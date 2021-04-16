@@ -5,9 +5,18 @@
     <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <DisableWinExeOutputInference>true</DisableWinExeOutputInference>
-    <ApplicationIcon>Icons\iconE.ico</ApplicationIcon>
+    <ApplicationIcon>iconE.ico</ApplicationIcon>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Icons\**" />
+    <Compile Remove="Publish\**" />
+    <EmbeddedResource Remove="Icons\**" />
+    <EmbeddedResource Remove="Publish\**" />
+    <None Remove="Icons\**" />
+    <None Remove="Publish\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
