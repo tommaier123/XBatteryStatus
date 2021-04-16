@@ -55,6 +55,10 @@ namespace XBatteryStatus
                         {
                             bleDevice.ConnectionStatusChanged += ConnectionStatusChanged;
                             count++;
+                            if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
+                            {
+                                ConnectGamepad(bleDevice);
+                            }
                         }
                     }
                 }
@@ -68,7 +72,7 @@ namespace XBatteryStatus
             }
             else
             {
-                notifyIcon.Visible = false;
+                Update();
             }
         }
 
@@ -111,22 +115,27 @@ namespace XBatteryStatus
 
         private void ConnectionStatusChanged(BluetoothLEDevice sender, object args)
         {
+            ConnectGamepad(sender);
+            Update();
+        }
+
+        public void ConnectGamepad(BluetoothLEDevice device)
+        {
             if (pairedGamepad == null || pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Disconnected)
             {
                 try
                 {
-                    GattDeviceService service = sender.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb"));
+                    GattDeviceService service = device.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb"));
                     GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).First();
 
                     if (service != null && characteristic != null)
                     {
-                        pairedGamepad = sender;
+                        pairedGamepad = device;
                         batteryCharacteristic = characteristic;
                     }
                 }
                 catch { }
             }
-            Update();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
