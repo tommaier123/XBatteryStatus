@@ -39,6 +39,7 @@ namespace XBatteryStatus
 
         async private void FindBleController()
         {
+            int count = 0;
             foreach (var device in await DeviceInformation.FindAllAsync())
             {
                 try
@@ -52,22 +53,22 @@ namespace XBatteryStatus
 
                         if (service != null && characteristic != null)//get the gamepads with battery status
                         {
-                            pairedGamepad = bleDevice;//use the first one
-                            batteryCharacteristic = characteristic;
-                            notifyIcon.Visible = false;
                             bleDevice.ConnectionStatusChanged += ConnectionStatusChanged;
-                            Update();
-                            return;
+                            count++;
                         }
                     }
                 }
                 catch { }
             }
 
-            if (batteryCharacteristic == null)
+            if (count == 0)
             {
                 notifyIcon.Icon = Properties.Resources.iconE;
-                notifyIcon.Text = "XBatteryStatus: No paired BLE controller with battery status found";
+                notifyIcon.Text = "XBatteryStatus: No paired controller with battery service found";
+            }
+            else
+            {
+                notifyIcon.Visible = false;
             }
         }
 
@@ -110,6 +111,21 @@ namespace XBatteryStatus
 
         private void ConnectionStatusChanged(BluetoothLEDevice sender, object args)
         {
+            if (pairedGamepad == null || pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Disconnected)
+            {
+                try
+                {
+                    GattDeviceService service = sender.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb"));
+                    GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).First();
+
+                    if (service != null && characteristic != null)
+                    {
+                        pairedGamepad = sender;
+                        batteryCharacteristic = characteristic;
+                    }
+                }
+                catch { }
+            }
             Update();
         }
 
@@ -125,7 +141,7 @@ namespace XBatteryStatus
 
         public void Update()
         {
-            notifyIcon.Visible = pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Connected;
+            notifyIcon.Visible = pairedGamepad != null && pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Connected;
             ReadBattery();
         }
     }
