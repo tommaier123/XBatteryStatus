@@ -12,7 +12,7 @@ A tray app that displays the battery level of most bluetooth game controllers
 * Tray icon will hide itself when no controller is connected
 
 ## Installation
-* Install the [.NET 5 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/5.0)
+* Install the [.NET 5 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/5.0)
 * Make sure to pair your controller before running the app or restart after pairing a new one
 * Download the [latest release](https://github.com/tommaier123/XBatteryStatus/releases/latest)
 * Run the install.bat **with admin permissions** or manually move the XBatteryStatus.exe to the autostart folder
