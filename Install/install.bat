@@ -6,14 +6,25 @@ goto check_Permissions
     
     net session >nul 2>&1
     if %errorLevel% == 0 (
-        echo Success: Administrative permissions confirmed.
+        echo Success: Administrative permissions confirmed
     ) else (
-        echo Failure: Current permissions inadequate.
+        echo Failure: Current permissions inadequate. Run as Administrator
+		goto end
     )
     
-    pause >nul
-
+echo[
 taskkill /IM "XBatteryStatus.exe" /F
-timeout /T 1 /nobreak
+timeout /T 1 /nobreak >nul
 xcopy /s %~dp0\XBatteryStatus.exe "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp" /Y
 start "" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\XBatteryStatus.exe"
+
+if %errorLevel% == 0 (
+    echo[
+    echo Success: Installation successful
+) else (
+    echo[
+    echo Failure: Installation unsuccessful
+)
+
+:end
+pause
