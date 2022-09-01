@@ -17,6 +17,7 @@ namespace XBatteryStatus
         NotifyIcon notifyIcon = new NotifyIcon();
 
         private Timer timer1;
+        private ContextMenuStrip contextMenu;
 
         public BluetoothLEDevice pairedGamepad;
         public GattCharacteristic batteryCharacteristic;
@@ -28,6 +29,12 @@ namespace XBatteryStatus
             notifyIcon.Icon = Properties.Resources.iconQ;
             notifyIcon.Text = "XBatteryStatus: Looking for paired controller";
             notifyIcon.Visible = true;
+
+            contextMenu = new ContextMenuStrip();
+            ToolStripButton exitButton = new ToolStripButton("Exit", null, new EventHandler(ExitClicked), "Exit");
+            contextMenu.Items.Add(exitButton);
+            contextMenu.Dock = DockStyle.Top;
+            notifyIcon.ContextMenuStrip = contextMenu;
 
             FindBleController();
 
@@ -141,6 +148,11 @@ namespace XBatteryStatus
         private void timer1_Tick(object sender, EventArgs e)
         {
             ReadBattery();
+        }
+
+        private void ExitClicked(object sender, EventArgs e) 
+        {
+            Application.Exit();
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
