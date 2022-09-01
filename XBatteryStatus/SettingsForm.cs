@@ -56,22 +56,24 @@ namespace XBatteryStatus
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            var settings = Properties.Settings.Default;
-            int newFreq = 0;
-            if (int.TryParse(updateFrequency.Text, out newFreq))
+            if (ValidateChildren())
             {
-                settings.UpdateFrequency = newFreq * 1000;
+                var settings = Properties.Settings.Default;
+                int newFreq = 0;
+                if (int.TryParse(updateFrequency.Text, out newFreq))
+                {
+                    settings.UpdateFrequency = newFreq * 1000;
+                }
+                settings.EnableLowBatteryNotifications = notificationsEnabled.Checked;
+                settings.EnableAudioNotifications = audioEnabled.Checked;
+                if (audioFileDropDown.SelectedIndex >= 0 && audioFileDropDown.SelectedIndex < audioOptions.Length)
+                {
+                    settings.LowBatteryAudio = audioOptions[audioFileDropDown.SelectedIndex];
+                }
+                settings.Save();
+                DialogResult = DialogResult.OK;
+                Close();
             }
-            settings.EnableLowBatteryNotifications = notificationsEnabled.Checked;
-            settings.EnableAudioNotifications = audioEnabled.Checked;
-            if (audioFileDropDown.SelectedIndex >= 0 && audioFileDropDown.SelectedIndex < audioOptions.Length)
-            {
-                settings.LowBatteryAudio = audioOptions[audioFileDropDown.SelectedIndex];
-            }
-            settings.Save();
-            DialogResult = DialogResult.OK;
-            Close();
-
         }
 
         private void testAudio_Click(object sender, EventArgs e)
