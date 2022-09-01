@@ -23,6 +23,7 @@ namespace XBatteryStatus
         public GattCharacteristic batteryCharacteristic;
 
         private int lastBattery = 100;
+        private SettingsForm settingsForm;
 
         public MyApplicationContext()
         {
@@ -186,9 +187,15 @@ namespace XBatteryStatus
         }
         private void SettingsClicked(object sender, EventArgs e) 
         {
-            if (new SettingsForm().ShowDialog() == DialogResult.OK)
+            // Prevent double-opening
+            if (settingsForm == null)
             {
-                timer1.Interval = Properties.Settings.Default.UpdateFrequency;
+                settingsForm = new SettingsForm();
+                if (settingsForm.ShowDialog() == DialogResult.OK)
+                {
+                    timer1.Interval = Properties.Settings.Default.UpdateFrequency;
+                }
+                settingsForm = null;
             }
         }
 
