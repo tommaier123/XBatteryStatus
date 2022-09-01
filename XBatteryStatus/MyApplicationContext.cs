@@ -174,7 +174,10 @@ namespace XBatteryStatus
         }
         private void SettingsClicked(object sender, EventArgs e) 
         {
-            new SettingsForm().ShowDialog();
+            if (new SettingsForm().ShowDialog() == DialogResult.OK)
+            {
+                timer1.Interval = Properties.Settings.Default.UpdateFrequency;
+            }
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
