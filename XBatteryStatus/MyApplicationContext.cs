@@ -31,8 +31,11 @@ namespace XBatteryStatus
             notifyIcon.Visible = true;
 
             contextMenu = new ContextMenuStrip();
+            ToolStripButton settingsButton = new ToolStripButton("Settings", null, new EventHandler(SettingsClicked), "Settings");
+            contextMenu.Items.Add(settingsButton);
             ToolStripButton exitButton = new ToolStripButton("Exit", null, new EventHandler(ExitClicked), "Exit");
             contextMenu.Items.Add(exitButton);
+
             contextMenu.Dock = DockStyle.Top;
             notifyIcon.ContextMenuStrip = contextMenu;
 
@@ -85,6 +88,9 @@ namespace XBatteryStatus
 
         private async void ReadBattery()
         {
+
+            var settings = Properties.Settings.Default;
+
             if (pairedGamepad != null && batteryCharacteristic != null)
             {
                 if (pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Connected)
@@ -109,10 +115,22 @@ namespace XBatteryStatus
                         else if (val < 95) notifyIcon.Icon = Properties.Resources.icon90;
                         else notifyIcon.Icon = Properties.Resources.icon100;
 
-                        if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
+                        if (settings.EnableLowBatteryNotifications &&
+                            (lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
                         {
-                            new ToastContentBuilder().AddText("Low Battery").AddText(notify)
-                                .Show();
+                            ToastContentBuilder builder = new ToastContentBuilder()
+                                .AddText("Low Battery")
+                                .AddText(notify);
+
+                            if (settings.EnableAudioNotifications) 
+                            {
+                                builder.AddAudio(new ToastAudio() 
+                                {
+                                    Src = new Uri(settings.LowBatteryAudio),
+                                    Loop = false
+                                });
+                            }
+                            builder.Show();
                         }
                         lastBattery = val;
                     }
@@ -153,6 +171,10 @@ namespace XBatteryStatus
         private void ExitClicked(object sender, EventArgs e) 
         {
             Application.Exit();
+        }
+        private void SettingsClicked(object sender, EventArgs e) 
+        {
+            new SettingsForm().ShowDialog();
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
