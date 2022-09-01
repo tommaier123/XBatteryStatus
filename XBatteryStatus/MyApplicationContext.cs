@@ -31,12 +31,24 @@ namespace XBatteryStatus
             notifyIcon.Visible = true;
 
             contextMenu = new ContextMenuStrip();
+            contextMenu.ShowImageMargin = false;
+            contextMenu.ShowCheckMargin = false;
+            contextMenu.ShowItemToolTips = false;
             ToolStripButton settingsButton = new ToolStripButton("Settings", null, new EventHandler(SettingsClicked), "Settings");
+            settingsButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            settingsButton.AutoSize = true;
+            settingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            settingsButton.Margin = Padding.Empty;
             contextMenu.Items.Add(settingsButton);
             ToolStripButton exitButton = new ToolStripButton("Exit", null, new EventHandler(ExitClicked), "Exit");
+            exitButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            exitButton.AutoSize = true;
+            exitButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            exitButton.Margin = Padding.Empty;
             contextMenu.Items.Add(exitButton);
 
             contextMenu.Dock = DockStyle.Top;
+
             notifyIcon.ContextMenuStrip = contextMenu;
 
             FindBleController();
