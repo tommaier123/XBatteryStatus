@@ -34,7 +34,7 @@ namespace XBatteryStatus
             InitializeComponent();
 
             var settings = Properties.Settings.Default;
-            updateFrequency.Text = settings.UpdateFrequency.ToString();
+            updateFrequency.Text = (settings.UpdateFrequency / 1000).ToString();
             notificationsEnabled.Checked = settings.EnableLowBatteryNotifications;
             audioEnabled.Checked = settings.EnableAudioNotifications;
             audioFileDropDown.Items.Clear();
@@ -83,7 +83,7 @@ namespace XBatteryStatus
             int newFreq = 0;
             if (int.TryParse(updateFrequency.Text, out newFreq))
             {
-                settings.UpdateFrequency = newFreq;
+                settings.UpdateFrequency = newFreq * 1000;
             }
             settings.EnableLowBatteryNotifications = notificationsEnabled.Checked;
             settings.EnableAudioNotifications = audioEnabled.Checked;
