@@ -33,6 +33,8 @@ namespace XBatteryStatus
         {
             InitializeComponent();
 
+            this.CancelButton = cancelButton;
+
             var settings = Properties.Settings.Default;
             updateFrequency.Text = (settings.UpdateFrequency / 1000).ToString();
             notificationsEnabled.Checked = settings.EnableLowBatteryNotifications;
@@ -44,31 +46,6 @@ namespace XBatteryStatus
                 audioFileDropDown.Items.Add(lastPart);
             }
             audioFileDropDown.SelectedIndex = Array.FindIndex(audioOptions, item => item == settings.LowBatteryAudio);
-        }
-
-        protected override void OnValidating(CancelEventArgs e)
-        {
-
-            if (updateFrequency.TextLength == 0)
-            {
-                e.Cancel = true;
-            } 
-            else
-            { 
-                int val;
-                if (!int.TryParse(updateFrequency.Text, System.Globalization.NumberStyles.Any, null, out val))
-                {
-                    e.Cancel = true;
-                }
-                else
-                {
-                    if (val <= 0)
-                    {
-                        e.Cancel = true;
-                    }
-                }
-            }
-            base.OnValidating(e);
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -118,6 +95,36 @@ namespace XBatteryStatus
             }
         }
 
+        private void updateFrequency_Validating(object sender, CancelEventArgs e)
+        {
+            errorProvider.SetError(updateFrequency, "");
+
+            if (updateFrequency.TextLength == 0)
+            {
+                e.Cancel = true;
+                updateFrequency.Focus();
+                errorProvider.SetError(updateFrequency, "Update Frequency cannot be blank");
+            } 
+            else
+            { 
+                int val;
+                if (!int.TryParse(updateFrequency.Text, System.Globalization.NumberStyles.Any, null, out val))
+                {
+                    e.Cancel = true;
+                    updateFrequency.Focus();
+                    errorProvider.SetError(updateFrequency, "Update Frequency is not a number");
+                }
+                else
+                {
+                    if (val <= 0)
+                    {
+                        e.Cancel = true;
+                        updateFrequency.Focus();
+                        errorProvider.SetError(updateFrequency, "Update Frequency must be greater than zero");
+                    }
+                }
+            }
+        }
     }
 }
 

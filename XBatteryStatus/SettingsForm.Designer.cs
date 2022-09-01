@@ -24,6 +24,7 @@ namespace XBatteryStatus {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.updateFrequency = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -40,10 +41,12 @@ namespace XBatteryStatus {
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // updateFrequency
@@ -54,6 +57,7 @@ namespace XBatteryStatus {
             this.updateFrequency.Name = "updateFrequency";
             this.updateFrequency.Size = new System.Drawing.Size(45, 31);
             this.updateFrequency.TabIndex = 0;
+            this.updateFrequency.Validating += new System.ComponentModel.CancelEventHandler(this.updateFrequency_Validating);
             // 
             // label1
             // 
@@ -229,6 +233,10 @@ namespace XBatteryStatus {
             this.flowLayoutPanel1.Size = new System.Drawing.Size(300, 41);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -251,6 +259,7 @@ namespace XBatteryStatus {
             this.flowLayoutPanel3.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -273,5 +282,6 @@ namespace XBatteryStatus {
         private System.Windows.Forms.Button testAudio;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }
