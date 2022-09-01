@@ -27,16 +27,19 @@ namespace XBatteryStatus {
             this.updateFrequency = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.audioFileDropDown = new System.Windows.Forms.ComboBox();
             this.audioEnabled = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.audioLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.notificationsEnabled = new System.Windows.Forms.CheckBox();
-            this.audioFileDropDown = new System.Windows.Forms.ComboBox();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.testAudio = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +72,7 @@ namespace XBatteryStatus {
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.audioEnabled, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.updateFrequency, 1, 0);
@@ -76,7 +80,6 @@ namespace XBatteryStatus {
             this.tableLayoutPanel1.Controls.Add(this.audioLabel, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.notificationsEnabled, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.audioFileDropDown, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(13, 13);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -84,8 +87,26 @@ namespace XBatteryStatus {
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(429, 165);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(572, 187);
             this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.audioFileDropDown);
+            this.flowLayoutPanel2.Controls.Add(this.testAudio);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(240, 123);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(308, 38);
+            this.flowLayoutPanel2.TabIndex = 6;
+            // 
+            // audioFileDropDown
+            // 
+            this.audioFileDropDown.FormattingEnabled = true;
+            this.audioFileDropDown.ItemHeight = 25;
+            this.audioFileDropDown.Location = new System.Drawing.Point(3, 3);
+            this.audioFileDropDown.Name = "audioFileDropDown";
+            this.audioFileDropDown.Size = new System.Drawing.Size(182, 33);
+            this.audioFileDropDown.TabIndex = 8;
             // 
             // audioEnabled
             // 
@@ -142,15 +163,6 @@ namespace XBatteryStatus {
             this.notificationsEnabled.TabIndex = 6;
             this.notificationsEnabled.UseVisualStyleBackColor = true;
             // 
-            // audioFileDropDown
-            // 
-            this.audioFileDropDown.FormattingEnabled = true;
-            this.audioFileDropDown.ItemHeight = 25;
-            this.audioFileDropDown.Location = new System.Drawing.Point(240, 123);
-            this.audioFileDropDown.Name = "audioFileDropDown";
-            this.audioFileDropDown.Size = new System.Drawing.Size(182, 33);
-            this.audioFileDropDown.TabIndex = 8;
-            // 
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -179,10 +191,20 @@ namespace XBatteryStatus {
             this.flowLayoutPanel1.Controls.Add(this.cancelButton);
             this.flowLayoutPanel1.Controls.Add(this.okButton);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(142, 184);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(285, 206);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(300, 41);
             this.flowLayoutPanel1.TabIndex = 5;
+            // 
+            // testAudio
+            // 
+            this.testAudio.Location = new System.Drawing.Point(191, 3);
+            this.testAudio.Name = "testAudio";
+            this.testAudio.Size = new System.Drawing.Size(112, 34);
+            this.testAudio.TabIndex = 9;
+            this.testAudio.Text = "Test";
+            this.testAudio.UseVisualStyleBackColor = true;
+            this.testAudio.Click += new System.EventHandler(this.testAudio_Click);
             // 
             // SettingsForm
             // 
@@ -190,7 +212,7 @@ namespace XBatteryStatus {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(450, 226);
+            this.ClientSize = new System.Drawing.Size(593, 248);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -202,6 +224,7 @@ namespace XBatteryStatus {
             this.Text = "XBatteryStatus Settings";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -221,5 +244,7 @@ namespace XBatteryStatus {
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.Button testAudio;
     }
 }

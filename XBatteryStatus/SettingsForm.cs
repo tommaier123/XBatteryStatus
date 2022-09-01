@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace XBatteryStatus
@@ -77,6 +73,7 @@ namespace XBatteryStatus
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 
@@ -95,8 +92,32 @@ namespace XBatteryStatus
                 settings.LowBatteryAudio = audioOptions[audioFileDropDown.SelectedIndex];
             }
             settings.Save();
+            DialogResult = DialogResult.OK;
             Close();
 
         }
+
+        private void testAudio_Click(object sender, EventArgs e)
+        {
+            PlaySelectedAudio();
+        }
+
+        private void PlaySelectedAudio()
+        {
+            if (audioFileDropDown.SelectedIndex >= 0 && audioFileDropDown.SelectedIndex < audioOptions.Length)
+            {
+                // There's not a way to play toast audio directly here, so do a preview notification
+                new ToastContentBuilder()
+                    .AddText("Test Low Battery Notification")
+                    .AddAudio(new ToastAudio()
+                    {
+                        Src = new Uri(audioOptions[audioFileDropDown.SelectedIndex]),
+                        Loop = false
+                    })
+                    .Show();
+            }
+        }
+
     }
 }
+
