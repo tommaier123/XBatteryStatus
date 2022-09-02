@@ -17,17 +17,40 @@ namespace XBatteryStatus
         NotifyIcon notifyIcon = new NotifyIcon();
 
         private Timer timer1;
+        private ContextMenuStrip contextMenu;
 
         public BluetoothLEDevice pairedGamepad;
         public GattCharacteristic batteryCharacteristic;
 
         private int lastBattery = 100;
+        private SettingsForm settingsForm;
 
         public MyApplicationContext()
         {
             notifyIcon.Icon = Properties.Resources.iconQ;
             notifyIcon.Text = "XBatteryStatus: Looking for paired controller";
             notifyIcon.Visible = true;
+
+            contextMenu = new ContextMenuStrip();
+            contextMenu.ShowImageMargin = false;
+            contextMenu.ShowCheckMargin = false;
+            contextMenu.ShowItemToolTips = false;
+            ToolStripButton settingsButton = new ToolStripButton("Settings", null, new EventHandler(SettingsClicked), "Settings");
+            settingsButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            settingsButton.AutoSize = true;
+            settingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            settingsButton.Margin = Padding.Empty;
+            contextMenu.Items.Add(settingsButton);
+            ToolStripButton exitButton = new ToolStripButton("Exit", null, new EventHandler(ExitClicked), "Exit");
+            exitButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            exitButton.AutoSize = true;
+            exitButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            exitButton.Margin = Padding.Empty;
+            contextMenu.Items.Add(exitButton);
+
+            contextMenu.Dock = DockStyle.Top;
+
+            notifyIcon.ContextMenuStrip = contextMenu;
 
             FindBleController();
 
@@ -78,6 +101,9 @@ namespace XBatteryStatus
 
         private async void ReadBattery()
         {
+
+            var settings = Properties.Settings.Default;
+
             if (pairedGamepad != null && batteryCharacteristic != null)
             {
                 if (pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Connected)
@@ -102,10 +128,22 @@ namespace XBatteryStatus
                         else if (val < 95) notifyIcon.Icon = Properties.Resources.icon90;
                         else notifyIcon.Icon = Properties.Resources.icon100;
 
-                        if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
+                        if (settings.EnableLowBatteryNotifications &&
+                            (lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
                         {
-                            new ToastContentBuilder().AddText("Low Battery").AddText(notify)
-                                .Show();
+                            ToastContentBuilder builder = new ToastContentBuilder()
+                                .AddText("Low Battery")
+                                .AddText(notify);
+
+                            if (settings.EnableAudioNotifications) 
+                            {
+                                builder.AddAudio(new ToastAudio() 
+                                {
+                                    Src = new Uri(settings.LowBatteryAudio),
+                                    Loop = false
+                                });
+                            }
+                            builder.Show();
                         }
                         lastBattery = val;
                     }
@@ -141,6 +179,24 @@ namespace XBatteryStatus
         private void timer1_Tick(object sender, EventArgs e)
         {
             ReadBattery();
+        }
+
+        private void ExitClicked(object sender, EventArgs e) 
+        {
+            Application.Exit();
+        }
+        private void SettingsClicked(object sender, EventArgs e) 
+        {
+            // Prevent double-opening
+            if (settingsForm == null)
+            {
+                settingsForm = new SettingsForm();
+                if (settingsForm.ShowDialog() == DialogResult.OK)
+                {
+                    timer1.Interval = Properties.Settings.Default.UpdateFrequency;
+                }
+                settingsForm = null;
+            }
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
