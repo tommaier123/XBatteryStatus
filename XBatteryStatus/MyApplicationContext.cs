@@ -104,50 +104,53 @@ namespace XBatteryStatus
 
             var settings = Properties.Settings.Default;
 
-            if (pairedGamepad != null && batteryCharacteristic != null)
+            if (pairedGamepad != null && batteryCharacteristic != null &&
+                pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Connected)
             {
-                if (pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Connected)
+                GattReadResult result = await batteryCharacteristic.ReadValueAsync();
+
+                if (result.Status == GattCommunicationStatus.Success)
                 {
-                    GattReadResult result = await batteryCharacteristic.ReadValueAsync();
+                    var reader = DataReader.FromBuffer(result.Value);
+                    int val = reader.ReadByte();
+                    string notify = val.ToString() + "% - " + pairedGamepad.Name;
+                    notifyIcon.Text = "XBatteryStatus: " + notify;
+                    if (val < 5) notifyIcon.Icon = Properties.Resources.icon00;
+                    else if (val < 15) notifyIcon.Icon = Properties.Resources.icon10;
+                    else if (val < 25) notifyIcon.Icon = Properties.Resources.icon20;
+                    else if (val < 35) notifyIcon.Icon = Properties.Resources.icon30;
+                    else if (val < 45) notifyIcon.Icon = Properties.Resources.icon40;
+                    else if (val < 55) notifyIcon.Icon = Properties.Resources.icon50;
+                    else if (val < 65) notifyIcon.Icon = Properties.Resources.icon60;
+                    else if (val < 75) notifyIcon.Icon = Properties.Resources.icon70;
+                    else if (val < 85) notifyIcon.Icon = Properties.Resources.icon80;
+                    else if (val < 95) notifyIcon.Icon = Properties.Resources.icon90;
+                    else notifyIcon.Icon = Properties.Resources.icon100;
 
-                    if (result.Status == GattCommunicationStatus.Success)
+                    if (settings.EnableLowBatteryNotifications &&
+                        (lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
                     {
-                        var reader = DataReader.FromBuffer(result.Value);
-                        int val = reader.ReadByte();
-                        string notify = val.ToString() + "% - " + pairedGamepad.Name;
-                        notifyIcon.Text = "XBatteryStatus: " + notify;
-                        if (val < 5) notifyIcon.Icon = Properties.Resources.icon00;
-                        else if (val < 15) notifyIcon.Icon = Properties.Resources.icon10;
-                        else if (val < 25) notifyIcon.Icon = Properties.Resources.icon20;
-                        else if (val < 35) notifyIcon.Icon = Properties.Resources.icon30;
-                        else if (val < 45) notifyIcon.Icon = Properties.Resources.icon40;
-                        else if (val < 55) notifyIcon.Icon = Properties.Resources.icon50;
-                        else if (val < 65) notifyIcon.Icon = Properties.Resources.icon60;
-                        else if (val < 75) notifyIcon.Icon = Properties.Resources.icon70;
-                        else if (val < 85) notifyIcon.Icon = Properties.Resources.icon80;
-                        else if (val < 95) notifyIcon.Icon = Properties.Resources.icon90;
-                        else notifyIcon.Icon = Properties.Resources.icon100;
+                        ToastContentBuilder builder = new ToastContentBuilder()
+                            .AddText("Low Battery")
+                            .AddText(notify);
 
-                        if (settings.EnableLowBatteryNotifications &&
-                            (lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
+                        if (settings.EnableAudioNotifications) 
                         {
-                            ToastContentBuilder builder = new ToastContentBuilder()
-                                .AddText("Low Battery")
-                                .AddText(notify);
-
-                            if (settings.EnableAudioNotifications) 
+                            builder.AddAudio(new ToastAudio() 
                             {
-                                builder.AddAudio(new ToastAudio() 
-                                {
-                                    Src = new Uri(settings.LowBatteryAudio),
-                                    Loop = false
-                                });
-                            }
-                            builder.Show();
+                                Src = new Uri(settings.LowBatteryAudio),
+                                Loop = false
+                            });
                         }
-                        lastBattery = val;
+                        builder.Show();
                     }
+                    lastBattery = val;
                 }
+            }
+            else
+            {
+                notifyIcon.Icon = Properties.Resources.iconNone;
+                notifyIcon.Text = "XBatteryStatus: Controller disconnected";
             }
         }
 
@@ -206,7 +209,6 @@ namespace XBatteryStatus
 
         public void Update()
         {
-            notifyIcon.Visible = pairedGamepad != null && pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Connected;
             ReadBattery();
         }
     }

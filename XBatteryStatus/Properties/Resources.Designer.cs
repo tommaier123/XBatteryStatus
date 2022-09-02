@@ -183,6 +183,16 @@ namespace XBatteryStatus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon iconNone {
+            get {
+                object obj = ResourceManager.GetObject("iconNone", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon iconQ {
             get {
                 object obj = ResourceManager.GetObject("iconQ", resourceCulture);
