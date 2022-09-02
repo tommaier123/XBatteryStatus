@@ -7,9 +7,8 @@ A tray app that displays the battery level of most bluetooth game controllers
 * Support for every bluetooth game controller that uses the standard ble battery service (Tested on Xbox Series X Controller)
 * Battery level indication as dynamic tray icon
 * Battery percentage when hovering over the icon
-* Low battery notification at 15%, 10% and 5%
+* Low battery notification at 15%, 10% and 5%, with audio notifications
 * Support for multiple paired controllers (but only one connected at a time)
-* Tray icon will hide itself when no controller is connected
 
 ## Installation
 * Install the [.NET 5 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/5.0)
