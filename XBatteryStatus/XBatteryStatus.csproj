@@ -5,8 +5,9 @@
     <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <DisableWinExeOutputInference>true</DisableWinExeOutputInference>
-    <ApplicationIcon>iconE.ico</ApplicationIcon>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+	<DebugType>embedded</DebugType>
+	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,10 @@
     <EmbeddedResource Remove="Publish\**" />
     <None Remove="Icons\**" />
     <None Remove="Publish\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
