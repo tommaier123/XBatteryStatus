@@ -24,7 +24,7 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 * Run the install.msi
 
 ## Updating
-* When a new version is released you will get notified only three times
+(When a new version is released you will get notified only three times)
 * Stop XBatteryStatus by rightclicking on the icon
 * Download the [latest release](https://github.com/tommaier123/XBatteryStatus/releases/latest)
 * Run the install.msi
