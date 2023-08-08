@@ -31,4 +31,4 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 
 ## Setup
 * After pairing a new controller you need to stop and restart XBatteryStatus or turn off and on Bluetooth
-* This needs to be done only once after pairing after that everythign will work automatically
+* This needs to be done only once after pairing after that everything will work automatically
