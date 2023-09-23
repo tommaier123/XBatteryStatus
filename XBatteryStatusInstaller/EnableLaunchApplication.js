@@ -6,6 +6,7 @@
 var checkboxChecked = true;         // Is the checkbox on the finished dialog checked by default?
 var checkboxText = "Launch [ProductName]";  // Text for the checkbox on the finished dialog
 var filename = "XBatteryStatus.exe";   // The name of the executable to launch - change this to match the file you want to launch at the end of your setup
+var termfilename = "Terminate.exe";   // The name of the executable to launch - change this to match the file you want to launch at the end of your setup
 
 
 // Constant values from Windows Installer
@@ -38,6 +39,10 @@ try
     var fileId = FindFileIdentifier(database, filename);
     if (!fileId)
         throw "Unable to find '" + filename + "' in File table";
+	
+	var termfileId = FindFileIdentifier(database, termfilename);
+    if (!termfileId)
+        throw "Unable to find '" + termfilename + "' in File table";
 
 
     WScript.Echo("Updating the Control table...");
@@ -113,6 +118,47 @@ try
     }
 
 
+    WScript.Echo("Patching termination script");
+
+    WScript.Echo("Updating the CustomAction table...");
+    // Insert the custom action to terminate running tasks
+    sql = "INSERT INTO `CustomAction` (`Action`, `Type`, `Source`, `Target`) VALUES ('TerminateRunning_Uninstall', '210', '" + termfileId + "', '')";
+    view = database.OpenView(sql);
+    view.Execute();
+    view.Close();
+	
+    // Insert the custom action to terminate running tasks
+    sql = "INSERT INTO `CustomAction` (`Action`, `Type`, `Source`, `Target`) VALUES ('TerminateRunning_Install', '210', '" + termfileId + "', '')";
+    view = database.OpenView(sql);
+    view.Execute();
+    view.Close();
+
+
+    WScript.Echo("Updating the InstallExecuteSequence table...");
+    // Insert the custom action into the uninstall sequency
+    sql = "INSERT INTO `InstallExecuteSequence` (`Action`, `Condition`, `Sequence`) VALUES ('TerminateRunning_Uninstall', '$C__8B8575CA2ECDBC19077AF127CEF71F49=2', '1110')";
+    view = database.OpenView(sql);
+    view.Execute();
+    view.Close();
+	
+    // Insert the custom action into the install sequency
+    sql = "INSERT INTO `InstallExecuteSequence` (`Action`, `Condition`, `Sequence`) VALUES ('TerminateRunning_Install', '$C__8B8575CA2ECDBC19077AF127CEF71F49>2', '1111')";
+    view = database.OpenView(sql);
+    view.Execute();
+    view.Close();
+
+
+    // Disable file in use warning
+    sql = "INSERT INTO `Property` (`Property`, `Value`) VALUES ('MSIRESTARTMANAGERCONTROL', 'Disable')";
+    view = database.OpenView(sql);
+    view.Execute();
+    view.Close();
+	
+	// Disable reboot warning
+    sql = "INSERT INTO `Property` (`Property`, `Value`) VALUES ('REBOOT', 'ReallySuppress')";
+    view = database.OpenView(sql);
+    view.Execute();
+    view.Close();
 
     database.Commit();
 }

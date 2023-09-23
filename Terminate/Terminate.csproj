@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+	<DebugType>embedded</DebugType>
+	<Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+	
+</Project>

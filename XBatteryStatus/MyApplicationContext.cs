@@ -1,8 +1,10 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows.Forms;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
@@ -14,10 +16,13 @@ namespace XBatteryStatus
 {
     public class MyApplicationContext : ApplicationContext
     {
-        private string version = "V1.1.1";
+        private string version = "V1.2.1";
+        private string releaseUrl = @"https://github.com/tommaier123/XBatteryStatus/releases";
 
         NotifyIcon notifyIcon = new NotifyIcon();
         private ContextMenuStrip contextMenu;
+        private ToolStripMenuItem themeButton;
+        private ToolStripMenuItem hideButton;
 
         private Timer timer1;
 
@@ -32,12 +37,23 @@ namespace XBatteryStatus
         public MyApplicationContext()
         {
             lightMode = IsLightMode();
-            notifyIcon.Icon = GetIcon(Properties.Resources.iconQ, lightMode);
+            notifyIcon.Icon = GetIcon(Properties.Resources.iconQ);
             notifyIcon.Text = "XBatteryStatus: Looking for paired controller";
             notifyIcon.Visible = true;
 
             contextMenu = new ContextMenuStrip();
-            ToolStripMenuItem exitButton = new ToolStripMenuItem("Exit", null, new EventHandler(ExitClicked), "Exit");
+            themeButton = new ToolStripMenuItem("Theme");
+            themeButton.DropDownItems.Add("Auto", null, ThemeClicked);
+            themeButton.DropDownItems.Add("Light", null, ThemeClicked);
+            themeButton.DropDownItems.Add("Dark", null, ThemeClicked);
+            UpdateThemeButton();
+            contextMenu.Items.Add(themeButton);
+            hideButton = new ToolStripMenuItem("Auto Hide", null, HideClicked);
+            UpdateHideButton();
+            contextMenu.Items.Add(hideButton);
+            ToolStripMenuItem versionButton = new ToolStripMenuItem(version, null, new EventHandler(VersionClicked));
+            contextMenu.Items.Add(versionButton);
+            ToolStripMenuItem exitButton = new ToolStripMenuItem("Exit", null, new EventHandler(ExitClicked));
             contextMenu.Items.Add(exitButton);
             notifyIcon.ContextMenuStrip = contextMenu;
 
@@ -64,7 +80,7 @@ namespace XBatteryStatus
 
                 if (latest != null && Int32.Parse(version.Substring(1).Replace(".", "")) < Int32.Parse(latest.TagName.Substring(1).Replace(".", "")))
                 {
-                    if (Properties.Settings.Default.updateVersion!=latest.TagName)
+                    if (Properties.Settings.Default.updateVersion != latest.TagName)
                     {
                         Properties.Settings.Default.updateVersion = latest.TagName;
                         Properties.Settings.Default.reminderCount = 0;
@@ -80,7 +96,7 @@ namespace XBatteryStatus
                         .AddText("New Version Available on GitHub")
                         .AddButton(new ToastButton()
                                 .SetContent("Download")
-                                .SetProtocolActivation(new Uri("https://github.com/tommaier123/XBatteryStatus/releases")))
+                                .SetProtocolActivation(new Uri(releaseUrl)))
                         .AddButton(new ToastButton()
                                 .SetContent("Dismiss")
                                 .SetDismissActivation())
@@ -90,6 +106,7 @@ namespace XBatteryStatus
             }
             catch { }
         }
+
 
         async private void FindBleController()
         {
@@ -124,7 +141,7 @@ namespace XBatteryStatus
 
                 if (count == 0)
                 {
-                    notifyIcon.Icon = GetIcon(Properties.Resources.iconE, lightMode);
+                    notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
                     notifyIcon.Text = "XBatteryStatus: No paired controller with battery service found";
                 }
                 else
@@ -134,6 +151,8 @@ namespace XBatteryStatus
             }
             else
             {
+                notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
+                notifyIcon.Text = "XBatteryStatus: Bluetooth is turned off";
                 Update();
             }
         }
@@ -183,7 +202,7 @@ namespace XBatteryStatus
         public void Update()
         {
             bool enabled = bluetoothRadio?.State == RadioState.On && pairedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected;
-            notifyIcon.Visible = enabled;
+            notifyIcon.Visible = Properties.Settings.Default.hide ? enabled : true;
             if (enabled)
             {
                 ReadBattery();
@@ -214,7 +233,7 @@ namespace XBatteryStatus
                     else if (val < 85) icon = Properties.Resources.icon80;
                     else if (val < 95) icon = Properties.Resources.icon90;
 
-                    notifyIcon.Icon = GetIcon(icon, lightMode);
+                    notifyIcon.Icon = GetIcon(icon);
 
                     if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
                     {
@@ -236,6 +255,53 @@ namespace XBatteryStatus
             notifyIcon.Visible = false;
         }
 
+        private void ThemeClicked(object sender, EventArgs e)
+        {
+            if (sender == themeButton.DropDownItems[1]) { Properties.Settings.Default.theme = 1; }
+            else if (sender == themeButton.DropDownItems[2]) { Properties.Settings.Default.theme = 2; }
+            else { Properties.Settings.Default.theme = 0; }
+            Properties.Settings.Default.Save();
+            UpdateThemeButton();
+        }
+
+        private void UpdateThemeButton()
+        {
+            if (Properties.Settings.Default.theme == 1)
+            {
+                ((ToolStripMenuItem)themeButton.DropDownItems[0]).Checked = false;
+                ((ToolStripMenuItem)themeButton.DropDownItems[1]).Checked = true;
+                ((ToolStripMenuItem)themeButton.DropDownItems[2]).Checked = false;
+            }
+            else if (Properties.Settings.Default.theme == 2)
+            {
+                ((ToolStripMenuItem)themeButton.DropDownItems[0]).Checked = false;
+                ((ToolStripMenuItem)themeButton.DropDownItems[1]).Checked = false;
+                ((ToolStripMenuItem)themeButton.DropDownItems[2]).Checked = true;
+            }
+            else
+            {
+                ((ToolStripMenuItem)themeButton.DropDownItems[0]).Checked = true;
+                ((ToolStripMenuItem)themeButton.DropDownItems[1]).Checked = false;
+                ((ToolStripMenuItem)themeButton.DropDownItems[2]).Checked = false;
+            }
+
+            FindBleController();
+        }
+
+        private void HideClicked(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.hide = !Properties.Settings.Default.hide;
+            Properties.Settings.Default.Save();
+            UpdateHideButton();
+        }
+
+        private void UpdateHideButton()
+        {
+            hideButton.Checked = Properties.Settings.Default.hide;
+
+            Update();
+        }
+
         public bool IsLightMode()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
@@ -254,9 +320,9 @@ namespace XBatteryStatus
             return true;
         }
 
-        public Icon GetIcon(Icon darkModeIcon, bool lightMode)
+        public Icon GetIcon(Icon darkModeIcon)
         {
-            if (!lightMode)
+            if ((Properties.Settings.Default.theme == 0 && !lightMode) || Properties.Settings.Default.theme == 1)
             {
                 return darkModeIcon;
             }
@@ -280,5 +346,11 @@ namespace XBatteryStatus
                 }
             }
         }
+
+        private void VersionClicked(object sender, EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(releaseUrl) { UseShellExecute = true });
+        }
+
     }
 }

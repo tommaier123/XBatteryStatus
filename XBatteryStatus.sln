@@ -7,18 +7,38 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XBatteryStatus", "XBatteryS
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "XBatteryStatusInstaller", "XBatteryStatusInstaller\XBatteryStatusInstaller.vdproj", "{B344322B-0436-4014-89CA-F91DC9425D5F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terminate", "Terminate\Terminate.csproj", "{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{86B506A1-A575-4162-B557-61E6A73BDD36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86B506A1-A575-4162-B557-61E6A73BDD36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86B506A1-A575-4162-B557-61E6A73BDD36}.Debug|x64.ActiveCfg = Debug|x64
+		{86B506A1-A575-4162-B557-61E6A73BDD36}.Debug|x64.Build.0 = Debug|x64
 		{86B506A1-A575-4162-B557-61E6A73BDD36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B506A1-A575-4162-B557-61E6A73BDD36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86B506A1-A575-4162-B557-61E6A73BDD36}.Release|x64.ActiveCfg = Release|x64
+		{86B506A1-A575-4162-B557-61E6A73BDD36}.Release|x64.Build.0 = Release|x64
 		{B344322B-0436-4014-89CA-F91DC9425D5F}.Debug|Any CPU.ActiveCfg = Debug
+		{B344322B-0436-4014-89CA-F91DC9425D5F}.Debug|x64.ActiveCfg = Debug
+		{B344322B-0436-4014-89CA-F91DC9425D5F}.Debug|x64.Build.0 = Debug
 		{B344322B-0436-4014-89CA-F91DC9425D5F}.Release|Any CPU.ActiveCfg = Release
+		{B344322B-0436-4014-89CA-F91DC9425D5F}.Release|x64.ActiveCfg = Release
+		{B344322B-0436-4014-89CA-F91DC9425D5F}.Release|x64.Build.0 = Release
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Debug|x64.ActiveCfg = Debug|x64
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Debug|x64.Build.0 = Debug|x64
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Release|x64.ActiveCfg = Release|x64
+		{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

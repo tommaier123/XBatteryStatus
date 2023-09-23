@@ -8,6 +8,7 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
 	<DebugType>embedded</DebugType>
 	<Platforms>AnyCPU;x64</Platforms>
+	<Version>1.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_7F19B0A39E7641618AAAB7F9C6A4B4FB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D3B16B81E2EF4E6AA74C24528735BCA3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -209,15 +215,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:XBatteryStatus"
-        "ProductCode" = "8:{110FDEF2-34C9-4165-BC56-EACC8F06B329}"
-        "PackageCode" = "8:{D61D5DBA-4AAA-496D-94FC-6489D3639605}"
+        "ProductCode" = "8:{7249399A-F04A-4775-87E6-233063CE5C94}"
+        "PackageCode" = "8:{54C35175-C8DD-416B-95F4-F12494698716}"
         "UpgradeCode" = "8:{93DDDD01-E50C-43CA-B3CB-EDF95BCEE958}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.1"
+        "ProductVersion" = "8:1.2.1"
         "Manufacturer" = "8:Nova_Max"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/tommaier123/XBatteryStatus"
@@ -757,6 +763,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7F19B0A39E7641618AAAB7F9C6A4B4FB"
+            {
+            "SourcePath" = "8:..\\Terminate\\obj\\Release\\net5.0\\apphost.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_87BAE8FDA32844DE8EAEF43FC4BCFAAE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:PublishItems"
+            "OutputProjectGuid" = "8:{77CBD240-FBA0-459D-B6F1-17BE2A5907C6}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D53A1B57AD0D4264B99F2E57434B11E8"
             {
             "SourcePath" = "8:..\\XBatteryStatus\\obj\\Release\\net5.0-windows10.0.19041.0\\apphost.exe"
