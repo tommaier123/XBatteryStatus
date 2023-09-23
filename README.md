@@ -21,7 +21,7 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 ## Installation
 * Install the [.NET 5 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/5.0)
 * Download the [latest release](https://github.com/tommaier123/XBatteryStatus/releases/latest)
-* Run the install.msi
+* Run the XBatteryStatusInstaller.msi 
 
 ## Updating
 (When a new version is released you will get notified only three times)
