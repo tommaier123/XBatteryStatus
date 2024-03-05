@@ -18,10 +18,15 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 * Support for Windows light mode and dark mode
 * Update notifications for new versions
 
-## Installation
+## Installation via Installer
 * Install the [.NET 5 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/5.0)
 * Download the [latest release](https://github.com/tommaier123/XBatteryStatus/releases/latest)
-* Run the XBatteryStatusInstaller.msi 
+* Run the XBatteryStatusInstaller.msi
+
+## Installation via Winget
+* ```winget install Nova_Max.XBatteryStatus```
+* .net Desktop Runtime will be installed automatically
+* Run XBatteryStatus
 
 ## Updating
 (When a new version is released you will get notified only three times)
