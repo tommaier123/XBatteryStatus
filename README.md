@@ -1,4 +1,4 @@
-# XBatteryStatus
+# <img src="https://github.com/tommaier123/XBatteryStatus/blob/master/Icons/png/icon.png" height="24"/> XBatteryStatus 
 [![Release](https://img.shields.io/github/release/tommaier123/XBatteryStatus.svg)](https://github.com/tommaier123/XBatteryStatus/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/tommaier123/XBatteryStatus/total)](https://github.com/tommaier123/XBatteryStatus/releases/latest)
 [![Twitter](https://img.shields.io/twitter/follow/Nova_Max_?style=social)](https://twitter.com/Nova_Max_)
@@ -6,7 +6,8 @@
 
 A clean and lightweight tray app that displays the battery level of most bluetooth game controllers
 
-![Tray Icon](/Icons/icon100.png)
+![Tray Icon](/Icons/png/icon70.png)
+![Tray Icon](/Icons/png/iconNumeric.png)
 
 ## Features 
 * Support for every bluetooth game controller that uses the standard ble battery service (Tested on Xbox Series X Controller)
