@@ -93,7 +93,7 @@ namespace XBatteryStatus
                     }
                 }
             }
-            catch { }
+            catch (Exception e) { LogError(e); }
 
 
             var radios = Radio.GetRadiosAsync().GetResults();
@@ -140,13 +140,14 @@ namespace XBatteryStatus
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception e) { //LogError(e);
+                                        }
                 }
 
                 var newGamepads = foundGamepads.Except(pairedGamepads).ToList();
                 var removedGamepads = pairedGamepads.Except(foundGamepads).ToList();
 
-                foreach(var gamepad in newGamepads)
+                foreach (var gamepad in newGamepads)
                 {
                     gamepad.ConnectionStatusChanged += ConnectionStatusChanged;
                 }
@@ -223,7 +224,7 @@ namespace XBatteryStatus
                         Update();
                     }
                 }
-                catch { }
+                catch (Exception e) { LogError(e); }
             }
         }
 
@@ -380,5 +381,20 @@ namespace XBatteryStatus
             Process.Start(new ProcessStartInfo(releaseUrl) { UseShellExecute = true });
         }
 
+        private void Log(string s)
+        {
+#if DEBUG
+            Console.WriteLine(s);
+#endif
+        }
+
+        private void LogError(Exception e)
+        {
+#if DEBUG
+            Log(e.StackTrace);
+            Log(e.Message);
+            Log("");
+#endif
+        }
     }
 }
