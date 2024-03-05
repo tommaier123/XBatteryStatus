@@ -25,9 +25,11 @@ namespace XBatteryStatus
         private ContextMenuStrip contextMenu;
         private ToolStripMenuItem themeButton;
         private ToolStripMenuItem hideButton;
+        private ToolStripMenuItem numbersButton;
 
-        private Timer timer1;
-        private Timer timer2;
+        private Timer UpdateTimer;
+        private Timer DiscoverTimer;
+        private Timer HideTimeoutTimer;
 
         public List<BluetoothLEDevice> pairedGamepads = new List<BluetoothLEDevice>();
         public BluetoothLEDevice connectedGamepad;
@@ -40,25 +42,39 @@ namespace XBatteryStatus
 
         public MyApplicationContext()
         {
+            HideTimeoutTimer = new Timer();
+            HideTimeoutTimer.Tick += new EventHandler((x, y) => HideTimeout());
+            HideTimeoutTimer.Interval = 10000;
+            HideTimeoutTimer.Start();
+
             lightMode = IsLightMode();
-            notifyIcon.Icon = GetIcon(Properties.Resources.iconQ);
+            notifyIcon.Icon = GetIcon(-1, "?");
             notifyIcon.Text = "XBatteryStatus: Looking for paired controller";
             notifyIcon.Visible = true;
 
             contextMenu = new ContextMenuStrip();
+
             themeButton = new ToolStripMenuItem("Theme");
             themeButton.DropDownItems.Add("Auto", null, ThemeClicked);
             themeButton.DropDownItems.Add("Light", null, ThemeClicked);
             themeButton.DropDownItems.Add("Dark", null, ThemeClicked);
             UpdateThemeButton();
             contextMenu.Items.Add(themeButton);
+
             hideButton = new ToolStripMenuItem("Auto Hide", null, HideClicked);
             UpdateHideButton();
             contextMenu.Items.Add(hideButton);
+
+            numbersButton = new ToolStripMenuItem("Numeric", null, NumbersClicked);
+            UpdateNumbersButton();
+            contextMenu.Items.Add(numbersButton);
+
             ToolStripMenuItem versionButton = new ToolStripMenuItem(version, null, new EventHandler(VersionClicked));
             contextMenu.Items.Add(versionButton);
+
             ToolStripMenuItem exitButton = new ToolStripMenuItem("Exit", null, new EventHandler(ExitClicked));
             contextMenu.Items.Add(exitButton);
+
             notifyIcon.ContextMenuStrip = contextMenu;
 
             try
@@ -106,15 +122,15 @@ namespace XBatteryStatus
 
             FindBleController();
 
-            timer1 = new Timer();
-            timer1.Tick += new EventHandler((x, y) => Update());
-            timer1.Interval = 10000;
-            timer1.Start();
+            UpdateTimer = new Timer();
+            UpdateTimer.Tick += new EventHandler((x, y) => Update());
+            UpdateTimer.Interval = 10000;
+            UpdateTimer.Start();
 
-            timer2 = new Timer();
-            timer2.Tick += new EventHandler((x, y) => FindBleController());
-            timer2.Interval = 60000;
-            timer2.Start();
+            DiscoverTimer = new Timer();
+            DiscoverTimer.Tick += new EventHandler((x, y) => FindBleController());
+            DiscoverTimer.Interval = 60000;
+            DiscoverTimer.Start();
         }
 
         async private void FindBleController()
@@ -140,8 +156,9 @@ namespace XBatteryStatus
                             }
                         }
                     }
-                    catch (Exception e) { //LogError(e);
-                                        }
+                    catch (Exception e)
+                    { //LogError(e);
+                    }
                 }
 
                 var newGamepads = foundGamepads.Except(pairedGamepads).ToList();
@@ -164,7 +181,7 @@ namespace XBatteryStatus
 
                 if (pairedGamepads.Count == 0)
                 {
-                    notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
+                    notifyIcon.Icon = GetIcon(-1, "!");
                     notifyIcon.Text = "XBatteryStatus: No paired controller with battery service found";
                 }
                 else
@@ -173,7 +190,7 @@ namespace XBatteryStatus
 
                     if (connectedGamepads.Count == 0)
                     {
-                        notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
+                        notifyIcon.Icon = GetIcon(-1, "!");
                         notifyIcon.Text = "XBatteryStatus: No controller is connected";
                     }
                     else
@@ -184,7 +201,7 @@ namespace XBatteryStatus
             }
             else
             {
-                notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
+                notifyIcon.Icon = GetIcon(-1, "!");
                 notifyIcon.Text = "XBatteryStatus: Bluetooth is turned off";
             }
 
@@ -230,7 +247,7 @@ namespace XBatteryStatus
 
         public void Update()
         {
-            bool enabled = bluetoothRadio?.State == RadioState.On && connectedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected;
+            bool enabled = (bluetoothRadio?.State == RadioState.On && connectedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected) || HideTimeoutTimer.Enabled;
             notifyIcon.Visible = Properties.Settings.Default.hide ? enabled : true;
             if (enabled)
             {
@@ -250,19 +267,8 @@ namespace XBatteryStatus
                     int val = reader.ReadByte();
                     string notify = val.ToString() + "% - " + connectedGamepad.Name;
                     notifyIcon.Text = "XBatteryStatus: " + notify;
-                    Icon icon = Properties.Resources.icon100;
-                    if (val < 5) icon = Properties.Resources.icon00;
-                    else if (val < 15) icon = Properties.Resources.icon10;
-                    else if (val < 25) icon = Properties.Resources.icon20;
-                    else if (val < 35) icon = Properties.Resources.icon30;
-                    else if (val < 45) icon = Properties.Resources.icon40;
-                    else if (val < 55) icon = Properties.Resources.icon50;
-                    else if (val < 65) icon = Properties.Resources.icon60;
-                    else if (val < 75) icon = Properties.Resources.icon70;
-                    else if (val < 85) icon = Properties.Resources.icon80;
-                    else if (val < 95) icon = Properties.Resources.icon90;
 
-                    notifyIcon.Icon = GetIcon(icon);
+                    notifyIcon.Icon = GetIcon(val);
 
                     if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
                     {
@@ -290,6 +296,7 @@ namespace XBatteryStatus
             else if (sender == themeButton.DropDownItems[2]) { Properties.Settings.Default.theme = 2; }
             else { Properties.Settings.Default.theme = 0; }
             Properties.Settings.Default.Save();
+            Update();
             UpdateThemeButton();
         }
 
@@ -331,6 +338,25 @@ namespace XBatteryStatus
             Update();
         }
 
+        private void HideTimeout()
+        {
+            HideTimeoutTimer.Stop();
+            Update();
+        }
+
+        private void NumbersClicked(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.numbers = !Properties.Settings.Default.numbers;
+            Properties.Settings.Default.Save();
+            UpdateNumbersButton();
+        }
+
+        private void UpdateNumbersButton()
+        {
+            numbersButton.Checked = Properties.Settings.Default.numbers;
+            Update();
+        }
+
         public bool IsLightMode()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
@@ -349,31 +375,137 @@ namespace XBatteryStatus
             return true;
         }
 
-        public Icon GetIcon(Icon darkModeIcon)
+        public Icon GetIcon(int val, string s = "")
         {
-            if ((Properties.Settings.Default.theme == 0 && !lightMode) || Properties.Settings.Default.theme == 1)
+            var icon = Properties.Resources.icon00;
+
+            if (val >= 0)
             {
-                return darkModeIcon;
+                if (Properties.Settings.Default.numbers)
+                {
+                    if (val >= 100) val = 99;
+
+                    AddDigit(icon, DigitToBitmap(val / 10), false);
+                    AddDigit(icon, DigitToBitmap(val % 10), true);
+                }
+                else
+                {
+                    AddPercentage(icon, val);
+                }
             }
             else
             {
-                using (Bitmap bitmap = darkModeIcon.ToBitmap())
+                if (s == "!")
                 {
-
-                    for (int y = 0; y < bitmap.Height; y++)
-                    {
-                        for (int x = 0; x < bitmap.Width; x++)
-                        {
-                            Color pixelColor = bitmap.GetPixel(x, y);
-                            Color invertedColor = Color.FromArgb(pixelColor.A, 255 - pixelColor.R, 255 - pixelColor.G, 255 - pixelColor.B);
-                            bitmap.SetPixel(x, y, invertedColor);
-                        }
-                    }
-
-                    IntPtr Hicon = bitmap.GetHicon();
-                    return Icon.FromHandle(Hicon);
+                    AddSymbol(icon, Properties.Resources.symbolE);
+                }
+                else if (s == "?")
+                {
+                    AddSymbol(icon, Properties.Resources.symbolQ);
                 }
             }
+
+            if ((Properties.Settings.Default.theme == 0 && !lightMode) || Properties.Settings.Default.theme == 1)
+            {
+                IntPtr Hicon = icon.GetHicon();
+                return Icon.FromHandle(Hicon);
+            }
+            else
+            {
+                IntPtr Hicon = InvertBitmap(icon).GetHicon();
+                return Icon.FromHandle(Hicon);
+            }
+        }
+
+        public Bitmap DigitToBitmap(int digit)
+        {
+            return digit switch
+            {
+                0 => Properties.Resources.number0,
+                1 => Properties.Resources.number1,
+                2 => Properties.Resources.number2,
+                3 => Properties.Resources.number3,
+                4 => Properties.Resources.number4,
+                5 => Properties.Resources.number5,
+                6 => Properties.Resources.number6,
+                7 => Properties.Resources.number7,
+                8 => Properties.Resources.number8,
+                9 => Properties.Resources.number9,
+                _ => Properties.Resources.number0
+            };
+        }
+
+        public Bitmap AddDigit(Bitmap bitmap, Bitmap number, bool bottom)
+        {
+            int x_start = 21;
+            int y_start = bottom ? 17 : 6;
+
+            for (int y = 0; y < number.Height; y++)
+            {
+                for (int x = 0; x < number.Width; x++)
+                {
+                    Color pixelColor = number.GetPixel(x, y);
+                    if (pixelColor.A > 0)
+                    {
+                        bitmap.SetPixel(x + x_start, y + y_start, pixelColor);
+                    }
+                }
+            }
+
+            return bitmap;
+        }
+
+        public Bitmap AddPercentage(Bitmap bitmap, int val)
+        {
+            int y_start = 7 + (int)((100 - val) / 5.0 + 0.5);
+
+            for (int y = y_start; y < 27; y++)
+            {
+                for (int x = 20; x < 28; x++)
+                {
+                    Color pixelColor = Color.FromArgb(255, 255, 255, 255);
+                    if (pixelColor.A > 0)
+                    {
+                        bitmap.SetPixel(x, y, pixelColor);
+                    }
+                }
+            }
+
+            return bitmap;
+        }
+
+        public Bitmap AddSymbol(Bitmap bitmap, Bitmap symbol)
+        {
+            int x_start = 19;
+            int y_start = 6;
+
+            for (int y = 0; y < symbol.Height; y++)
+            {
+                for (int x = 0; x < symbol.Width; x++)
+                {
+                    Color pixelColor = symbol.GetPixel(x, y);
+                    if (pixelColor.A > 0)
+                    {
+                        bitmap.SetPixel(x + x_start, y + y_start, pixelColor);
+                    }
+                }
+            }
+
+            return bitmap;
+        }
+
+        public Bitmap InvertBitmap(Bitmap bitmap)
+        {
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    Color pixelColor = bitmap.GetPixel(x, y);
+                    Color invertedColor = Color.FromArgb(pixelColor.A, 255 - pixelColor.R, 255 - pixelColor.G, 255 - pixelColor.B);
+                    bitmap.SetPixel(x, y, invertedColor);
+                }
+            }
+            return bitmap;
         }
 
         private void VersionClicked(object sender, EventArgs e)
