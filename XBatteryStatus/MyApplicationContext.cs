@@ -1,6 +1,8 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -25,8 +27,10 @@ namespace XBatteryStatus
         private ToolStripMenuItem hideButton;
 
         private Timer timer1;
+        private Timer timer2;
 
-        public BluetoothLEDevice pairedGamepad;
+        public List<BluetoothLEDevice> pairedGamepads = new List<BluetoothLEDevice>();
+        public BluetoothLEDevice connectedGamepad;
         public GattCharacteristic batteryCharacteristic;
         public Radio bluetoothRadio;
 
@@ -56,21 +60,6 @@ namespace XBatteryStatus
             ToolStripMenuItem exitButton = new ToolStripMenuItem("Exit", null, new EventHandler(ExitClicked));
             contextMenu.Items.Add(exitButton);
             notifyIcon.ContextMenuStrip = contextMenu;
-
-            var radios = Radio.GetRadiosAsync().GetResults();
-            bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
-            if (bluetoothRadio != null)
-            {
-                bluetoothRadio.StateChanged += BluetoothRadio_StateChanged;
-            }
-
-
-            FindBleController();
-
-            timer1 = new Timer();
-            timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = 10000;
-            timer1.Start();
 
             try
             {
@@ -105,14 +94,35 @@ namespace XBatteryStatus
                 }
             }
             catch { }
-        }
 
+
+            var radios = Radio.GetRadiosAsync().GetResults();
+            bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
+            if (bluetoothRadio != null)
+            {
+                bluetoothRadio.StateChanged += BluetoothRadio_StateChanged;
+            }
+
+
+            FindBleController();
+
+            timer1 = new Timer();
+            timer1.Tick += new EventHandler((x, y) => Update());
+            timer1.Interval = 10000;
+            timer1.Start();
+
+            timer2 = new Timer();
+            timer2.Tick += new EventHandler((x, y) => FindBleController());
+            timer2.Interval = 60000;
+            timer2.Start();
+        }
 
         async private void FindBleController()
         {
             if (bluetoothRadio?.State == RadioState.On)
             {
-                int count = 0;
+                List<BluetoothLEDevice> foundGamepads = new List<BluetoothLEDevice>();
+
                 foreach (var device in await DeviceInformation.FindAllAsync())
                 {
                     try
@@ -126,35 +136,58 @@ namespace XBatteryStatus
 
                             if (service != null && characteristic != null)//get the gamepads with battery status
                             {
-                                bleDevice.ConnectionStatusChanged -= ConnectionStatusChanged;
-                                bleDevice.ConnectionStatusChanged += ConnectionStatusChanged;
-                                count++;
-                                if (bleDevice.ConnectionStatus == BluetoothConnectionStatus.Connected)
-                                {
-                                    ConnectGamepad(bleDevice);
-                                }
+                                foundGamepads.Add(bleDevice);
                             }
                         }
                     }
                     catch { }
                 }
 
-                if (count == 0)
+                var newGamepads = foundGamepads.Except(pairedGamepads).ToList();
+                var removedGamepads = pairedGamepads.Except(foundGamepads).ToList();
+
+                foreach(var gamepad in newGamepads)
+                {
+                    gamepad.ConnectionStatusChanged += ConnectionStatusChanged;
+                }
+
+                foreach (var gamepad in removedGamepads)
+                {
+                    if (gamepad != null)
+                    {
+                        gamepad.ConnectionStatusChanged -= ConnectionStatusChanged;
+                    }
+                }
+
+                pairedGamepads = foundGamepads;
+
+                if (pairedGamepads.Count == 0)
                 {
                     notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
                     notifyIcon.Text = "XBatteryStatus: No paired controller with battery service found";
                 }
                 else
                 {
-                    Update();
+                    var connectedGamepads = pairedGamepads.Where(x => x.ConnectionStatus == BluetoothConnectionStatus.Connected).ToList();
+
+                    if (connectedGamepads.Count == 0)
+                    {
+                        notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
+                        notifyIcon.Text = "XBatteryStatus: No controller is connected";
+                    }
+                    else
+                    {
+                        ConnectGamepad(connectedGamepads.First());
+                    }
                 }
             }
             else
             {
                 notifyIcon.Icon = GetIcon(Properties.Resources.iconE);
                 notifyIcon.Text = "XBatteryStatus: Bluetooth is turned off";
-                Update();
             }
+
+            Update();
         }
 
         private void BluetoothRadio_StateChanged(Radio sender, object args)
@@ -168,15 +201,15 @@ namespace XBatteryStatus
             {
                 ConnectGamepad(sender);
             }
-            else if (sender == pairedGamepad)
+            else if (sender == connectedGamepad)
             {
-                Update();
+                FindBleController();//another controller might be connected
             }
         }
 
         public void ConnectGamepad(BluetoothLEDevice device)
         {
-            if (pairedGamepad == null || pairedGamepad.ConnectionStatus == BluetoothConnectionStatus.Disconnected)
+            if (connectedGamepad == null || connectedGamepad.ConnectionStatus == BluetoothConnectionStatus.Disconnected)
             {
                 try
                 {
@@ -185,7 +218,7 @@ namespace XBatteryStatus
 
                     if (service != null && characteristic != null)
                     {
-                        pairedGamepad = device;
+                        connectedGamepad = device;
                         batteryCharacteristic = characteristic;
                         Update();
                     }
@@ -194,14 +227,9 @@ namespace XBatteryStatus
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            Update();
-        }
-
         public void Update()
         {
-            bool enabled = bluetoothRadio?.State == RadioState.On && pairedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected;
+            bool enabled = bluetoothRadio?.State == RadioState.On && connectedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected;
             notifyIcon.Visible = Properties.Settings.Default.hide ? enabled : true;
             if (enabled)
             {
@@ -211,7 +239,7 @@ namespace XBatteryStatus
 
         private async void ReadBattery()
         {
-            if (pairedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected && batteryCharacteristic != null)
+            if (connectedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected && batteryCharacteristic != null)
             {
                 GattReadResult result = await batteryCharacteristic.ReadValueAsync();
 
@@ -219,7 +247,7 @@ namespace XBatteryStatus
                 {
                     var reader = DataReader.FromBuffer(result.Value);
                     int val = reader.ReadByte();
-                    string notify = val.ToString() + "% - " + pairedGamepad.Name;
+                    string notify = val.ToString() + "% - " + connectedGamepad.Name;
                     notifyIcon.Text = "XBatteryStatus: " + notify;
                     Icon icon = Properties.Resources.icon100;
                     if (val < 5) icon = Properties.Resources.icon00;
