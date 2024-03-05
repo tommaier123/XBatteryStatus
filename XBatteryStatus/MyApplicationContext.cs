@@ -18,7 +18,7 @@ namespace XBatteryStatus
 {
     public class MyApplicationContext : ApplicationContext
     {
-        private string version = "V1.2.1";
+        private string version = "V1.3.0";
         private string releaseUrl = @"https://github.com/tommaier123/XBatteryStatus/releases";
 
         NotifyIcon notifyIcon = new NotifyIcon();
