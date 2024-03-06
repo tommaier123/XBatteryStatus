@@ -17,7 +17,7 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 * Support for multiple paired controllers (but only one connected at a time)
 * Tray icon will hide itself when no controller is connected
 * Support for Windows light mode and dark mode
-* Update notifications for new versions
+* Update notifications for new versions with an automatic update option
 
 ## Installation via Installer
 * Download the [latest release](https://github.com/tommaier123/XBatteryStatus/releases/latest)
