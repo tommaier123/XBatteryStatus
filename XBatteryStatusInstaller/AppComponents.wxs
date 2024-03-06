@@ -1,0 +1,9 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Fragment>
+		<ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
+			<Component>
+				<File Source="..\XBatteryStatus\bin\Release\publish\XBatteryStatus.exe" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
