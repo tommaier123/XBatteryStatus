@@ -5,20 +5,22 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Security.Policy;
+using System.Net;
 using System.Windows.Forms;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Radios;
+using Windows.Foundation.Collections;
 using Windows.Storage.Streams;
 
 namespace XBatteryStatus
 {
     public class MyApplicationContext : ApplicationContext
     {
-        private string version = "V1.3.0";
+        private string version = "V1.3.1";
         private string releaseUrl = @"https://github.com/tommaier123/XBatteryStatus/releases";
 
         NotifyIcon notifyIcon = new NotifyIcon();
@@ -96,12 +98,45 @@ namespace XBatteryStatus
                         Properties.Settings.Default.reminderCount++;
                         Properties.Settings.Default.Save();
 
+                        ToastNotificationManagerCompat.OnActivated += toastArgs =>
+                        {
+                            ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
+                            ValueSet userInput = toastArgs.UserInput;
+
+                            if(args.ToString() == "action=update")
+                            {
+                                ToastNotificationManagerCompat.Uninstall();
+                                ToastNotificationManagerCompat.History.Clear();
+
+                                if (File.Exists("XBatteryStatus.msi"))
+                                {
+                                    File.Delete("XBatteryStatus.msi");
+                                }
+
+                                using (var client = new WebClient())
+                                {
+                                    client.DownloadFile(latest.Assets.Where(x=>x.BrowserDownloadUrl.EndsWith(".msi")).First().BrowserDownloadUrl, "XBatteryStatus.msi");
+                                }
+
+                                Process process = new Process();
+                                process.StartInfo.FileName = "msiexec";
+                                process.StartInfo.Arguments = " /i XBatteryStatus.msi /qr";
+                                process.StartInfo.Verb = "runas";
+                                process.Start();
+
+                                Exit();
+                            }
+                        };
+
                         new ToastContentBuilder()
                         .AddText("XBatteryStatus")
                         .AddText("New Version Available on GitHub")
                         .AddButton(new ToastButton()
                                 .SetContent("Download")
                                 .SetProtocolActivation(new Uri(releaseUrl)))
+                        .AddButton(new ToastButton()
+                                .SetContent("Update")
+                                .AddArgument("action", "update"))
                         .AddButton(new ToastButton()
                                 .SetContent("Dismiss")
                                 .SetDismissActivation())
@@ -282,12 +317,15 @@ namespace XBatteryStatus
 
         private void ExitClicked(object sender, EventArgs e)
         {
-            Application.Exit();
+            Exit();
         }
 
-        private void OnApplicationExit(object sender, EventArgs e)
+        private void Exit()
         {
             notifyIcon.Visible = false;
+            ToastNotificationManagerCompat.Uninstall();
+            ToastNotificationManagerCompat.History.Clear();
+            Application.Exit();
         }
 
         private void ThemeClicked(object sender, EventArgs e)
