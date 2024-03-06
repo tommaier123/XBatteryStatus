@@ -20,7 +20,7 @@ namespace XBatteryStatus
 {
     public class MyApplicationContext : ApplicationContext
     {
-        private string version = "V1.3.1";
+        private string version = "V1.3.2";
         private string releaseUrl = @"https://github.com/tommaier123/XBatteryStatus/releases";
 
         NotifyIcon notifyIcon = new NotifyIcon();
@@ -103,24 +103,31 @@ namespace XBatteryStatus
                             ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
                             ValueSet userInput = toastArgs.UserInput;
 
-                            if(args.ToString() == "action=update")
+                            if (args.ToString() == "action=update")
                             {
                                 ToastNotificationManagerCompat.Uninstall();
                                 ToastNotificationManagerCompat.History.Clear();
 
-                                if (File.Exists("XBatteryStatus.msi"))
+                                string path = Path.Combine(Path.GetTempPath(), "XBatteryStatus", "XBatteryStatus.msi");
+
+                                if(!Directory.Exists(Path.GetDirectoryName(path)))
                                 {
-                                    File.Delete("XBatteryStatus.msi");
+                                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                                }
+
+                                if (File.Exists(path))
+                                {
+                                    File.Delete(path);
                                 }
 
                                 using (var client = new WebClient())
                                 {
-                                    client.DownloadFile(latest.Assets.Where(x=>x.BrowserDownloadUrl.EndsWith(".msi")).First().BrowserDownloadUrl, "XBatteryStatus.msi");
+                                    client.DownloadFile(latest.Assets.Where(x => x.BrowserDownloadUrl.EndsWith(".msi")).First().BrowserDownloadUrl, path);
                                 }
 
                                 Process process = new Process();
                                 process.StartInfo.FileName = "msiexec";
-                                process.StartInfo.Arguments = " /i XBatteryStatus.msi /qr";
+                                process.StartInfo.Arguments = " /i " + path + " /qr";
                                 process.StartInfo.Verb = "runas";
                                 process.Start();
 
