@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /XBatteryStatus-cache
 /XBatteryStatus-SetupFiles
 /Installer/XBatteryStatus-cache
+/Installer/XBatteryStatus-x64_Release-SetupFiles/XBatteryStatus-x64.msixupload
+/Installer/XBatteryStatus-x64_Release-SetupFiles/XBatteryStatus.msi
