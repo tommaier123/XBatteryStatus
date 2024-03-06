@@ -20,25 +20,24 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 * Update notifications for new versions
 
 ## Installation via Installer
-* Install the [.NET 5 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/5.0)
 * Download the [latest release](https://github.com/tommaier123/XBatteryStatus/releases/latest)
-* Run the XBatteryStatusInstaller.msi
+* Run the XBatteryStatus.msi
 
 ## Installation via Winget
 * ```winget install Nova_Max.XBatteryStatus```
-* .net Desktop Runtime will be installed automatically
 * Run XBatteryStatus
 
 ## Updating
-(When a new version is released you will get notified only three times)
-* Stop XBatteryStatus by rightclicking on the icon and selecting "Exit" (optinal but speeds up installation)
-* Download the [latest release](https://github.com/tommaier123/XBatteryStatus/releases/latest)
-* Run the install.msi
+* When a new version is released you will get notified three times
+* Either manually download and install the latest version
+* Or click on update to install it automatically
 
-## Setup
-* After pairing a new controller you need to stop and restart XBatteryStatus or turn off and on Bluetooth
-* This needs to be done only once after pairing after that everything will work automatically
 
 ## Settings
 * Theme: Override for automatic light/dark theme detection
 * Auto Hide: When enabled the tray icon will hide itself when no controller is connected
+* Numeric: Turn on the numeric display
+
+
+##
+Powered by Advanced Installer
