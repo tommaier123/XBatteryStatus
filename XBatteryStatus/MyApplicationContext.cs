@@ -32,6 +32,7 @@ namespace XBatteryStatus
         private Timer UpdateTimer;
         private Timer DiscoverTimer;
         private Timer HideTimeoutTimer;
+        private Timer SoftwareUpdateTimer;
 
         public List<BluetoothLEDevice> pairedGamepads = new List<BluetoothLEDevice>();
         public BluetoothLEDevice connectedGamepad;
@@ -48,6 +49,11 @@ namespace XBatteryStatus
             HideTimeoutTimer.Tick += new EventHandler((x, y) => HideTimeout());
             HideTimeoutTimer.Interval = 10000;
             HideTimeoutTimer.Start();
+
+            SoftwareUpdateTimer = new Timer();
+            SoftwareUpdateTimer.Tick += new EventHandler((x, y) => { HideTimeoutTimer.Stop(); CheckSoftwareUpdate(); });
+            SoftwareUpdateTimer.Interval = 30000;
+            SoftwareUpdateTimer.Start();
 
             lightMode = IsLightMode();
             notifyIcon.Icon = GetIcon(-1, "?");
@@ -79,6 +85,29 @@ namespace XBatteryStatus
 
             notifyIcon.ContextMenuStrip = contextMenu;
 
+            var radios = Radio.GetRadiosAsync().GetResults();
+            bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
+            if (bluetoothRadio != null)
+            {
+                bluetoothRadio.StateChanged += BluetoothRadio_StateChanged;
+            }
+
+
+            FindBleController();
+
+            UpdateTimer = new Timer();
+            UpdateTimer.Tick += new EventHandler((x, y) => Update());
+            UpdateTimer.Interval = 10000;
+            UpdateTimer.Start();
+
+            DiscoverTimer = new Timer();
+            DiscoverTimer.Tick += new EventHandler((x, y) => FindBleController());
+            DiscoverTimer.Interval = 60000;
+            DiscoverTimer.Start();
+        }
+
+        private void CheckSoftwareUpdate()
+        {
             try
             {
                 Octokit.GitHubClient github = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("XBatteryStatus"));
@@ -110,7 +139,7 @@ namespace XBatteryStatus
 
                                 string path = Path.Combine(Path.GetTempPath(), "XBatteryStatus", "XBatteryStatus.msi");
 
-                                if(!Directory.Exists(Path.GetDirectoryName(path)))
+                                if (!Directory.Exists(Path.GetDirectoryName(path)))
                                 {
                                     Directory.CreateDirectory(Path.GetDirectoryName(path));
                                 }
@@ -152,27 +181,6 @@ namespace XBatteryStatus
                 }
             }
             catch (Exception e) { LogError(e); }
-
-
-            var radios = Radio.GetRadiosAsync().GetResults();
-            bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
-            if (bluetoothRadio != null)
-            {
-                bluetoothRadio.StateChanged += BluetoothRadio_StateChanged;
-            }
-
-
-            FindBleController();
-
-            UpdateTimer = new Timer();
-            UpdateTimer.Tick += new EventHandler((x, y) => Update());
-            UpdateTimer.Interval = 10000;
-            UpdateTimer.Start();
-
-            DiscoverTimer = new Timer();
-            DiscoverTimer.Tick += new EventHandler((x, y) => FindBleController());
-            DiscoverTimer.Interval = 60000;
-            DiscoverTimer.Start();
         }
 
         async private void FindBleController()
