@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="21.5" Modules="professional" RootPath="." Language="en" Id="{4B1838EB-C72B-4362-8B22-8606D203FD19}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="21.5.1" Modules="professional" RootPath="." Language="en" Id="{4B1838EB-C72B-4362-8B22-8606D203FD19}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="Application_AssetGenDestFolderPath" Value="Generated Assets" ValueType="1"/>
     <ROW Name="Application_AssetGenScalingMode" Value="2"/>
@@ -189,9 +189,9 @@
     <ROW XmlAttribute="Category" XmlElement="Extension" Name="Category" Flags="0" Order="0" Value="windows.appExecutionAlias"/>
     <ROW XmlAttribute="Category_1" XmlElement="Extension_1" Name="Category" Flags="0" Order="0" Value="windows.desktopAppMigration"/>
     <ROW XmlAttribute="Category_2" XmlElement="Extension_2" Name="Category" Flags="0" Order="0" Value="windows.startupTask"/>
-    <ROW XmlAttribute="Description" XmlElement="VisualElements" Name="Description" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="DisplayName" XmlElement="VisualElements" Name="DisplayName" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="DisplayName_1" XmlElement="StartupTask" Name="DisplayName" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
+    <ROW XmlAttribute="Description" XmlElement="VisualElements" Name="Description" Flags="0" Order="0" Value="XBatteryStatus"/>
+    <ROW XmlAttribute="DisplayName" XmlElement="VisualElements" Name="DisplayName" Flags="0" Order="0" Value="XBatteryStatus"/>
+    <ROW XmlAttribute="DisplayName_1" XmlElement="StartupTask" Name="DisplayName" Flags="0" Order="0" Value="XBatteryStatus"/>
     <ROW XmlAttribute="Enabled" XmlElement="StartupTask" Name="Enabled" Flags="0" Order="0" Value="true"/>
     <ROW XmlAttribute="EntryPoint" XmlElement="Application" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
     <ROW XmlAttribute="EntryPoint_1" XmlElement="Extension_1" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
@@ -225,6 +225,10 @@
     <ROW XmlAttribute="SecondaryButtonMode" XmlElement="Buttons" Name="SecondaryButtonMode" Flags="0" Order="0" Value="normal"/>
     <ROW XmlAttribute="ShortcutPath" XmlElement="DesktopApp" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.exe.lnk"/>
     <ROW XmlAttribute="ShortcutPath_1" XmlElement="DesktopApp_1" Name="ShortcutPath" Flags="0" Order="0" Value="%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.exe.lnk"/>
+    <ROW XmlAttribute="ShortcutPath_2" XmlElement="DesktopApp_2" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatu.lnk"/>
+    <ROW XmlAttribute="ShortcutPath_3" XmlElement="DesktopApp_3" Name="ShortcutPath" Flags="0" Order="0" Value="%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatu.lnk"/>
+    <ROW XmlAttribute="ShortcutPath_4" XmlElement="DesktopApp_4" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.lnk"/>
+    <ROW XmlAttribute="ShortcutPath_5" XmlElement="DesktopApp_5" Name="ShortcutPath" Flags="0" Order="0" Value="%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.lnk"/>
     <ROW XmlAttribute="Size" XmlElement="Icon" Name="Size" Flags="0" Order="0" Value="default"/>
     <ROW XmlAttribute="Square150x150Logo" XmlElement="VisualElements" Name="Square150x150Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare150x150Logo.scale100.png"/>
     <ROW XmlAttribute="Square310x310Logo" XmlElement="DefaultTile" Name="Square310x310Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare310x310Logo.scale100.png"/>
@@ -254,6 +258,10 @@
     <ROW XmlElement="DesktopApp" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="1" Flags="0" Type="0"/>
     <ROW XmlElement="DesktopAppMigration" ParentElement="Extension_1" Name="DesktopAppMigration" Order="1" Flags="0" Type="0"/>
     <ROW XmlElement="DesktopApp_1" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="DesktopApp_2" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="DesktopApp_3" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="DesktopApp_4" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="5" Flags="0" Type="0"/>
+    <ROW XmlElement="DesktopApp_5" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="6" Flags="0" Type="0"/>
     <ROW XmlElement="DeviceCapability" ParentElement="Capabilities" Name="DeviceCapability" Order="1" Flags="0" Type="0"/>
     <ROW XmlElement="DisplayName" ParentElement="Properties" Name="DisplayName" Order="2" Flags="0" Text="XBatteryStatus" Type="0"/>
     <ROW XmlElement="ExecutionAlias" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="1" Flags="0" Type="0"/>
@@ -299,6 +307,7 @@
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="file_deleter.ps1" SourcePath="&lt;AI_SCRIPTS&gt;file_deleter.ps1"/>
     <ROW Name="viewer.exe" SourcePath="&lt;AI_CUSTACTS&gt;viewer.exe" DigSign="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
@@ -440,8 +449,8 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="XBatteryStatus.exe" Directory_="SHORTCUTDIR" Name="XBATTE~1.EXE|XBatteryStatus.exe" Component_="XBatteryStatus.exe" Target="[#XBatteryStatus.exe]" Description="XBatteryStatus.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="XBatteryStatus.exe_1" Directory_="StartupFolder" Name="XBATTE~1.EXE|XBatteryStatus.exe" Component_="XBatteryStatus.exe" Target="[#XBatteryStatus.exe]" Description="XBatteryStatus.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="XBatteryStatus.exe" Directory_="SHORTCUTDIR" Name="XBATTE~2|XBatteryStatus" Component_="XBatteryStatus.exe" Target="[#XBatteryStatus.exe]" Description="XBatteryStatus" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="XBatteryStatus.exe_1" Directory_="StartupFolder" Name="XBATTE~1|XBatteryStatus" Component_="XBatteryStatus.exe" Target="[#XBatteryStatus.exe]" Description="XBatteryStatus" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
