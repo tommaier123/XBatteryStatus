@@ -27,6 +27,9 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 * ```winget install Nova_Max.XBatteryStatus```
 * Run XBatteryStatus
 
+## Requirements
+* [.NET 5 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/5.0) (automatically installed)
+
 ## Updating
 * When a new version is released you will get notified three times
 * Either manually download and install the latest version
