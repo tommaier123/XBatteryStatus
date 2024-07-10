@@ -181,7 +181,11 @@ namespace XBatteryStatus
                 }
                 UpdateTimer.Stop();
             }
-            catch (Exception e) { LogError(e); }
+            catch (Exception e)
+            {
+                SoftwareUpdateTimer.Interval = 90 * 60000;
+                LogError(e);
+            }
         }
 
         async private void FindBleController()
