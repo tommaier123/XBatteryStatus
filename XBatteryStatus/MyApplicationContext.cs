@@ -51,7 +51,7 @@ namespace XBatteryStatus
             HideTimeoutTimer.Start();
 
             SoftwareUpdateTimer = new Timer();
-            SoftwareUpdateTimer.Tick += new EventHandler((x, y) => { HideTimeoutTimer.Stop(); CheckSoftwareUpdate(); });
+            SoftwareUpdateTimer.Tick += new EventHandler((x, y) => { CheckSoftwareUpdate(); });
             SoftwareUpdateTimer.Interval = 30000;
             SoftwareUpdateTimer.Start();
 
@@ -179,6 +179,7 @@ namespace XBatteryStatus
                         .Show();
                     }
                 }
+                UpdateTimer.Stop();
             }
             catch (Exception e) { LogError(e); }
         }
