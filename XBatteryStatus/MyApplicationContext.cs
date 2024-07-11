@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
@@ -56,7 +57,7 @@ namespace XBatteryStatus
             SoftwareUpdateTimer.Start();
 
             lightMode = IsLightMode();
-            notifyIcon.Icon = GetIcon(-1, "?");
+            SetIcon(-1, "?");
             notifyIcon.Text = "XBatteryStatus: Looking for paired controller";
             notifyIcon.Visible = true;
 
@@ -236,7 +237,7 @@ namespace XBatteryStatus
 
                 if (pairedGamepads.Count == 0)
                 {
-                    notifyIcon.Icon = GetIcon(-1, "!");
+                    SetIcon(-1, "!");
                     notifyIcon.Text = "XBatteryStatus: No paired controller with battery service found";
                 }
                 else
@@ -245,7 +246,7 @@ namespace XBatteryStatus
 
                     if (connectedGamepads.Count == 0)
                     {
-                        notifyIcon.Icon = GetIcon(-1, "!");
+                        SetIcon(-1, "!");
                         notifyIcon.Text = "XBatteryStatus: No controller is connected";
                     }
                     else
@@ -256,7 +257,7 @@ namespace XBatteryStatus
             }
             else
             {
-                notifyIcon.Icon = GetIcon(-1, "!");
+                SetIcon(-1, "!");
                 notifyIcon.Text = "XBatteryStatus: Bluetooth is turned off";
             }
 
@@ -323,7 +324,7 @@ namespace XBatteryStatus
                     string notify = val.ToString() + "% - " + connectedGamepad.Name;
                     notifyIcon.Text = "XBatteryStatus: " + notify;
 
-                    notifyIcon.Icon = GetIcon(val);
+                    SetIcon(val);
 
                     if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
                     {
@@ -431,6 +432,18 @@ namespace XBatteryStatus
             }
 
             return true;
+        }
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+        extern static bool DestroyIcon(IntPtr handle);
+
+        public void SetIcon(int val, string s = "")
+        {
+            if (notifyIcon.Icon != null)
+            {
+                DestroyIcon(notifyIcon.Icon.Handle);
+            }
+            notifyIcon.Icon = GetIcon(val, s);
         }
 
         public Icon GetIcon(int val, string s = "")
