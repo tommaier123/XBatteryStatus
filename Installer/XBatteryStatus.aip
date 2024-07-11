@@ -21,10 +21,10 @@
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/tommaier123/XBatteryStatus"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/tommaier123/XBatteryStatus/releases"/>
     <ROW Property="Manufacturer" Value="Nova_Max"/>
-    <ROW Property="ProductCode" Value="1033:{5E0FB4A6-A5E1-4BE0-930D-F34B64B592B6} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{38C08490-E237-4D5B-82C0-32EBE4DB2E76} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="XBatteryStatus"/>
-    <ROW Property="ProductVersion" Value="1.3.2" Options="32"/>
+    <ROW Property="ProductVersion" Value="1.3.4" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{93DDDD01-E50C-43CA-B3CB-EDF95BCEE958}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -56,15 +56,9 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="A9DBE469DEED46998DA553406739ED74" ComponentId="{A70B299E-1D39-4445-BC64-3C44D7316584}" Directory_="APPDIR" Attributes="260" KeyPath="A9DBE469DEED46998DA553406739ED74" Options="2"/>
     <ROW Component="APPDIR" ComponentId="{F405CF0A-C71D-4E39-A2E9-6953D0661FC9}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="Microsoft.Toolkit.Uwp.Notifications.dll" ComponentId="{7ECE13B9-9AB4-4D9C-9ACD-54CE518C9E65}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Toolkit.Uwp.Notifications.dll"/>
-    <ROW Component="Microsoft.Windows.SDK.NET.dll" ComponentId="{C78876F1-7B96-48C2-92D2-4B12E8D8C9A1}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Windows.SDK.NET.dll"/>
-    <ROW Component="Octokit.dll" ComponentId="{5D472972-9EE1-4426-8E1B-BA10B7348AB7}" Directory_="APPDIR" Attributes="0" KeyPath="Octokit.dll"/>
     <ROW Component="ProductInformation" ComponentId="{46644AA0-DF5A-46D4-A0D7-42A4EB2A769E}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0F6885D-225C-4B0F-963E-22EF909667EA}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="Store50x50Logo.scale100.png" ComponentId="{75FC1E3A-F24A-4FA5-BDB3-0AB167818E71}" Directory_="Assets" Attributes="0" KeyPath="Store50x50Logo.scale100.png" Type="0"/>
-    <ROW Component="WinRT.Runtime.dll" ComponentId="{F4358838-26F6-4C3E-8D86-838C16B9EA88}" Directory_="APPDIR" Attributes="0" KeyPath="WinRT.Runtime.dll"/>
-    <ROW Component="XBatteryStatus.dll" ComponentId="{73B7B72B-A2F5-47F7-AA0C-29084F109DA2}" Directory_="APPDIR" Attributes="256" KeyPath="XBatteryStatus.dll"/>
-    <ROW Component="XBatteryStatus.dll.config" ComponentId="{58AF43D0-AC0A-411F-B8D6-23BD92C04649}" Directory_="APPDIR" Attributes="0" KeyPath="XBatteryStatus.dll.config" Type="0"/>
     <ROW Component="XBatteryStatus.exe" ComponentId="{3429B614-4145-48D1-B9B8-F0EC2D4E022D}" Directory_="APPDIR" Attributes="256" KeyPath="XBatteryStatus.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
@@ -74,12 +68,7 @@
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="XBatteryStatus.exe" Component_="XBatteryStatus.exe" FileName="XBATTE~1.EXE|XBatteryStatus.exe" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\XBatteryStatus.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="XBatteryStatus.dll.config" Component_="XBatteryStatus.dll.config" FileName="XBATTE~1.CON|XBatteryStatus.dll.config" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\XBatteryStatus.dll.config" SelfReg="false"/>
-    <ROW File="XBatteryStatus.runtimeconfig.json" Component_="XBatteryStatus.dll.config" FileName="XBATTE~1.JSO|XBatteryStatus.runtimeconfig.json" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\XBatteryStatus.runtimeconfig.json" SelfReg="false"/>
-    <ROW File="XBatteryStatus.dll" Component_="XBatteryStatus.dll" FileName="XBATTE~1.DLL|XBatteryStatus.dll" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\XBatteryStatus.dll" SelfReg="false"/>
-    <ROW File="XBatteryStatus.deps.json" Component_="XBatteryStatus.dll.config" FileName="XBATTE~2.JSO|XBatteryStatus.deps.json" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\XBatteryStatus.deps.json" SelfReg="false"/>
-    <ROW File="XBatteryStatus.runtimeconfig.dev.json" Component_="XBatteryStatus.dll.config" FileName="XBATTE~3.JSO|XBatteryStatus.runtimeconfig.dev.json" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\XBatteryStatus.runtimeconfig.dev.json" SelfReg="false"/>
+    <ROW File="XBatteryStatus.exe" Component_="XBatteryStatus.exe" FileName="XBATTE~1.EXE|XBatteryStatus.exe" Attributes="0" SourcePath="..\XBatteryStatus\bin\Release\publish\XBatteryStatus.exe" SelfReg="false" DigSign="true"/>
     <ROW File="Store50x50Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~2.PNG|Store50x50Logo.scale-100.png" Attributes="0" SourcePath="..\Icons\png\icon.png" SelfReg="false"/>
     <ROW File="XBatteryStatus.exeSquare150x150Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~6.PNG|XBatteryStatus.exeSquare150x150Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare150x150Logo.scale-100.png" SelfReg="false"/>
     <ROW File="XBatteryStatus.exeSquare44x44Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~21.PNG|XBatteryStatus.exeSquare44x44Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.scale-100.png" SelfReg="false"/>
@@ -135,10 +124,6 @@
     <ROW File="XBatteryStatus.exeBadgeLogo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~48.PNG|XBatteryStatus.exeBadgeLogo.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-150.png" SelfReg="false"/>
     <ROW File="XBatteryStatus.exeBadgeLogo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~49.PNG|XBatteryStatus.exeBadgeLogo.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-200.png" SelfReg="false"/>
     <ROW File="XBatteryStatus.exeBadgeLogo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~50.PNG|XBatteryStatus.exeBadgeLogo.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-400.png" SelfReg="false"/>
-    <ROW File="Microsoft.Toolkit.Uwp.Notifications.dll" Component_="Microsoft.Toolkit.Uwp.Notifications.dll" FileName="MICROS~1.DLL|Microsoft.Toolkit.Uwp.Notifications.dll" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\Microsoft.Toolkit.Uwp.Notifications.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Windows.SDK.NET.dll" Component_="Microsoft.Windows.SDK.NET.dll" FileName="MICROS~2.DLL|Microsoft.Windows.SDK.NET.dll" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\Microsoft.Windows.SDK.NET.dll" SelfReg="false"/>
-    <ROW File="Octokit.dll" Component_="Octokit.dll" FileName="Octokit.dll" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\Octokit.dll" SelfReg="false"/>
-    <ROW File="WinRT.Runtime.dll" Component_="WinRT.Runtime.dll" FileName="WINRTR~1.DLL|WinRT.Runtime.dll" Attributes="0" SourcePath="..\XBatteryStatus\bin\x64\Release\net5.0-windows10.0.19041.0\WinRT.Runtime.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppXCfgComponent">
     <ROW ID="Configuration" Order="1" ManifestFile="AppxManifest.xml" TargetOs="4" AutoUpdatesFrequency="0" AutoUpdatesOptions="0" ManifestBundleFile="AppxBundleManifest.xml"/>
@@ -235,7 +220,7 @@
     <ROW XmlAttribute="Square44x44Logo" XmlElement="VisualElements" Name="Square44x44Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare44x44Logo.scale100.png"/>
     <ROW XmlAttribute="Square71x71Logo" XmlElement="DefaultTile" Name="Square71x71Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare71x71Logo.scale100.png"/>
     <ROW XmlAttribute="TaskId" XmlElement="StartupTask" Name="TaskId" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.3.2.0"/>
+    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.3.4.0"/>
     <ROW XmlAttribute="Version_1" XmlElement="AppInstallerUX" Name="Version" Flags="0" Order="0" Value="1.0.0"/>
     <ROW XmlAttribute="Wide310x150Logo" XmlElement="DefaultTile" Name="Wide310x150Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeWide310x150Logo.scale100.png"/>
     <ROW XmlAttribute="xmlns" XmlElement="AppInstallerUX" Name="xmlns" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
@@ -381,15 +366,9 @@
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
     <ROW Feature_="MainFeature" Component_="XBatteryStatus.exe"/>
-    <ROW Feature_="MainFeature" Component_="XBatteryStatus.dll.config"/>
-    <ROW Feature_="MainFeature" Component_="XBatteryStatus.dll"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.Toolkit.Uwp.Notifications.dll"/>
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.Windows.SDK.NET.dll"/>
     <ROW Feature_="AiAppXAssets" Component_="Store50x50Logo.scale100.png"/>
     <ROW Feature_="A9DBE469DEED46998DA553406739ED74" Component_="A9DBE469DEED46998DA553406739ED74"/>
-    <ROW Feature_="MainFeature" Component_="Octokit.dll"/>
-    <ROW Feature_="MainFeature" Component_="WinRT.Runtime.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="icon.exe" SourcePath="..\Icons\ico\icon.ico" Index="0"/>
