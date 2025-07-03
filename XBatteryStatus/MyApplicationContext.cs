@@ -8,7 +8,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
@@ -21,7 +23,7 @@ namespace XBatteryStatus
 {
     public class MyApplicationContext : ApplicationContext
     {
-        private string version = "V1.3.4";
+        private string version = "V1.3.5";
         private string releaseUrl = @"https://github.com/tommaier123/XBatteryStatus/releases";
 
         NotifyIcon notifyIcon = new NotifyIcon();
@@ -107,6 +109,25 @@ namespace XBatteryStatus
             DiscoverTimer.Start();
         }
 
+        private async Task DownloadUpdateAsync(Octokit.Release latest, String path)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var downloadUrl = latest.Assets
+                    .Where(x => x.BrowserDownloadUrl.EndsWith(".msi"))
+                    .First()
+                    .BrowserDownloadUrl;
+
+                var response = await httpClient.GetAsync(downloadUrl);
+
+                response.EnsureSuccessStatusCode();
+
+                using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await response.Content.CopyToAsync(fs);
+                }
+            }
+        }
         private void CheckSoftwareUpdate()
         {
             try
@@ -150,10 +171,9 @@ namespace XBatteryStatus
                                     File.Delete(path);
                                 }
 
-                                using (var client = new WebClient())
-                                {
-                                    client.DownloadFile(latest.Assets.Where(x => x.BrowserDownloadUrl.EndsWith(".msi")).First().BrowserDownloadUrl, path);
-                                }
+
+                                DownloadUpdateAsync(latest, path).GetAwaiter().GetResult();
+
 
                                 Process process = new Process();
                                 process.StartInfo.FileName = "msiexec";
