@@ -122,6 +122,7 @@ namespace XBatteryStatus
 
                 response.EnsureSuccessStatusCode();
 
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
                 using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     await response.Content.CopyToAsync(fs);
