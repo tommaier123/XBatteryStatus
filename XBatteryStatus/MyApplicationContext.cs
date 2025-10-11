@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace XBatteryStatus
 {
     public class MyApplicationContext : ApplicationContext
     {
-        private string version = "V1.3.4";
+        private string version = "V1.3.5";
         private string releaseUrl = @"https://github.com/tommaier123/XBatteryStatus/releases";
 
         NotifyIcon notifyIcon = new NotifyIcon();
@@ -48,6 +47,14 @@ namespace XBatteryStatus
 
         public MyApplicationContext()
         {
+            if (Properties.Settings.Default.newInstall)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.newInstall = false;
+                Properties.Settings.Default.Save();
+            }
+
+
             HideTimeoutTimer = new Timer();
             HideTimeoutTimer.Tick += new EventHandler((x, y) => HideTimeout());
             HideTimeoutTimer.Interval = 10000;
@@ -136,7 +143,6 @@ namespace XBatteryStatus
                 Octokit.GitHubClient github = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("XBatteryStatus"));
                 var all = github.Repository.Release.GetAll("tommaier123", "XBatteryStatus").Result.Where(x => x.Prerelease == false).ToList();
                 var latest = all.OrderByDescending(x => Int32.Parse(x.TagName.Substring(1).Replace(".", ""))).FirstOrDefault();
-
                 if (latest != null && Int32.Parse(version.Substring(1).Replace(".", "")) < Int32.Parse(latest.TagName.Substring(1).Replace(".", "")))
                 {
                     if (Properties.Settings.Default.updateVersion != latest.TagName)
@@ -150,7 +156,7 @@ namespace XBatteryStatus
                         Properties.Settings.Default.reminderCount++;
                         Properties.Settings.Default.Save();
 
-                        ToastNotificationManagerCompat.OnActivated += toastArgs =>
+                        ToastNotificationManagerCompat.OnActivated += async toastArgs =>
                         {
                             ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
                             ValueSet userInput = toastArgs.UserInput;
@@ -172,9 +178,18 @@ namespace XBatteryStatus
                                     File.Delete(path);
                                 }
 
+                                using (var httpClient = new HttpClient())
+                                {
+                                    var msiAsset = latest.Assets.FirstOrDefault(x => x.BrowserDownloadUrl.EndsWith(".msi"));
+                                    if (msiAsset != null)
+                                    {
+                                        var response = await httpClient.GetAsync(msiAsset.BrowserDownloadUrl);
+                                        response.EnsureSuccessStatusCode();
 
-                                DownloadUpdateAsync(latest, path).GetAwaiter().GetResult();
-
+                                        await using var fileStream = new FileStream(path, FileMode.Create);
+                                        await response.Content.CopyToAsync(fileStream);
+                                    }
+                                }
 
                                 Process process = new Process();
                                 process.StartInfo.FileName = "msiexec";
@@ -334,27 +349,31 @@ namespace XBatteryStatus
 
         private async void ReadBattery()
         {
-            if (connectedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected && batteryCharacteristic != null)
+            try
             {
-                GattReadResult result = await batteryCharacteristic.ReadValueAsync();
-
-                if (result.Status == GattCommunicationStatus.Success)
+                if (connectedGamepad?.ConnectionStatus == BluetoothConnectionStatus.Connected && batteryCharacteristic != null)
                 {
-                    var reader = DataReader.FromBuffer(result.Value);
-                    int val = reader.ReadByte();
-                    string notify = val.ToString() + "% - " + connectedGamepad.Name;
-                    notifyIcon.Text = "XBatteryStatus: " + notify;
+                    GattReadResult result = await batteryCharacteristic.ReadValueAsync();
 
-                    SetIcon(val);
-
-                    if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
+                    if (result.Status == GattCommunicationStatus.Success)
                     {
-                        new ToastContentBuilder().AddText("Low Battery").AddText(notify)
-                            .Show();
+                        var reader = DataReader.FromBuffer(result.Value);
+                        int val = reader.ReadByte();
+                        string notify = val.ToString() + "% - " + connectedGamepad?.Name;
+                        notifyIcon.Text = "XBatteryStatus: " + notify;
+
+                        SetIcon(val);
+
+                        if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
+                        {
+                            new ToastContentBuilder().AddText("Low Battery").AddText(notify)
+                                .Show();
+                        }
+                        lastBattery = val;
                     }
-                    lastBattery = val;
                 }
             }
+            catch (Exception e) { LogError(e); }
         }
 
         private void ExitClicked(object sender, EventArgs e)

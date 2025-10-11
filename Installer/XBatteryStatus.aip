@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="21.5.1" Modules="professional" RootPath="." Language="en" Id="{4B1838EB-C72B-4362-8B22-8606D203FD19}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="23.1" Modules="professional" RootPath="." Language="en" Id="{4B1838EB-C72B-4362-8B22-8606D203FD19}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="Application_AssetGenDestFolderPath" Value="Generated Assets" ValueType="1"/>
     <ROW Name="Application_AssetGenScalingMode" Value="2"/>
@@ -8,7 +8,6 @@
     <ROW Name="AssetGenPkgDestFolderPath" Value="Generated Assets" ValueType="1"/>
     <ROW Name="AssetGenPkgScalingMode" Value="2"/>
     <ROW Name="AssetGenPkgSourceFilePath" Value="..\Icons\png\icon.png" ValueType="1"/>
-    <ROW Name="HiddenItems" Value="MsiDriverPackagesComponent;UserAccountsComponent;ScheduledTasksComponent;SqlConnectionComponent;AutorunComponent;FirewallExceptionComponent;GameUxComponent;MsiDirectEditorComponent;SharePointSlnComponent;SilverlightSlnComponent;MultipleInstancesComponent;SccmComponent;ActSyncAppComponent;CPLAppletComponent"/>
     <ROW Name="MigrationUninstallCode" Value="{93DDDD01-E50C-43CA-B3CB-EDF95BCEE958}"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
@@ -24,7 +23,7 @@
     <ROW Property="ProductCode" Value="1033:{38C08490-E237-4D5B-82C0-32EBE4DB2E76} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="XBatteryStatus"/>
-    <ROW Property="ProductVersion" Value="1.3.4" Options="32"/>
+    <ROW Property="ProductVersion" Value="1.3.5" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{93DDDD01-E50C-43CA-B3CB-EDF95BCEE958}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -54,7 +53,7 @@
     <ROW Component="ProductInformation" Value="{46644AA0-DF5A-46D4-A0D7-42A4EB2A769E}"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="A9DBE469DEED46998DA553406739ED74" ComponentId="{A70B299E-1D39-4445-BC64-3C44D7316584}" Directory_="APPDIR" Attributes="260" KeyPath="A9DBE469DEED46998DA553406739ED74" Options="2"/>
+    <ROW Component="A0BFC224E0E9125ADE0B2DBF343" ComponentId="{41899F58-9387-4766-84F1-F754649B76F8}" Directory_="APPDIR" Attributes="260" KeyPath="A0BFC224E0E9125ADE0B2DBF343" Options="2"/>
     <ROW Component="APPDIR" ComponentId="{F405CF0A-C71D-4E39-A2E9-6953D0661FC9}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ProductInformation" ComponentId="{46644AA0-DF5A-46D4-A0D7-42A4EB2A769E}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0F6885D-225C-4B0F-963E-22EF909667EA}" Directory_="SHORTCUTDIR" Attributes="0"/>
@@ -62,7 +61,7 @@
     <ROW Component="XBatteryStatus.exe" ComponentId="{3429B614-4145-48D1-B9B8-F0EC2D4E022D}" Directory_="APPDIR" Attributes="256" KeyPath="XBatteryStatus.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="A9DBE469DEED46998DA553406739ED74" Title=".NET Desktop Runtime 5.0.17 x64" Description=".NET Desktop Runtime 5.0.17 x64" Display="5" Level="1" Attributes="0"/>
+    <ROW Feature="A0BFC224E0E9125ADE0B2DBF343" Title=".NET Desktop Runtime 8.0.20 x64" Description=".NET Desktop Runtime 8.0.20 x64" Display="5" Level="1" Attributes="0"/>
     <ROW Feature="AiAppXAssets" Title="AiAppXAssets" Description="Description" Display="3" Level="0" Directory_="APPDIR" Attributes="0" Options="271" Builds="Build_MSIX"/>
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
@@ -220,7 +219,7 @@
     <ROW XmlAttribute="Square44x44Logo" XmlElement="VisualElements" Name="Square44x44Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare44x44Logo.scale100.png"/>
     <ROW XmlAttribute="Square71x71Logo" XmlElement="DefaultTile" Name="Square71x71Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare71x71Logo.scale100.png"/>
     <ROW XmlAttribute="TaskId" XmlElement="StartupTask" Name="TaskId" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.3.4.0"/>
+    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.3.5.0"/>
     <ROW XmlAttribute="Version_1" XmlElement="AppInstallerUX" Name="Version" Flags="0" Order="0" Value="1.0.0"/>
     <ROW XmlAttribute="Wide310x150Logo" XmlElement="DefaultTile" Name="Wide310x150Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeWide310x150Logo.scale100.png"/>
     <ROW XmlAttribute="xmlns" XmlElement="AppInstallerUX" Name="xmlns" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
@@ -282,9 +281,9 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
     <ROW Action="AI_DownloadPrereq" Description="Downloading prerequisite software" DescriptionLocId="ActionText.Description.AI_DownloadPrereq" Template="[1]" TemplateLocId="ActionText.Template.AI_DownloadPrereq"/>
     <ROW Action="AI_ExtractPrereq" Description="Extracting prerequisite software" DescriptionLocId="ActionText.Description.AI_ExtractPrereq" Template="[1]" TemplateLocId="ActionText.Template.AI_ExtractPrereq"/>
-    <ROW Action="AI_InstallPostPrerequisite" Description="Installing prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="[1]" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
-    <ROW Action="AI_InstallPrePrerequisite" Description="Installing prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="[1]" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
-    <ROW Action="AI_InstallPrerequisite" Description="Installing prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="[1]" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
+    <ROW Action="AI_InstallPostPrerequisite" Description="Configuring prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="[1]" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
+    <ROW Action="AI_InstallPrePrerequisite" Description="Configuring prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="[1]" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
+    <ROW Action="AI_InstallPrerequisite" Description="Configuring prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="[1]" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
     <ROW Action="AI_VerifyPrePrereq" Description="Verifying prerequisites" DescriptionLocId="ActionText.Description.AI_VerifyPrereq" Template="[1] was not installed correctly." TemplateLocId="ActionText.Template.AI_VerifyPrereq"/>
     <ROW Action="AI_VerifyPrereq" Description="Verifying prerequisites" DescriptionLocId="ActionText.Description.AI_VerifyPrereq" Template="[1] was not installed correctly." TemplateLocId="ActionText.Template.AI_VerifyPrereq"/>
   </COMPONENT>
@@ -316,16 +315,16 @@
     <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
     <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
-    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_RollbackPrereq" Condition="1" Ordering="102"/>
-    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="301"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
-    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="103"/>
-    <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="101"/>
     <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_RollbackPrePrereq" Condition="1" Ordering="104"/>
     <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrePrereq" Condition="1" Ordering="302"/>
     <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrePrereq" Condition="1" Ordering="105"/>
     <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrePrereq" Condition="1" Ordering="102"/>
+    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_RollbackPrereq" Condition="1" Ordering="106"/>
+    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="303"/>
+    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="107"/>
+    <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="103"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -346,10 +345,13 @@
     <ROW Action="AI_InstallPostPrerequisite" Type="1" Source="Prereq.dll" Target="InstallPostPrereq"/>
     <ROW Action="AI_InstallPrePrerequisite" Type="65" Source="Prereq.dll" Target="InstallPrePrereq"/>
     <ROW Action="AI_InstallPrerequisite" Type="1" Source="Prereq.dll" Target="InstallPrereq"/>
+    <ROW Action="AI_MigrateInstallerProps" Type="1" Source="aicustact.dll" Target="MigrateInstallerProps"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
     <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_ResolvePropertyBaseFolder" Type="1" Source="aicustact.dll" Target="ResolvePropertyBaseFolder" WithoutSeq="true"/>
+    <ROW Action="AI_RestoreInstallerProps" Type="1" Source="aicustact.dll" Target="RestoreInstallerProps" WithoutSeq="true"/>
     <ROW Action="AI_RollbackPrePrereq" Type="65" Source="Prereq.dll" Target="RollbackPrePrereq" WithoutSeq="true"/>
     <ROW Action="AI_RollbackPrereq" Type="65" Source="Prereq.dll" Target="RollbackPrereq" WithoutSeq="true"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
@@ -368,7 +370,7 @@
     <ROW Feature_="MainFeature" Component_="XBatteryStatus.exe"/>
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="AiAppXAssets" Component_="Store50x50Logo.scale100.png"/>
-    <ROW Feature_="A9DBE469DEED46998DA553406739ED74" Component_="A9DBE469DEED46998DA553406739ED74"/>
+    <ROW Feature_="A0BFC224E0E9125ADE0B2DBF343" Component_="A0BFC224E0E9125ADE0B2DBF343"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="icon.exe" SourcePath="..\Icons\ico\icon.ico" Index="0"/>
@@ -384,10 +386,11 @@
     <ROW Action="AI_EnableDebugLog" Sequence="53"/>
     <ROW Action="LaunchApplication" Condition="NOT Installed" Sequence="6601"/>
     <ROW Action="AI_DetectSoftware" Sequence="102"/>
-    <ROW Action="AI_VerifyPrereq" Sequence="1101"/>
     <ROW Action="AI_AppSearchEx" Sequence="101"/>
     <ROW Action="StopProcess" Sequence="52"/>
     <ROW Action="AI_DATA_SETTER" Sequence="51"/>
+    <ROW Action="AI_MigrateInstallerProps" Condition="SETUPEXEDIR AND ((UILevel = 2) OR (UILevel = 3))" Sequence="6599"/>
+    <ROW Action="AI_VerifyPrereq" Sequence="1101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
@@ -396,13 +399,13 @@
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_DetectSoftware" Sequence="102"/>
-    <ROW Action="AI_DownloadPrereq" Sequence="1296"/>
-    <ROW Action="AI_ExtractPrereq" Sequence="1297"/>
-    <ROW Action="AI_InstallPrerequisite" Sequence="1298"/>
+    <ROW Action="AI_InstallPrePrerequisite" Condition="Installed" Sequence="1296"/>
+    <ROW Action="AI_AppSearchEx" Sequence="101"/>
+    <ROW Action="AI_DownloadPrereq" Sequence="1297"/>
+    <ROW Action="AI_ExtractPrereq" Sequence="1298"/>
+    <ROW Action="AI_InstallPrerequisite" Sequence="1299"/>
     <ROW Action="AI_InstallPostPrerequisite" Sequence="1301"/>
     <ROW Action="AI_CleanPrereq" Sequence="1302"/>
-    <ROW Action="AI_InstallPrePrerequisite" Condition="Installed" Sequence="1299"/>
-    <ROW Action="AI_AppSearchEx" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType = 1)) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="x64_Release"/>
@@ -415,7 +418,7 @@
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="x64_Release"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
-    <ROW Registry="A9DBE469DEED46998DA553406739ED74" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="A9DBE469DEED46998DA553406739ED74" Value="1" Component_="A9DBE469DEED46998DA553406739ED74"/>
+    <ROW Registry="A0BFC224E0E9125ADE0B2DBF343" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="A0BFC224E0E9125ADE0B2DBF343" Value="1" Component_="A0BFC224E0E9125ADE0B2DBF343"/>
     <ROW Registry="AdvancedInstaller" Root="-1" Key="Software\Caphyon\Advanced Installer" Name="\"/>
     <ROW Registry="Caphyon" Root="-1" Key="Software\Caphyon" Name="\"/>
     <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
@@ -439,10 +442,10 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
-    <ROW PrereqKey="A9DBE469DEED46998DA553406739ED74" DisplayName=".NET Desktop Runtime 5.0.17 x64" VersionMin="5.0" SetupFileUrl="https://download.visualstudio.microsoft.com/download/pr/3aa4e942-42cd-4bf5-afe7-fc23bd9c69c5/64da54c8864e473c19a7d3de15790418/windowsdesktop-runtime-5.0.17-win-x64.exe" Location="1" ExactSize="55338488" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" WinNT64Versions="Windows 7 RTM x64, Windows Server 2008 R2 x64, Windows 8 x64, Windows Server 2012 x64, Windows 10 version 1507 x64, Windows 10 version 1511 x64" Operator="1" NoUiComLine="/q /norestart" Options="fx" MD5="f22a2f0f291f632e02c3c77632b7bf15" TargetName=".NET 5.0" Feature="A9DBE469DEED46998DA553406739ED74"/>
-    <ATTRIBUTE name="PrereqsOrder" value="A9DBE469DEED46998DA553406739ED74"/>
+    <ROW PrereqKey="A0BFC224E0E9125ADE0B2DBF343" DisplayName=".NET Desktop Runtime 8.0.20 x64" VersionMin="8.0" SetupFileUrl="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.20/windowsdesktop-runtime-8.0.20-win-x64.exe" Location="1" ExactSize="58466840" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" WinNT64Versions="Windows 7 RTM x64, Windows 8 x64, Windows Server 2012 x64, Windows 10 version 1507 x64, Windows 10 version 1511 x64" Operator="1" NoUiComLine="/q /norestart" Options="fx" MD5="f60af75c4b3c2ff8b41044136736d45a" TargetName=".NET 8.0" Feature="A0BFC224E0E9125ADE0B2DBF343"/>
+    <ATTRIBUTE name="PrereqsOrder" value="A0BFC224E0E9125ADE0B2DBF343"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
-    <ROW SearchKey="A9DBE469DEED46998DA553406739ED74Mic" Prereq="A9DBE469DEED46998DA553406739ED74" SearchType="14" SearchString="[ProgramFiles64Folder]dotnet\shared\Microsoft.WindowsDesktop.App" VerMin="5.0.17" Order="1" Property="PreReqSearch_A9DBE469DEED46998DA553"/>
+    <ROW SearchKey="A0BFC224E0E9125ADE0B2DBF343SystemFo" Prereq="A0BFC224E0E9125ADE0B2DBF343" SearchType="14" SearchString="[ProgramFiles64Folder]dotnet\shared\Microsoft.WindowsDesktop.App" VerMin="8.0.20" Order="1" Property="PreReqSearch_A0BFC224E0E9125ADE0B2D"/>
   </COMPONENT>
 </DOCUMENT>
