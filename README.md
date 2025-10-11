@@ -1,7 +1,6 @@
 # <img src="https://github.com/tommaier123/XBatteryStatus/blob/master/Icons/png/icon.png" height="24"/> XBatteryStatus 
 [![Release](https://img.shields.io/github/release/tommaier123/XBatteryStatus.svg)](https://github.com/tommaier123/XBatteryStatus/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/tommaier123/XBatteryStatus/total)](https://github.com/tommaier123/XBatteryStatus/releases/latest)
-[![Twitter](https://img.shields.io/twitter/follow/Nova_Max_?style=social)](https://twitter.com/Nova_Max_)
 [<img src="https://ko-fi.com/img/githubbutton_sm.svg" height="20">](https://ko-fi.com/W7W6PHPZ3)
 
 A clean and lightweight tray app that displays the battery level of most bluetooth game controllers
@@ -28,7 +27,7 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 * Run XBatteryStatus
 
 ## Requirements
-* [.NET 5 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/5.0) (automatically installed)
+* [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) (automatically installed)
 
 ## Updating
 * When a new version is released you will get notified three times
