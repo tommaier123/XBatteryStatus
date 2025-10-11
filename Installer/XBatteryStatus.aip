@@ -20,7 +20,7 @@
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/tommaier123/XBatteryStatus"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/tommaier123/XBatteryStatus/releases"/>
     <ROW Property="Manufacturer" Value="Nova_Max"/>
-    <ROW Property="ProductCode" Value="1033:{38C08490-E237-4D5B-82C0-32EBE4DB2E76} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{4A16BD2D-D35D-40F6-A798-6CFB8D249B69} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="XBatteryStatus"/>
     <ROW Property="ProductVersion" Value="1.3.5" Options="32"/>
