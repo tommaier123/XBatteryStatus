@@ -18,11 +18,28 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     
-    - name: Publish
+    - name: Publish Executable
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml
     
-    - name: Upload artifacts
+    - name: Publish Build Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: published-app
+        name: executable
         path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
+
+    - name: Build Installer
+      uses: caphyon/advinst-github-action@main
+      with:
+        advinst-version: '23.1'
+        advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
+        advinst-enable-automation: 'true'
+        aip-path: ${{ github.workspace }}\Installer/XBatteryStatus.aip
+        aip-build-name: x64_Release
+        aip-package-name: XBatteryStatus.msi
+        aip-output-dir:  ${{ github.workspace }}\Installer\setup
+        
+    - name: Publish Installer Artifacts
+      uses: actions/upload-artifact@main
+      with:
+        name: installer
+        path: ${{ github.workspace }}\Installer\setup\XBatteryStatus.msi
