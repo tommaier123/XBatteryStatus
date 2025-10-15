@@ -33,13 +33,13 @@ jobs:
         advinst-version: '23.1'
         advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
         advinst-enable-automation: 'true'
-        aip-path: Installer/XBatteryStatus.aip
+        aip-path: ${{ github.workspace }}\Installer/XBatteryStatus.aip
         aip-build-name: x64_Release
         aip-package-name: XBatteryStatus.msi
-        aip-output-dir:  Installer\setup
+        aip-output-dir:  ${{ github.workspace }}\Installer\setup
         
     - name: Publish Installer Artifacts
       uses: actions/upload-artifact@main
       with:
         name: setup
-        path: Installer\setup\XBatteryStatus.msi
+        path: ${{ github.workspace }}\Installer\setup\XBatteryStatus.msi
