@@ -18,10 +18,10 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     
-    - name: Publish
+    - name: Publish Executable
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml
     
-    - name: Publish build artifacts
+    - name: Publish Build Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: published-app
@@ -38,7 +38,7 @@ jobs:
         aip-package-name: XBatteryStatus.msi
         aip-output-dir:  Installer\setup
         
-    - name: Publish installer artifacts
+    - name: Publish Installer Artifacts
       uses: actions/upload-artifact@main
       with:
         name: setup
