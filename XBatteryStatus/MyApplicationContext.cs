@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Windows.Devices.Bluetooth;
@@ -21,7 +22,7 @@ namespace XBatteryStatus
 {
     public class MyApplicationContext : ApplicationContext
     {
-        private string version = "V1.3.5";
+        private Version version;
         private string releaseUrl = @"https://github.com/tommaier123/XBatteryStatus/releases";
 
         NotifyIcon notifyIcon = new NotifyIcon();
@@ -53,6 +54,7 @@ namespace XBatteryStatus
                 Properties.Settings.Default.Save();
             }
 
+            version = Assembly.GetExecutingAssembly().GetName().Version;
 
             HideTimeoutTimer = new Timer();
             HideTimeoutTimer.Tick += new EventHandler((x, y) => HideTimeout());
@@ -86,7 +88,7 @@ namespace XBatteryStatus
             UpdateNumbersButton();
             contextMenu.Items.Add(numbersButton);
 
-            ToolStripMenuItem versionButton = new ToolStripMenuItem(version, null, new EventHandler(VersionClicked));
+            ToolStripMenuItem versionButton = new ToolStripMenuItem(version.ToString(3), null, new EventHandler(VersionClicked));
             contextMenu.Items.Add(versionButton);
 
             ToolStripMenuItem exitButton = new ToolStripMenuItem("Exit", null, new EventHandler(ExitClicked));
@@ -122,7 +124,7 @@ namespace XBatteryStatus
                 Octokit.GitHubClient github = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("XBatteryStatus"));
                 var all = github.Repository.Release.GetAll("tommaier123", "XBatteryStatus").Result.Where(x => x.Prerelease == false).ToList();
                 var latest = all.OrderByDescending(x => Int32.Parse(x.TagName.Substring(1).Replace(".", ""))).FirstOrDefault();
-                if (latest != null && Int32.Parse(version.Substring(1).Replace(".", "")) < Int32.Parse(latest.TagName.Substring(1).Replace(".", "")))
+                if (latest != null && version.CompareTo(new Version(latest.TagName.Substring(1))) < 0)
                 {
                     if (Properties.Settings.Default.updateVersion != latest.TagName)
                     {
