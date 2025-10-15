@@ -26,3 +26,22 @@ jobs:
       with:
         name: published-app
         path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
+
+    - name: Build Installer
+        uses: caphyon/advinst-github-action@main
+        with:
+          advinst-version: '23.1'
+          advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
+          advinst-enable-automation: 'true'
+          aip-path: Installer/XBatteryStatus.aip
+          aip-build-name: DefaultBuild
+          aip-package-name: setup.msi
+          aip-output-dir:  Installer\setup
+          aip-commands: |
+            SetProperty FOO="foo"
+            SetVersion 1.2.0
+      - name: Publish setup artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: setup
+          path: Installer\setup\XBatteryStatus.msi
