@@ -20,6 +20,9 @@ jobs:
     
     - name: Publish
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj --configuration Release -p:PublishProfile=FolderProfile.pubxml
+
+    - name: Start SSH debugging session
+      uses: mxschmitt/action-tmate@v3
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
