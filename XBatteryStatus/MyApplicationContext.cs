@@ -88,7 +88,7 @@ namespace XBatteryStatus
             UpdateNumbersButton();
             contextMenu.Items.Add(numbersButton);
 
-            ToolStripMenuItem versionButton = new ToolStripMenuItem(version.ToString(3), null, new EventHandler(VersionClicked));
+            ToolStripMenuItem versionButton = new ToolStripMenuItem("V" + version.ToString(3), null, new EventHandler(VersionClicked));
             contextMenu.Items.Add(versionButton);
 
             ToolStripMenuItem exitButton = new ToolStripMenuItem("Exit", null, new EventHandler(ExitClicked));
@@ -230,7 +230,7 @@ namespace XBatteryStatus
                         }
                     }
                     catch
-                    { 
+                    {
                     }
                 }
 
