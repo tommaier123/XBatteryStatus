@@ -34,7 +34,7 @@ jobs:
         advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
         advinst-enable-automation: 'true'
         aip-path: Installer/XBatteryStatus.aip
-        aip-build-name: DefaultBuild
+        aip-build-name: x64_Release
         aip-package-name: XBatteryStatus.msi
         aip-output-dir:  Installer\setup
         
