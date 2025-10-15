@@ -21,24 +21,25 @@ jobs:
     - name: Publish
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml
     
-    - name: Upload artifacts
+    - name: Publish build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: published-app
         path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
 
     - name: Build Installer
-        uses: caphyon/advinst-github-action@main
-        with:
-          advinst-version: '23.1'
-          advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
-          advinst-enable-automation: 'true'
-          aip-path: Installer/XBatteryStatus.aip
-          aip-build-name: DefaultBuild
-          aip-package-name: XBatteryStatus.msi
-          aip-output-dir:  Installer\setup
-      - name: Publish setup artifact
-        uses: actions/upload-artifact@main
-        with:
-          name: setup
-          path: Installer\setup\XBatteryStatus.msi
+      uses: caphyon/advinst-github-action@main
+      with:
+        advinst-version: '23.1'
+        advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
+        advinst-enable-automation: 'true'
+        aip-path: Installer/XBatteryStatus.aip
+        aip-build-name: DefaultBuild
+        aip-package-name: XBatteryStatus.msi
+        aip-output-dir:  Installer\setup
+        
+    - name: Publish installer artifacts
+      uses: actions/upload-artifact@main
+      with:
+        name: setup
+        path: Installer\setup\XBatteryStatus.msi
