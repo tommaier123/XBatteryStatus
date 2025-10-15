@@ -229,8 +229,8 @@ namespace XBatteryStatus
                             }
                         }
                     }
-                    catch (Exception e)
-                    { //LogError(e);
+                    catch
+                    { 
                     }
                 }
 
