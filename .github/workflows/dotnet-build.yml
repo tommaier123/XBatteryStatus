@@ -24,7 +24,7 @@ jobs:
     - name: Publish Build Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: published-app
+        name: executable
         path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
 
     - name: Build Installer
@@ -41,5 +41,5 @@ jobs:
     - name: Publish Installer Artifacts
       uses: actions/upload-artifact@main
       with:
-        name: setup
+        name: installer
         path: ${{ github.workspace }}\Installer\setup\XBatteryStatus.msi
