@@ -2,7 +2,7 @@ name: Build and Publish
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 
@@ -25,4 +25,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: published-app
-        path: XBatteryStatus/bin/
+        path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
