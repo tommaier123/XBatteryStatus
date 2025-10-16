@@ -12,14 +12,38 @@ jobs:
     
     steps:
     - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: '8.0.x'
     
+    - name: Generate Version
+      id: version
+      shell: bash
+      run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            VERSION="${{ github.ref_name }}"
+            VERSION="${VERSION#v}"
+            echo "Building release version: $VERSION"
+          else
+            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+            LAST_TAG="${LAST_TAG#v}"
+            
+            COMMIT_COUNT=$(git rev-list --count $(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)..HEAD 2>/dev/null || echo "0")
+            
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            
+            VERSION="${LAST_TAG}-${COMMIT_COUNT}-g${SHORT_SHA}"
+            echo "Building development version: $VERSION"
+          fi
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
     - name: Publish Executable
-      run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml
+      run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml -p:Version=${{ steps.version.outputs.version }}
     
     - name: Publish Build Artifacts
       id: executalbe-artifact
