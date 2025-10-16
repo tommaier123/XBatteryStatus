@@ -22,10 +22,28 @@ jobs:
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml
     
     - name: Publish Build Artifacts
+      id: executalbe-artifact
       uses: actions/upload-artifact@v4
       with:
         name: executable
         path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
+
+    - name: Sign Executable
+      uses: signpath/github-action-submit-signing-request@v1
+      with:
+        api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
+        organization-id: '8ab4e21f-f24a-4a69-a19f-54da7a9abb72'
+        project-slug: 'XBatteryStatus'
+        signing-policy-slug: 'test-signing'
+        github-artifact-id: '${{ steps.executalbe-artifact.outputs.artifact-id }}'
+        wait-for-completion: true
+        output-artifact-directory: 'XBatteryStatus/bin/Release/signed'
+
+    - name: Publish Signed Executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: signed executable
+        path: XBatteryStatus/bin/Release/signed
 
     - name: Build Installer
       uses: caphyon/advinst-github-action@main
