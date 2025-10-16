@@ -32,6 +32,7 @@ jobs:
             
             BASE_VERSION=$(cat VERSION)
             
+            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
             COMMIT_COUNT=$(git rev-list --count ${LAST_TAG}..HEAD)
             
             SHORT_SHA=$(git rev-parse --short HEAD)
