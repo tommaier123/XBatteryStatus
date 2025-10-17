@@ -3,10 +3,12 @@ name: Create Tag
 on:
   workflow_dispatch:
     inputs:
-      tag_name:
+      tag:
         description: 'Tag name'
         required: true
         type: string
+
+run-name: Create Tag ${{ github.event.inputs.tag }}
 
 jobs:
   create-tag:
@@ -25,7 +27,7 @@ jobs:
       
       - name: Create and Push Tag
         run: |
-          git tag "${{ inputs.tag_name }}"
-          git push origin "${{ inputs.tag_name }}"
+          git tag "${{ inputs.tag }}"
+          git push origin "${{ inputs.tag }}"
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
