@@ -103,7 +103,7 @@ jobs:
         wait-for-completion: true
         output-artifact-directory: 'signed/installer'
     
-    - name: Publish Signed installer
+    - name: Publish Signed Installer
       uses: actions/upload-artifact@v4
       with:
         name: signed installer
