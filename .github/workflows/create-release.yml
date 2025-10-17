@@ -1,0 +1,93 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to create release for'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      
+      - name: Verify Tag
+        id: tag
+        run: |
+          TAG="${{ inputs.tag }}"
+          if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Error: Tag $TAG does not exist"
+            exit 1
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Using tag: $TAG"
+      
+      - name: Download Artifacts
+        uses: dawidd6/action-download-artifact@v11
+        with:
+          workflow: dotnet-build.yml
+          workflow_conclusion: success
+          name: signed-installer
+          path: ./artifacts
+          commit: ${{ steps.tag.outputs.tag }}
+      
+      - name: Extract Artifacts
+        run: |
+          echo "Downloaded artifacts:"
+          find ./artifacts -type f
+          
+          # Unzip the signed installer
+          cd ./artifacts
+          if [ -f *.zip ]; then
+            unzip -o *.zip
+            echo "Extracted files:"
+            find . -type f
+            
+            # Verify XBatteryStatus.exe exists
+            if [ ! -f XBatteryStatus.exe ]; then
+              echo "Error: XBatteryStatus.exe not found in artifact"
+              exit 1
+            fi
+          else
+            echo "Error: No zip file found in artifacts"
+            exit 1
+          fi
+      
+      - name: Create Release Notes
+        id: notes
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          cat > release_notes.txt << 'EOF'
+## What's Changed
+
+<!-- Add your release notes here -->
+
+**Full Changelog**: https://github.com/${{ github.repository }}/compare/PREVIOUS_TAG...$TAG
+EOF
+          echo "Release notes template created"
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: XBatteryStatus ${{ steps.tag.outputs.tag }}
+          body_path: release_notes.txt
+          draft: true
+          prerelease: ${{ inputs.prerelease }}
+          files: |
+            ./artifacts/XBatteryStatus.exe
