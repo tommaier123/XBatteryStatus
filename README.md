@@ -41,5 +41,17 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 * Numeric: Turn on the numeric display
 
 
-##
-Powered by Advanced Installer
+## Sponsors
+
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/ca93d971-67dc-41dd-b945-ab4f372ea72a" /></td>
+    <td>Free code signing on Windows provided by <a href="https://signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>Installer powered by <a href="https://www.advancedinstaller.com/">Advanced Installer</a></td>
+  </tr>
+</table>

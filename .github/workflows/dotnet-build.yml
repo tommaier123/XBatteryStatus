@@ -97,7 +97,7 @@ jobs:
         api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
         organization-id: '8ab4e21f-f24a-4a69-a19f-54da7a9abb72'
         project-slug: 'XBatteryStatus'
-        signing-policy-slug: 'test-signing'
+        signing-policy-slug: 'release-signing'
         artifact-configuration-slug: 'Sign_Installer'
         github-artifact-id: '${{ steps.installer-artifact.outputs.artifact-id }}'
         wait-for-completion: true

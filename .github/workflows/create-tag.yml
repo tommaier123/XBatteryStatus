@@ -20,12 +20,12 @@ jobs:
       
       - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "tommaier123"
+          git config user.email "tommaier123@users.noreply.github.com"
       
       - name: Create and Push Tag
         run: |
           git tag "${{ inputs.tag_name }}"
           git push origin "${{ inputs.tag_name }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
