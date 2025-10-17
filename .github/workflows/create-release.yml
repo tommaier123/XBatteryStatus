@@ -71,13 +71,13 @@ jobs:
         id: notes
         run: |
           TAG="${{ steps.tag.outputs.tag }}"
-          cat > release_notes.txt << 'EOF'
-## What's Changed
-
-<!-- Add your release notes here -->
-
-**Full Changelog**: https://github.com/${{ github.repository }}/compare/PREVIOUS_TAG...$TAG
-EOF
+          cat > release_notes.txt << EOF
+          ## What's Changed
+          
+          <!-- Add your release notes here -->
+          
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/PREVIOUS_TAG...$TAG
+          EOF
           echo "Release notes template created"
       
       - name: Create Release
