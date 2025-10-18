@@ -105,7 +105,7 @@ jobs:
     - name: Extract Signed Files
       shell: pwsh
       run: |
-        Get-ChildItem
+        Get-ChildItem signed/
         Rename-Item -Path "signed/unsigned-package.zip" -NewName "signed-package.zip"
         Expand-Archive -Path "signed/signed-package.zip" -DestinationPath "signed"
     
