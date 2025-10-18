@@ -70,14 +70,13 @@ jobs:
         New-Item -ItemType Directory -Force -Path unsigned
         Copy-Item "XBatteryStatus/bin/Release/publish/XBatteryStatus.exe" -Destination "unsigned/"
         Copy-Item "Installer/setup/XBatteryStatus.msi" -Destination "unsigned/"
-        Compress-Archive -Path "unsigned/*" -DestinationPath "unsigned-package.zip"
         
     - name: Publish Unsigned Package Artifact
       id: unsigned-artifact
       uses: actions/upload-artifact@v4
       with:
         name: unsigned-package
-        path: unsigned-package.zip
+        path: unsigned/
 
     - name: Determine Signing Policy
       id: signing
