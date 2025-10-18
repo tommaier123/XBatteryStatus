@@ -59,7 +59,7 @@ jobs:
 
   build:
     needs: create-tag
-    uses: ./.github/workflows/build-and-sign.yml
+    uses: ./.github/workflows/build_and_sign.yml
     with:
       version: ${{ needs.create-tag.outputs.clean_version }}
       use_release_signing: true
