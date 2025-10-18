@@ -102,13 +102,6 @@ jobs:
         wait-for-completion: true
         output-artifact-directory: 'signed'
     
-    - name: Extract Signed Files
-      shell: pwsh
-      run: |
-        Get-ChildItem signed/
-        Rename-Item -Path "signed/unsigned-package.zip" -NewName "signed-package.zip"
-        Expand-Archive -Path "signed/signed-package.zip" -DestinationPath "signed"
-    
     - name: Publish Signed Executable
       uses: actions/upload-artifact@v4
       with:
