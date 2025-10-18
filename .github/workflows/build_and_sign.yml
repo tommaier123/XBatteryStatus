@@ -30,7 +30,7 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     
-    - name: Generate Version
+    - name: Generate Version Number
       id: version
       shell: bash
       run: |
@@ -50,7 +50,7 @@ jobs:
           
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-    - name: Publish Executable
+    - name: DotNet Build and Publish
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml -p:Version=${{ steps.version.outputs.version }}
 
     - name: Build Installer
@@ -67,19 +67,17 @@ jobs:
     - name: Create Signing Package
       shell: pwsh
       run: |
-        New-Item -ItemType Directory -Force -Path unsigned/package
-        Copy-Item "XBatteryStatus/bin/Release/publish/XBatteryStatus.exe" -Destination "unsigned/package/"
-        Copy-Item "Installer/setup/XBatteryStatus.msi" -Destination "unsigned/package/"
-        
-        # Create zip file
-        Compress-Archive -Path "unsigned/package/*" -DestinationPath "unsigned/package.zip"
+        New-Item -ItemType Directory -Force -Path unsigned
+        Copy-Item "XBatteryStatus/bin/Release/publish/XBatteryStatus.exe" -Destination "unsigned/"
+        Copy-Item "Installer/setup/XBatteryStatus.msi" -Destination "unsigned/"
+        Compress-Archive -Path "unsigned/*" -DestinationPath "unsigned-package.zip"
         
     - name: Publish Unsigned Package Artifact
       id: unsigned-artifact
       uses: actions/upload-artifact@v4
       with:
         name: unsigned-package
-        path: unsigned/package.zip
+        path: unsigned-package.zip
 
     - name: Determine Signing Policy
       id: signing
@@ -108,8 +106,8 @@ jobs:
     - name: Extract Signed Files
       shell: pwsh
       run: |
-        # Extract the signed zip file
-        Expand-Archive -Path "signed/package.zip" -DestinationPath "signed"
+        Rename-Item -Path "signed/unsigned-package.zip" -NewName "signed-package.zip"
+        Expand-Archive -Path "signed/signed-package.zip" -DestinationPath "signed"
     
     - name: Publish Signed Executable
       uses: actions/upload-artifact@v4
