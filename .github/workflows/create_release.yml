@@ -63,6 +63,7 @@ jobs:
     with:
       version: ${{ needs.create-tag.outputs.clean_version }}
       use_release_signing: true
+    secrets: inherit
 
   create-release:
     needs: [create-tag, build]
