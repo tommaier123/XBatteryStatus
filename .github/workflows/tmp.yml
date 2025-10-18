@@ -76,7 +76,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: unsigned-package
-        path: unsigned
+        path: unsigned/*
 
     - name: Determine Signing Policy
       id: signing
