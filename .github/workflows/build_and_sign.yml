@@ -52,13 +52,6 @@ jobs:
 
     - name: Publish Executable
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml -p:Version=${{ steps.version.outputs.version }}
-    
-    - name: Publish Build Artifacts
-      id: executable-artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: executable
-        path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
 
     - name: Build Installer
       uses: caphyon/advinst-github-action@main
@@ -70,13 +63,23 @@ jobs:
         aip-build-name: x64_Release
         aip-package-name: XBatteryStatus.msi
         aip-output-dir:  ${{ github.workspace }}\Installer\setup
+
+    - name: Create Signing Package
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force -Path unsigned/package
+        Copy-Item "XBatteryStatus/bin/Release/publish/XBatteryStatus.exe" -Destination "unsigned/package/"
+        Copy-Item "Installer/setup/XBatteryStatus.msi" -Destination "unsigned/package/"
         
-    - name: Publish Installer Artifacts
-      id: installer-artifact
-      uses: actions/upload-artifact@main
+        # Create zip file
+        Compress-Archive -Path "unsigned/package/*" -DestinationPath "unsigned/package.zip"
+        
+    - name: Publish Unsigned Package Artifact
+      id: unsigned-artifact
+      uses: actions/upload-artifact@v4
       with:
-        name: installer
-        path: ${{ github.workspace }}\Installer\setup\XBatteryStatus.msi
+        name: unsigned-package
+        path: unsigned/package.zip
 
     - name: Determine Signing Policy
       id: signing
@@ -90,38 +93,32 @@ jobs:
           echo "Using test signing certificate"
         fi
 
-    - name: Sign Executable
+    - name: Sign Package
       uses: signpath/github-action-submit-signing-request@v1
       with:
         api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
         organization-id: '8ab4e21f-f24a-4a69-a19f-54da7a9abb72'
         project-slug: 'XBatteryStatus'
         signing-policy-slug: '${{ steps.signing.outputs.policy }}'
-        artifact-configuration-slug: 'Sign_Executable'
-        github-artifact-id: '${{ steps.executable-artifact.outputs.artifact-id }}'
+        artifact-configuration-slug: 'Sign_Package'
+        github-artifact-id: '${{ steps.unsigned-artifact.outputs.artifact-id }}'
         wait-for-completion: true
-        output-artifact-directory: 'signed/executable'
+        output-artifact-directory: 'signed'
+    
+    - name: Extract Signed Files
+      shell: pwsh
+      run: |
+        # Extract the signed zip file
+        Expand-Archive -Path "signed/package.zip" -DestinationPath "signed"
     
     - name: Publish Signed Executable
       uses: actions/upload-artifact@v4
       with:
         name: signed-executable
-        path: signed/executable
+        path: signed/XBatteryStatus.exe
 
-    - name: Sign Installer
-      uses: signpath/github-action-submit-signing-request@v1
-      with:
-        api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
-        organization-id: '8ab4e21f-f24a-4a69-a19f-54da7a9abb72'
-        project-slug: 'XBatteryStatus'
-        signing-policy-slug: '${{ steps.signing.outputs.policy }}'
-        artifact-configuration-slug: 'Sign_Installer'
-        github-artifact-id: '${{ steps.installer-artifact.outputs.artifact-id }}'
-        wait-for-completion: true
-        output-artifact-directory: 'signed/installer'
-    
     - name: Publish Signed Installer
       uses: actions/upload-artifact@v4
       with:
         name: signed-installer
-        path: signed/installer
+        path: signed/XBatteryStatus.msi

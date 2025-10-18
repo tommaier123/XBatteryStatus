@@ -45,6 +45,7 @@ jobs:
       
       - name: Create and Push Tag
         run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           TAG="V${{ steps.prepare.outputs.clean_version }}"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             echo "Error: Tag $TAG already exists"
@@ -91,7 +92,7 @@ jobs:
           
           <!-- Add your release notes here -->
           
-          **Full Changelog**: https://github.com/${{ github.repository }}/compare/PREVIOUS_TAG...$TAG
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/$LAST_TAG...$TAG
           EOF
           echo "Release notes template created"
       
