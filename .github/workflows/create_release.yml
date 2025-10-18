@@ -83,28 +83,6 @@ jobs:
           name: signed-installer
           path: ./artifacts
       
-      - name: Extract Artifacts
-        run: |
-          echo "Downloaded artifacts:"
-          find ./artifacts -type f
-          
-          # Unzip the signed installer
-          cd ./artifacts
-          if [ -f *.zip ]; then
-            unzip -o *.zip
-            echo "Extracted files:"
-            find . -type f
-            
-            # Verify XBatteryStatus.msi exists
-            if [ ! -f XBatteryStatus.msi ]; then
-              echo "Error: XBatteryStatus.msi not found in artifact"
-              exit 1
-            fi
-          else
-            echo "Error: No zip file found in artifacts"
-            exit 1
-          fi
-      
       - name: Create Release Notes
         id: notes
         run: |
