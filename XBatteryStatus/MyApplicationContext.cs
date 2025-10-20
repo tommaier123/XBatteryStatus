@@ -389,6 +389,24 @@ namespace XBatteryStatus
 
         private void Exit()
         {
+            foreach (var gamepad in pairedGamepads)
+            {
+                if (gamepad != null)
+                {
+                    gamepad.ConnectionStatusChanged -= ConnectionStatusChanged;
+                    gamepad.Dispose();
+                }
+            }
+            pairedGamepads.Clear();
+            connectedGamepad = null;
+
+            if (notifyIcon.Icon != null)
+            {
+                DestroyIcon(notifyIcon.Icon.Handle);
+                notifyIcon.Icon.Dispose();
+                notifyIcon.Icon = null;
+            }
+
             notifyIcon.Visible = false;
             ToastNotificationManagerCompat.Uninstall();
             ToastNotificationManagerCompat.History.Clear();
