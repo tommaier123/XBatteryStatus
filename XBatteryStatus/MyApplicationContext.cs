@@ -200,7 +200,7 @@ namespace XBatteryStatus
                         .Show();
                     }
                 }
-                UpdateTimer.Stop();
+                SoftwareUpdateTimer.Stop();
             }
             catch (Exception e)
             {
