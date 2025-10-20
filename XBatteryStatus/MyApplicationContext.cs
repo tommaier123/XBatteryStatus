@@ -217,23 +217,39 @@ namespace XBatteryStatus
 
                 foreach (var device in await DeviceInformation.FindAllAsync())
                 {
+                    BluetoothLEDevice bleDevice = null;
+                    bool keepDevice = false;
+
                     try
                     {
-                        BluetoothLEDevice bleDevice = await BluetoothLEDevice.FromIdAsync(device.Id);
+                        bleDevice = await BluetoothLEDevice.FromIdAsync(device.Id);
 
                         if (bleDevice?.Appearance.SubCategory == BluetoothLEAppearanceSubcategories.Gamepad)//get the gamepads
                         {
-                            GattDeviceService service = bleDevice.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb"));
-                            GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).First();
-
-                            if (service != null && characteristic != null)//get the gamepads with battery status
+                            using (GattDeviceService service = bleDevice.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb")))
                             {
-                                foundGamepads.Add(bleDevice);
+                                if (service != null)
+                                {
+                                    GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).FirstOrDefault();
+
+                                    if (characteristic != null)//get the gamepads with battery status
+                                    {
+                                        foundGamepads.Add(bleDevice);
+                                        keepDevice = true; // Don't dispose this device
+                                    }
+                                }
                             }
                         }
                     }
                     catch
                     {
+                    }
+                    finally
+                    {
+                        if (!keepDevice && bleDevice != null)
+                        {
+                            bleDevice.Dispose();
+                        }
                     }
                 }
 
