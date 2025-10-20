@@ -419,8 +419,8 @@ namespace XBatteryStatus
             else if (sender == themeButton.DropDownItems[2]) { Properties.Settings.Default.theme = 2; }
             else { Properties.Settings.Default.theme = 0; }
             Properties.Settings.Default.Save();
-            UpdateThemeButton();
             Update();
+            UpdateThemeButton();
         }
 
         private void UpdateThemeButton()
@@ -443,6 +443,8 @@ namespace XBatteryStatus
                 ((ToolStripMenuItem)themeButton.DropDownItems[1]).Checked = false;
                 ((ToolStripMenuItem)themeButton.DropDownItems[2]).Checked = false;
             }
+
+            FindBleController();
         }
 
         private void HideClicked(object sender, EventArgs e)
