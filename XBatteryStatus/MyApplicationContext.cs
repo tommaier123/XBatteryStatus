@@ -324,14 +324,19 @@ namespace XBatteryStatus
             {
                 try
                 {
-                    GattDeviceService service = device.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb"));
-                    GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).First();
-
-                    if (service != null && characteristic != null)
+                    using (GattDeviceService service = device.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb")))
                     {
-                        connectedGamepad = device;
-                        batteryCharacteristic = characteristic;
-                        Update();
+                        if (service != null)
+                        {
+                            GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).FirstOrDefault();
+
+                            if (characteristic != null)
+                            {
+                                connectedGamepad = device;
+                                batteryCharacteristic = characteristic;
+                                Update();
+                            }
+                        }
                     }
                 }
                 catch (Exception e) { LogError(e); }
