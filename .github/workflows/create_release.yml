@@ -1,0 +1,109 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.0.0)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        type: boolean
+        default: false
+
+run-name: Create Release V${{ github.event.inputs.version }}
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      clean_version: ${{ steps.prepare.outputs.clean_version }}
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      
+      - name: Prepare Version
+        id: prepare
+        run: |
+          VERSION="${{ inputs.version }}"
+          # Remove 'V' or 'v' prefix if present
+          VERSION="${VERSION#[vV]}"
+          echo "clean_version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Clean version: $VERSION"
+      
+      - name: Configure Git
+        run: |
+          git config user.name "tommaier123"
+          git config user.email "tommaier123@users.noreply.github.com"
+      
+      - name: Create and Push Tag
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          TAG="V${{ steps.prepare.outputs.clean_version }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Error: Tag $TAG already exists"
+            exit 1
+          else
+            git tag "$TAG"
+            git push origin "$TAG"
+            echo "Created and pushed tag: $TAG"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: create-tag
+    uses: ./.github/workflows/build_and_sign.yml
+    with:
+      version: ${{ needs.create-tag.outputs.clean_version }}
+      use_release_signing: true
+    secrets: inherit
+
+  create-release:
+    needs: [create-tag, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      
+      - name: Download Signed Installer
+        uses: actions/download-artifact@v4
+        with:
+          name: signed-installer
+          path: ./artifacts
+      
+      - name: Create Release Notes
+        id: notes
+        run: |
+          TAG="V${{ needs.create-tag.outputs.clean_version }}"
+          cat > release_notes.txt << EOF
+          
+          <!-- Add your release notes here -->
+          
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/$LAST_TAG...$TAG
+          EOF
+          echo "Release notes template created"
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: V${{ needs.create-tag.outputs.clean_version }}
+          name: XBatteryStatus V${{ needs.create-tag.outputs.clean_version }}
+          body_path: release_notes.txt
+          draft: true
+          prerelease: ${{ inputs.prerelease }}
+          files: |
+            ./artifacts/XBatteryStatus.msi

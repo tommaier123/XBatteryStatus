@@ -1,12 +1,20 @@
-name: Build and Publish
+name: Build and Sign
 
 on:
   push:
     branches: [master]
-    tags:
-      - 'V*.*.*'
   workflow_dispatch:
-
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version number for release builds'
+        required: false
+        type: string
+      use_release_signing:
+        description: 'Use release certificate'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -22,38 +30,28 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     
-    - name: Generate Version
+    - name: Generate Version Number
       id: version
       shell: bash
       run: |
-          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-            VERSION="${{ github.ref_name }}"
-            VERSION="${VERSION#v}"
+          # Check if version was provided as input for releases
+          if [[ -n "${{ inputs.version }}" ]]; then
+            VERSION="${{ inputs.version }}"
             echo "Building release version: $VERSION"
           else
-            
+            # Development build with commit count and SHA
             BASE_VERSION=$(cat VERSION)
-            
             LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
             COMMIT_COUNT=$(git rev-list --count ${LAST_TAG}..HEAD)
-            
             SHORT_SHA=$(git rev-parse --short HEAD)
-            
             VERSION="${BASE_VERSION}-${COMMIT_COUNT}+${SHORT_SHA}"
             echo "Building development version: $VERSION"
           fi
           
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-    - name: Publish Executable
+    - name: DotNet Build and Publish
       run: dotnet publish XBatteryStatus/XBatteryStatus.csproj -p:PublishProfile=XBatteryStatus\Properties\PublishProfiles\FolderProfile.pubxml -p:Version=${{ steps.version.outputs.version }}
-    
-    - name: Publish Build Artifacts
-      id: executalbe-artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: executable
-        path: XBatteryStatus/bin/Release/publish/XBatteryStatus.exe
 
     - name: Build Installer
       uses: caphyon/advinst-github-action@main
@@ -65,46 +63,53 @@ jobs:
         aip-build-name: x64_Release
         aip-package-name: XBatteryStatus.msi
         aip-output-dir:  ${{ github.workspace }}\Installer\setup
-        
-    - name: Publish Installer Artifacts
-      id: installer-artifact
-      uses: actions/upload-artifact@main
-      with:
-        name: installer
-        path: ${{ github.workspace }}\Installer\setup\XBatteryStatus.msi
 
-    - name: Sign Executable
+    - name: Create Signing Package
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force -Path unsigned
+        Copy-Item "XBatteryStatus/bin/Release/publish/XBatteryStatus.exe" -Destination "unsigned/"
+        Copy-Item "Installer/setup/XBatteryStatus.msi" -Destination "unsigned/"
+        
+    - name: Publish Unsigned Package Artifact
+      id: unsigned-artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: unsigned-package
+        path: unsigned/
+
+    - name: Determine Signing Policy
+      id: signing
+      shell: bash
+      run: |
+        if [[ "${{ inputs.use_release_signing }}" == "true" ]]; then
+          echo "policy=release-signing" >> $GITHUB_OUTPUT
+          echo "Using release signing certificate"
+        else
+          echo "policy=test-signing" >> $GITHUB_OUTPUT
+          echo "Using test signing certificate"
+        fi
+
+    - name: Sign Package
       uses: signpath/github-action-submit-signing-request@v1
       with:
         api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
         organization-id: '8ab4e21f-f24a-4a69-a19f-54da7a9abb72'
         project-slug: 'XBatteryStatus'
-        signing-policy-slug: 'test-signing'
-        artifact-configuration-slug: 'Sign_Executable'
-        github-artifact-id: '${{ steps.executalbe-artifact.outputs.artifact-id }}'
+        signing-policy-slug: '${{ steps.signing.outputs.policy }}'
+        artifact-configuration-slug: 'Sign_Package'
+        github-artifact-id: '${{ steps.unsigned-artifact.outputs.artifact-id }}'
         wait-for-completion: true
-        output-artifact-directory: 'signed/executable'
+        output-artifact-directory: 'signed'
     
     - name: Publish Signed Executable
       uses: actions/upload-artifact@v4
       with:
-        name: signed executable
-        path: signed/executable
+        name: signed-executable
+        path: signed/XBatteryStatus.exe
 
-    - name: Sign Installer
-      uses: signpath/github-action-submit-signing-request@v1
-      with:
-        api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
-        organization-id: '8ab4e21f-f24a-4a69-a19f-54da7a9abb72'
-        project-slug: 'XBatteryStatus'
-        signing-policy-slug: 'release-signing'
-        artifact-configuration-slug: 'Sign_Installer'
-        github-artifact-id: '${{ steps.installer-artifact.outputs.artifact-id }}'
-        wait-for-completion: true
-        output-artifact-directory: 'signed/installer'
-    
     - name: Publish Signed Installer
       uses: actions/upload-artifact@v4
       with:
-        name: signed installer
-        path: signed/installer
+        name: signed-installer
+        path: signed/XBatteryStatus.msi
