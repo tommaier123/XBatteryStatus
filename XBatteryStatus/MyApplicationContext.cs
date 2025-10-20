@@ -126,7 +126,7 @@ namespace XBatteryStatus
             {
                 Octokit.GitHubClient github = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("XBatteryStatus"));
                 var all = github.Repository.Release.GetAll("tommaier123", "XBatteryStatus").Result.Where(x => x.Prerelease == false).ToList();
-                var latest = all.OrderByDescending(x => Int32.Parse(x.TagName.Substring(1).Replace(".", ""))).FirstOrDefault();
+                var latest = all.OrderByDescending(x => NuGetVersion.Parse(x.TagName.Substring(1))).FirstOrDefault();
                 if (latest != null && NuGetVersion.Parse(latest.TagName.Substring(1)) > version)
                 {
                     if (Properties.Settings.Default.updateVersion != latest.TagName)
