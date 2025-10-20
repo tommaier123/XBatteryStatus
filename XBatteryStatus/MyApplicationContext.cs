@@ -419,7 +419,6 @@ namespace XBatteryStatus
             else if (sender == themeButton.DropDownItems[2]) { Properties.Settings.Default.theme = 2; }
             else { Properties.Settings.Default.theme = 0; }
             Properties.Settings.Default.Save();
-            Update();
             UpdateThemeButton();
         }
 
