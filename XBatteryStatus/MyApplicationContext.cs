@@ -266,6 +266,7 @@ namespace XBatteryStatus
                     if (gamepad != null)
                     {
                         gamepad.ConnectionStatusChanged -= ConnectionStatusChanged;
+                        gamepad.Dispose();
                     }
                 }
 
