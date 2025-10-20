@@ -224,7 +224,7 @@ namespace XBatteryStatus
                     {
                         bleDevice = await BluetoothLEDevice.FromIdAsync(device.Id);
 
-                        if (bleDevice?.Appearance.SubCategory == BluetoothLEAppearanceSubcategories.Gamepad)//get the gamepads
+                        if (bleDevice?.Appearance.SubCategory == BluetoothLEAppearanceSubcategories.Gamepad) //get the gamepads
                         {
                             using (GattDeviceService service = bleDevice.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb")))
                             {
@@ -232,10 +232,10 @@ namespace XBatteryStatus
                                 {
                                     GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).FirstOrDefault();
 
-                                    if (characteristic != null)//get the gamepads with battery status
+                                    if (characteristic != null) //get the gamepads with battery status
                                     {
                                         foundGamepads.Add(bleDevice);
-                                        keepDevice = true; // Don't dispose this device
+                                        keepDevice = true; //don't dispose this device
                                     }
                                 }
                             }
@@ -314,7 +314,7 @@ namespace XBatteryStatus
             }
             else if (sender == connectedGamepad)
             {
-                FindBleController();//another controller might be connected
+                FindBleController(); //another controller might be connected
             }
         }
 
@@ -503,56 +503,70 @@ namespace XBatteryStatus
         {
             if (notifyIcon.Icon != null)
             {
-                DestroyIcon(notifyIcon.Icon.Handle);
+                IntPtr oldHandle = notifyIcon.Icon.Handle;
+                notifyIcon.Icon.Dispose();
+                DestroyIcon(oldHandle);
             }
             notifyIcon.Icon = GetIcon(val, s);
         }
 
         public Icon GetIcon(int val, string s = "")
         {
-            var icon = Properties.Resources.icon00;
+            using (var icon = (Bitmap)Properties.Resources.icon00.Clone())
+            {
+                try
+                {
+                    if (val >= 0)
+                    {
+                        if (Properties.Settings.Default.numbers)
+                        {
+                            if (val >= 100) val = 99;
 
-            if (val >= 0)
-            {
-                if (Properties.Settings.Default.numbers)
-                {
-                    if (val >= 100) val = 99;
+                            AddDigit(icon, DigitToBitmap(val / 10), false);
+                            AddDigit(icon, DigitToBitmap(val % 10), true);
+                        }
+                        else
+                        {
+                            AddPercentage(icon, val);
+                        }
+                    }
+                    else
+                    {
+                        if (s == "!")
+                        {
+                            AddSymbol(icon, Properties.Resources.symbolE);
+                        }
+                        else if (s == "?")
+                        {
+                            AddSymbol(icon, Properties.Resources.symbolQ);
+                        }
+                    }
 
-                    AddDigit(icon, DigitToBitmap(val / 10), false);
-                    AddDigit(icon, DigitToBitmap(val % 10), true);
-                }
-                else
-                {
-                    AddPercentage(icon, val);
-                }
-            }
-            else
-            {
-                if (s == "!")
-                {
-                    AddSymbol(icon, Properties.Resources.symbolE);
-                }
-                else if (s == "?")
-                {
-                    AddSymbol(icon, Properties.Resources.symbolQ);
-                }
-            }
+                    if (!((Properties.Settings.Default.theme == 0 && !lightMode) || Properties.Settings.Default.theme == 1))
+                    {
+                        InvertBitmap(icon);
+                    }
 
-            if ((Properties.Settings.Default.theme == 0 && !lightMode) || Properties.Settings.Default.theme == 1)
-            {
-                IntPtr Hicon = icon.GetHicon();
-                return Icon.FromHandle(Hicon);
-            }
-            else
-            {
-                IntPtr Hicon = InvertBitmap(icon).GetHicon();
-                return Icon.FromHandle(Hicon);
+                    IntPtr hIcon = icon.GetHicon();
+                    try
+                    {
+                        return (Icon)Icon.FromHandle(hIcon).Clone();
+                    }
+                    finally
+                    {
+                        DestroyIcon(hIcon);
+                    }
+                }
+                catch
+                {
+                    return (Icon)SystemIcons.Application.Clone(); //return a fallback icon
+                }
             }
         }
 
         public Bitmap DigitToBitmap(int digit)
         {
-            return digit switch
+            return (digit switch
             {
                 0 => Properties.Resources.number0,
                 1 => Properties.Resources.number1,
@@ -565,7 +579,7 @@ namespace XBatteryStatus
                 8 => Properties.Resources.number8,
                 9 => Properties.Resources.number9,
                 _ => Properties.Resources.number0
-            };
+            });
         }
 
         public Bitmap AddDigit(Bitmap bitmap, Bitmap number, bool bottom)
