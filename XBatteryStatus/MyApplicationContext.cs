@@ -398,6 +398,12 @@ namespace XBatteryStatus
             Exit();
         }
 
+        protected override void ExitThreadCore()
+        {
+            Exit();
+            base.ExitThreadCore();
+        }
+
         private void Exit()
         {
             foreach (var gamepad in pairedGamepads)
@@ -419,7 +425,6 @@ namespace XBatteryStatus
             }
 
             notifyIcon.Visible = false;
-            ToastNotificationManagerCompat.Uninstall();
             ToastNotificationManagerCompat.History.Clear();
             Application.Exit();
         }
