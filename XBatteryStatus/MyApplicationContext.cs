@@ -19,7 +19,6 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.Radios;
 using Windows.Foundation.Collections;
 using Windows.Storage.Streams;
-using Windows.UI.Notifications;
 
 namespace XBatteryStatus
 {
@@ -148,6 +147,13 @@ namespace XBatteryStatus
                             ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
                             ValueSet userInput = toastArgs.UserInput;
 
+                            if (args.ToString() == "action=dismiss")
+                            {
+                                Properties.Settings.Default.reminderCount++;
+                                Properties.Settings.Default.Save();
+                                return;
+                            }
+
                             if (args.ToString() == "action=update")
                             {
                                 ToastNotificationManagerCompat.Uninstall();
@@ -188,6 +194,8 @@ namespace XBatteryStatus
                             }
                         };
 
+                        ToastNotificationManagerCompat.History.Clear();
+
                         new ToastContentBuilder()
                         .AddText("XBatteryStatus")
                         .AddText("New Version Available on GitHub")
@@ -199,19 +207,8 @@ namespace XBatteryStatus
                                 .AddArgument("action", "update"))
                         .AddButton(new ToastButton()
                                 .SetContent("Dismiss")
-                                .SetDismissActivation())
-                        .Show(toast =>
-                        toast.Dismissed += (sender, args) =>
-                        {
-                            if (args.Reason == ToastDismissalReason.UserCanceled)
-                            {
-                                Properties.Settings.Default.reminderCount++;
-                                Properties.Settings.Default.Save();
-                                Log("Dismissed");
-                            }
-                        });
-
-
+                                .AddArgument("action", "dismiss"))
+                        .Show();
                     }
                 }
                 SoftwareUpdateTimer.Stop();
