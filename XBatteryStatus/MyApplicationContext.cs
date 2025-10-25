@@ -12,12 +12,14 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Windows.ApplicationModel;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Radios;
 using Windows.Foundation.Collections;
 using Windows.Storage.Streams;
+using Windows.UI.Notifications;
 
 namespace XBatteryStatus
 {
@@ -64,10 +66,14 @@ namespace XBatteryStatus
             HideTimeoutTimer.Interval = 10000;
             HideTimeoutTimer.Start();
 
-            SoftwareUpdateTimer = new Timer();
-            SoftwareUpdateTimer.Tick += new EventHandler((x, y) => { CheckSoftwareUpdate(); });
-            SoftwareUpdateTimer.Interval = 30000;
-            SoftwareUpdateTimer.Start();
+
+            if (!IsStoreInstall())
+            {
+                SoftwareUpdateTimer = new Timer();
+                SoftwareUpdateTimer.Tick += new EventHandler((x, y) => { CheckSoftwareUpdate(); });
+                SoftwareUpdateTimer.Interval = 30000;
+                SoftwareUpdateTimer.Start();
+            }
 
             lightMode = IsLightMode();
             SetIcon(-1, "?");
@@ -137,9 +143,6 @@ namespace XBatteryStatus
 
                     if (Properties.Settings.Default.reminderCount < 3)
                     {
-                        Properties.Settings.Default.reminderCount++;
-                        Properties.Settings.Default.Save();
-
                         ToastNotificationManagerCompat.OnActivated += async toastArgs =>
                         {
                             ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
@@ -197,7 +200,18 @@ namespace XBatteryStatus
                         .AddButton(new ToastButton()
                                 .SetContent("Dismiss")
                                 .SetDismissActivation())
-                        .Show();
+                        .Show(toast =>
+                        toast.Dismissed += (sender, args) =>
+                        {
+                            if (args.Reason == ToastDismissalReason.UserCanceled)
+                            {
+                                Properties.Settings.Default.reminderCount++;
+                                Properties.Settings.Default.Save();
+                                Log("Dismissed");
+                            }
+                        });
+
+
                     }
                 }
                 SoftwareUpdateTimer.Stop();
@@ -659,6 +673,19 @@ namespace XBatteryStatus
         private void VersionClicked(object sender, EventArgs e)
         {
             Process.Start(new ProcessStartInfo(releaseUrl) { UseShellExecute = true });
+        }
+
+        public static bool IsStoreInstall()
+        {
+            try
+            {
+                var package = Package.Current;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void Log(string s)
