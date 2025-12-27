@@ -40,6 +40,7 @@ namespace XBatteryStatus
 
         public List<BluetoothLEDevice> pairedGamepads = new List<BluetoothLEDevice>();
         public BluetoothLEDevice connectedGamepad;
+        public GattDeviceService batteryService;
         public GattCharacteristic batteryCharacteristic;
         public Radio bluetoothRadio;
 
@@ -335,18 +336,29 @@ namespace XBatteryStatus
             {
                 try
                 {
-                    using (GattDeviceService service = device.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb")))
+                    if (batteryService != null)
                     {
-                        if (service != null)
-                        {
-                            GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).FirstOrDefault();
+                        batteryService.Dispose();
+                        batteryService = null;
+                    }
+                    
+                    batteryCharacteristic = null;
 
-                            if (characteristic != null)
-                            {
-                                connectedGamepad = device;
-                                batteryCharacteristic = characteristic;
-                                Update();
-                            }
+                    GattDeviceService service = device.GetGattService(new Guid("0000180f-0000-1000-8000-00805f9b34fb"));
+                    if (service != null)
+                    {
+                        GattCharacteristic characteristic = service.GetCharacteristics(new Guid("00002a19-0000-1000-8000-00805f9b34fb")).FirstOrDefault();
+
+                        if (characteristic != null)
+                        {
+                            connectedGamepad = device;
+                            batteryService = service;
+                            batteryCharacteristic = characteristic;
+                            Update();
+                        }
+                        else
+                        {
+                            service.Dispose();
                         }
                     }
                 }
@@ -416,6 +428,13 @@ namespace XBatteryStatus
             }
             pairedGamepads.Clear();
             connectedGamepad = null;
+
+            if (batteryService != null)
+            {
+                batteryService.Dispose();
+                batteryService = null;
+            }
+            batteryCharacteristic = null;
 
             if (notifyIcon.Icon != null)
             {
