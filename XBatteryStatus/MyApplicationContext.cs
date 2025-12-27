@@ -537,13 +537,15 @@ namespace XBatteryStatus
 
         public void SetIcon(int val, string s = "")
         {
-            if (notifyIcon.Icon != null)
+            Icon oldIcon = notifyIcon.Icon;
+            notifyIcon.Icon = GetIcon(val, s); ;
+            
+            if (oldIcon != null)
             {
-                IntPtr oldHandle = notifyIcon.Icon.Handle;
-                notifyIcon.Icon.Dispose();
+                IntPtr oldHandle = oldIcon.Handle;
+                oldIcon.Dispose();
                 DestroyIcon(oldHandle);
             }
-            notifyIcon.Icon = GetIcon(val, s);
         }
 
         public Icon GetIcon(int val, string s = "")
