@@ -12,3 +12,4 @@ jobs:
           identifier: Nova_Max.XBatteryStatus
           max-versions-to-keep: 5 # keep only latest 5 versions
           token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          release-tag: V1.3.7
