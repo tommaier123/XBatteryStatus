@@ -1,0 +1,14 @@
+name: Create WinGet Release
+on:
+  workflow_dispatch:
+  release:
+    types: [released]
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - uses: vedantmgoyal9/winget-releaser@main
+        with:
+          identifier: Nova_Max.XBatteryStatus
+          max-versions-to-keep: 5 # keep only latest 5 versions
+          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
