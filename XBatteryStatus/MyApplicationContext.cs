@@ -47,6 +47,8 @@ namespace XBatteryStatus
         private int lastBattery = 100;
 
         private bool lightMode = false;
+        private readonly string logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "XBatteryStatus", "log.txt");
+        private readonly System.Threading.SemaphoreSlim logSemaphore = new System.Threading.SemaphoreSlim(1, 1);
 
         public MyApplicationContext()
         {
@@ -60,6 +62,7 @@ namespace XBatteryStatus
             string versionString = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "0.0.0";
             version = NuGetVersion.Parse(versionString);
 
+            Log($"XBatteryStatus V{versionString} started");
 
             HideTimeoutTimer = new Timer();
             HideTimeoutTimer.Tick += new EventHandler((x, y) => HideTimeout());
@@ -454,6 +457,9 @@ namespace XBatteryStatus
             }
 
             notifyIcon.Visible = false;
+            
+            logSemaphore?.Dispose();
+            
             ToastNotificationManagerCompat.History.Clear();
             Application.Exit();
         }
@@ -730,20 +736,38 @@ namespace XBatteryStatus
             }
         }
 
-        private void Log(string s)
+        private async void Log(string s)
         {
 #if DEBUG
             Console.WriteLine(s);
+#else
+            await logSemaphore.WaitAsync();
+            try
+            {
+                string logDirectory = Path.GetDirectoryName(logFilePath);
+                if (!Directory.Exists(logDirectory))
+                {
+                    Directory.CreateDirectory(logDirectory);
+                }
+
+                string logEntry = $"[{DateTime.Now:dd.MM.yyyy HH:mm:ss}] {s}";
+                await File.AppendAllTextAsync(logFilePath, logEntry + Environment.NewLine);
+            }
+            catch
+            {
+            }
+            finally
+            {
+                logSemaphore.Release();
+            }
 #endif
         }
 
         private void LogError(Exception e)
         {
-#if DEBUG
             Log(e.StackTrace);
             Log(e.Message);
             Log("");
-#endif
         }
     }
 }
