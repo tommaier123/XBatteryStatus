@@ -105,14 +105,7 @@ namespace XBatteryStatus
 
             notifyIcon.ContextMenuStrip = contextMenu;
 
-            var radios = Radio.GetRadiosAsync().GetResults();
-            bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
-            if (bluetoothRadio != null)
-            {
-                bluetoothRadio.StateChanged += BluetoothRadio_StateChanged;
-            }
-
-
+            InitializeBluetoothRadioAsync();
             FindBleController();
 
             UpdateTimer = new Timer();
@@ -124,6 +117,23 @@ namespace XBatteryStatus
             DiscoverTimer.Tick += new EventHandler((x, y) => FindBleController());
             DiscoverTimer.Interval = 60000;
             DiscoverTimer.Start();
+        }
+
+        private async void InitializeBluetoothRadioAsync()
+        {
+            try
+            {
+                var radios = await Radio.GetRadiosAsync();
+                bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
+                if (bluetoothRadio != null)
+                {
+                    bluetoothRadio.StateChanged += BluetoothRadio_StateChanged;
+                }
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+            }
         }
 
         private void CheckSoftwareUpdate()
