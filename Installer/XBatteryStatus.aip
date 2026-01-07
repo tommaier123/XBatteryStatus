@@ -140,7 +140,7 @@
     <ROW Action="AI_AppSearchEx" Condition="AI_BOOTSTRAPPER" Sequence="251"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="Build_MSIX" BuildName="Build_MSIX" BuildOrder="2" BuildType="7" PackageFolder="XBatteryStatus-x64_Release-SetupFiles" PackageFileName="XBatteryStatus" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppXBuildUploadFile="true" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
+    <ROW BuildKey="Build_MSIX" BuildName="Build_MSIX" BuildOrder="2" BuildType="7" PackageFolder="XBatteryStatus-x64_Release-SetupFiles" PackageFileName="XBatteryStatus" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppXBuildPackageBundle="true" UwpAppXBuildUploadFile="true" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
     <ROW BuildKey="Build_MSIXSubBuild" BuildName="x64" BuildOrder="3" BuildType="8" ParentBuild="Build_MSIX"/>
     <ROW BuildKey="x64_Release" BuildName="x64_Release" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
