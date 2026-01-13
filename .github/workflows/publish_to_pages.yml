@@ -10,6 +10,10 @@ on:
 
 run-name: Publish ${{ github.event.inputs.release_tag }} to GitHub Pages
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   publish-to-pages:
     runs-on: ubuntu-latest
@@ -30,6 +34,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          mkdir -p ./pages/${{ inputs.release_tag }}
           gh release download "${{ inputs.release_tag }}" --pattern "XBatteryStatus_offline.msi" --dir ./pages/${{ inputs.release_tag }}
       
       - name: Setup Pages
