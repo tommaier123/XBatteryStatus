@@ -64,22 +64,16 @@ jobs:
         aip-package-name: XBatteryStatus.msi
         aip-output-dir:  ${{ github.workspace }}\Installer\setup
         
-    - name: Build Store Installer
+    - name: Build MSI Offline Installer
       uses: caphyon/advinst-github-action@main
       with:
         advinst-version: '23.3'
         advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
         advinst-enable-automation: 'true'
-        aip-path: ${{ github.workspace }}\Installer/XBatteryStatus.aip
-        aip-build-name: Build_MSIX
-        aip-package-name: XBatteryStatus.msixupload
+        aip-path: ${{ github.workspace }}\Installer/XBatteryStatus_offline.aip
+        aip-build-name: x64_Release
+        aip-package-name: XBatteryStatus_offline.msi
         aip-output-dir:  ${{ github.workspace }}\Installer\setup
-    
-    - name: Publish Store Installer
-      uses: actions/upload-artifact@v4
-      with:
-        name: store-installer
-        path: Installer/setup/XBatteryStatus.msixupload
 
     - name: Create Signing Package
       shell: pwsh
@@ -87,6 +81,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path unsigned
         Copy-Item "XBatteryStatus/bin/Release/publish/XBatteryStatus.exe" -Destination "unsigned/"
         Copy-Item "Installer/setup/XBatteryStatus.msi" -Destination "unsigned/"
+        Copy-Item "Installer/setup/XBatteryStatus_offline.msi" -Destination "unsigned/"
         
     - name: Publish Unsigned Package Artifact
       id: unsigned-artifact
@@ -130,3 +125,9 @@ jobs:
       with:
         name: signed-installer
         path: signed/XBatteryStatus.msi
+        
+    - name: Publish Signed Offline Installer
+      uses: actions/upload-artifact@v4
+      with:
+        name: signed-installer
+        path: signed/XBatteryStatus_offline.msi

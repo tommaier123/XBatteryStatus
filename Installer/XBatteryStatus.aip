@@ -4,10 +4,10 @@
     <ROW Name="Application_AssetGenDestFolderPath" Value="Generated Assets" ValueType="1"/>
     <ROW Name="Application_AssetGenScalingMode" Value="2"/>
     <ROW Name="Application_AssetGenSourceFilePath" Value="..\Icons\png\icon50px.png" ValueType="1"/>
-    <ROW Name="Application_WorkingDir" Value="APPDIR"/>
     <ROW Name="AssetGenPkgDestFolderPath" Value="Generated Assets" ValueType="1"/>
     <ROW Name="AssetGenPkgScalingMode" Value="2"/>
     <ROW Name="AssetGenPkgSourceFilePath" Value="..\Icons\png\icon.png" ValueType="1"/>
+    <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
     <ROW Name="MigrationUninstallCode" Value="{93DDDD01-E50C-43CA-B3CB-EDF95BCEE958}"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
@@ -43,7 +43,6 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="Assets" Directory_Parent="TARGETDIR" DefaultDir="Assets" IsPseudoRoot="1"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="StartupFolder" Directory_Parent="TARGETDIR" DefaultDir="STARTU~1|StartupFolder" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
@@ -53,79 +52,19 @@
     <ROW Component="ProductInformation" Value="{46644AA0-DF5A-46D4-A0D7-42A4EB2A769E}"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="A0BFC224E0E9125ADE0B2DBF343" ComponentId="{41899F58-9387-4766-84F1-F754649B76F8}" Directory_="APPDIR" Attributes="260" KeyPath="A0BFC224E0E9125ADE0B2DBF343" Options="2"/>
+    <ROW Component="A0BFC224E0E9125ADE0B2DBF343" ComponentId="{EF19227D-ECB9-48DF-9F22-C8FE2415BFA7}" Directory_="APPDIR" Attributes="260" KeyPath="A0BFC224E0E9125ADE0B2DBF343" Options="2"/>
     <ROW Component="APPDIR" ComponentId="{F405CF0A-C71D-4E39-A2E9-6953D0661FC9}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ProductInformation" ComponentId="{46644AA0-DF5A-46D4-A0D7-42A4EB2A769E}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0F6885D-225C-4B0F-963E-22EF909667EA}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="Store50x50Logo.scale100.png" ComponentId="{75FC1E3A-F24A-4FA5-BDB3-0AB167818E71}" Directory_="Assets" Attributes="0" KeyPath="Store50x50Logo.scale100.png" Type="0"/>
     <ROW Component="XBatteryStatus.exe" ComponentId="{3429B614-4145-48D1-B9B8-F0EC2D4E022D}" Directory_="APPDIR" Attributes="256" KeyPath="XBatteryStatus.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="A0BFC224E0E9125ADE0B2DBF343" Title=".NET Desktop Runtime 8.0.20 x64" Description=".NET Desktop Runtime 8.0.20 x64" Display="5" Level="1" Attributes="0"/>
-    <ROW Feature="AiAppXAssets" Title="AiAppXAssets" Description="Description" Display="3" Level="0" Directory_="APPDIR" Attributes="0" Options="271" Builds="Build_MSIX"/>
+    <ROW Feature="A0BFC224E0E9125ADE0B2DBF343" Title=".NET Desktop Runtime 8.0.22 x64" Description=".NET Desktop Runtime 8.0.22 x64" Display="3" Level="1" Attributes="0"/>
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="XBatteryStatus.exe" Component_="XBatteryStatus.exe" FileName="XBATTE~1.EXE|XBatteryStatus.exe" Attributes="0" SourcePath="..\XBatteryStatus\bin\Release\publish\XBatteryStatus.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="Store50x50Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~2.PNG|Store50x50Logo.scale-100.png" Attributes="0" SourcePath="..\Icons\png\icon.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare150x150Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~6.PNG|XBatteryStatus.exeSquare150x150Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare150x150Logo.scale-100.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~21.PNG|XBatteryStatus.exeSquare44x44Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.scale-100.png" SelfReg="false"/>
-    <ROW File="Store50x50Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~3.PNG|Store50x50Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\Store50x50Logo.scale-150.png" SelfReg="false"/>
-    <ROW File="Store50x50Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~4.PNG|Store50x50Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\Store50x50Logo.scale-200.png" SelfReg="false"/>
-    <ROW File="Store50x50Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~5.PNG|Store50x50Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\Store50x50Logo.scale-400.png" SelfReg="false"/>
-    <ROW File="Store50x50Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~1.PNG|Store50x50Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\Store50x50Logo.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare71x71Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~1.PNG|XBatteryStatus.exeSquare71x71Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare71x71Logo.scale-100.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare71x71Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~2.PNG|XBatteryStatus.exeSquare71x71Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare71x71Logo.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare71x71Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~3.PNG|XBatteryStatus.exeSquare71x71Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare71x71Logo.scale-150.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare71x71Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~4.PNG|XBatteryStatus.exeSquare71x71Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare71x71Logo.scale-200.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare71x71Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~5.PNG|XBatteryStatus.exeSquare71x71Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare71x71Logo.scale-400.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare150x150Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~7.PNG|XBatteryStatus.exeSquare150x150Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare150x150Logo.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare150x150Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~8.PNG|XBatteryStatus.exeSquare150x150Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare150x150Logo.scale-150.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare150x150Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATTE~9.PNG|XBatteryStatus.exeSquare150x150Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare150x150Logo.scale-200.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare150x150Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~10.PNG|XBatteryStatus.exeSquare150x150Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare150x150Logo.scale-400.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeWide310x150Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~11.PNG|XBatteryStatus.exeWide310x150Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeWide310x150Logo.scale-100.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeWide310x150Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~12.PNG|XBatteryStatus.exeWide310x150Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeWide310x150Logo.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeWide310x150Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~13.PNG|XBatteryStatus.exeWide310x150Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeWide310x150Logo.scale-150.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeWide310x150Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~14.PNG|XBatteryStatus.exeWide310x150Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeWide310x150Logo.scale-200.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeWide310x150Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~15.PNG|XBatteryStatus.exeWide310x150Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeWide310x150Logo.scale-400.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare310x310Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~16.PNG|XBatteryStatus.exeSquare310x310Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare310x310Logo.scale-100.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare310x310Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~17.PNG|XBatteryStatus.exeSquare310x310Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare310x310Logo.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare310x310Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~18.PNG|XBatteryStatus.exeSquare310x310Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare310x310Logo.scale-150.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare310x310Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~19.PNG|XBatteryStatus.exeSquare310x310Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare310x310Logo.scale-200.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare310x310Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~20.PNG|XBatteryStatus.exeSquare310x310Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare310x310Logo.scale-400.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize16.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~22.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-16.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-16.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize16_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~23.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-16_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-16_altform-unplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize16_altformlightunplated.p" Component_="Store50x50Logo.scale100.png" FileName="XBATT~24.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-16_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-16_altform-lightunplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~25.PNG|XBatteryStatus.exeSquare44x44Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize24.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~26.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-24.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-24.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize24_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~27.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-24_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-24_altform-unplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize24_altformlightunplated.p" Component_="Store50x50Logo.scale100.png" FileName="XBATT~28.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-24_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-24_altform-lightunplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~29.PNG|XBatteryStatus.exeSquare44x44Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.scale-150.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize32.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~30.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-32.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-32.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize32_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~31.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-32_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-32_altform-unplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize32_altformlightunplated.p" Component_="Store50x50Logo.scale100.png" FileName="XBATT~32.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-32_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-32_altform-lightunplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~33.PNG|XBatteryStatus.exeSquare44x44Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.scale-200.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize48.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~34.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-48.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-48.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize48_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~35.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-48_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-48_altform-unplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize48_altformlightunplated.p" Component_="Store50x50Logo.scale100.png" FileName="XBATT~36.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-48_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-48_altform-lightunplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~37.PNG|XBatteryStatus.exeSquare44x44Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.scale-400.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize256.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~38.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-256.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-256.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize256_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~39.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-256_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-256_altform-unplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSquare44x44Logo.targetsize256_altformlightunplated." Component_="Store50x50Logo.scale100.png" FileName="XBATT~40.PNG|XBatteryStatus.exeSquare44x44Logo.targetsize-256_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSquare44x44Logo.targetsize-256_altform-lightunplated.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSplashScreen.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~41.PNG|XBatteryStatus.exeSplashScreen.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSplashScreen.scale-100.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSplashScreen.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~42.PNG|XBatteryStatus.exeSplashScreen.scale-125.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSplashScreen.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSplashScreen.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~43.PNG|XBatteryStatus.exeSplashScreen.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSplashScreen.scale-150.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSplashScreen.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~44.PNG|XBatteryStatus.exeSplashScreen.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSplashScreen.scale-200.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeSplashScreen.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~45.PNG|XBatteryStatus.exeSplashScreen.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeSplashScreen.scale-400.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeBadgeLogo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~46.PNG|XBatteryStatus.exeBadgeLogo.scale-100.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-100.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeBadgeLogo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~47.PNG|XBatteryStatus.exeBadgeLogo.scale-125.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-125.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeBadgeLogo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~48.PNG|XBatteryStatus.exeBadgeLogo.scale-150.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-150.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeBadgeLogo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~49.PNG|XBatteryStatus.exeBadgeLogo.scale-200.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-200.png" SelfReg="false"/>
-    <ROW File="XBatteryStatus.exeBadgeLogo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="XBATT~50.PNG|XBatteryStatus.exeBadgeLogo.scale-400.png" Attributes="0" SourcePath="Generated Assets\XBatteryStatus.exeBadgeLogo.scale-400.png" SelfReg="false"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.AppXCfgComponent">
-    <ROW ID="Configuration" Order="1" ManifestFile="AppxManifest.xml" TargetOs="4" AutoUpdatesFrequency="0" AutoUpdatesOptions="0" ManifestBundleFile="AppxBundleManifest.xml"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -140,14 +79,11 @@
     <ROW Action="AI_AppSearchEx" Condition="AI_BOOTSTRAPPER" Sequence="251"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="Build_MSIX" BuildName="Build_MSIX" BuildOrder="2" BuildType="7" PackageFolder="XBatteryStatus-x64_Release-SetupFiles" PackageFileName="XBatteryStatus" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppXBuildPackageBundle="true" UwpAppXBuildUploadFile="true" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
-    <ROW BuildKey="Build_MSIXSubBuild" BuildName="x64" BuildOrder="3" BuildType="8" ParentBuild="Build_MSIX"/>
     <ROW BuildKey="x64_Release" BuildName="x64_Release" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
-    <ATTRIBUTE name="TranslateSegments" value="0b00000000000000000000000000000000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DynamicPropertyComponent">
     <ROW Property="ProductVersion" Type="3" SourcePath="..\XBatteryStatus\bin\version.json" PathInSource="Root\version"/>
@@ -167,125 +103,6 @@
     <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
     <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
   </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlAttributeComponent">
-    <ROW XmlAttribute="Alias" XmlElement="ExecutionAlias" Name="Alias" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="AllowUserInteraction" XmlElement="UX" Name="AllowUserInteraction" Flags="0" Order="0" Value="false"/>
-    <ROW XmlAttribute="AppNameInTitle" XmlElement="UX" Name="AppNameInTitle" Flags="0" Order="0" Value="false"/>
-    <ROW XmlAttribute="BackgroundColor" XmlElement="VisualElements" Name="BackgroundColor" Flags="0" Order="0" Value="transparent"/>
-    <ROW XmlAttribute="BadgeLogo" XmlElement="LockScreen" Name="BadgeLogo" Flags="0" Order="0" FileId="XBatteryStatus.exeBadgeLogo.scale100.png"/>
-    <ROW XmlAttribute="Category" XmlElement="Extension" Name="Category" Flags="0" Order="0" Value="windows.appExecutionAlias"/>
-    <ROW XmlAttribute="Category_1" XmlElement="Extension_1" Name="Category" Flags="0" Order="0" Value="windows.desktopAppMigration"/>
-    <ROW XmlAttribute="Category_2" XmlElement="Extension_2" Name="Category" Flags="0" Order="0" Value="windows.startupTask"/>
-    <ROW XmlAttribute="Description" XmlElement="VisualElements" Name="Description" Flags="0" Order="0" Value="XBatteryStatus"/>
-    <ROW XmlAttribute="DisplayName" XmlElement="VisualElements" Name="DisplayName" Flags="0" Order="0" Value="XBatteryStatus"/>
-    <ROW XmlAttribute="DisplayName_1" XmlElement="StartupTask" Name="DisplayName" Flags="0" Order="0" Value="XBatteryStatus"/>
-    <ROW XmlAttribute="Enabled" XmlElement="StartupTask" Name="Enabled" Flags="0" Order="0" Value="true"/>
-    <ROW XmlAttribute="EntryPoint" XmlElement="Application" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
-    <ROW XmlAttribute="EntryPoint_1" XmlElement="Extension_1" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
-    <ROW XmlAttribute="EntryPoint_2" XmlElement="Extension_2" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
-    <ROW XmlAttribute="Executable" XmlElement="Application" Name="Executable" Flags="0" Order="0" FileId="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="Executable_1" XmlElement="Extension_1" Name="Executable" Flags="0" Order="0" FileId="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="Executable_2" XmlElement="Extension_2" Name="Executable" Flags="0" Order="0" FileId="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="HorizontalAlignment" XmlElement="LaunchWhenReady" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
-    <ROW XmlAttribute="HorizontalAlignment_1" XmlElement="Icon" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
-    <ROW XmlAttribute="HorizontalAlignment_2" XmlElement="Buttons" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
-    <ROW XmlAttribute="Id" XmlElement="Application" Name="Id" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="IgnorableNamespaces" XmlElement="AppInstallerUX" Name="IgnorableNamespaces" Flags="0" Order="0" Value="ux ux2"/>
-    <ROW XmlAttribute="Image" XmlElement="SplashScreen" Name="Image" Flags="0" Order="0" FileId="XBatteryStatus.exeSplashScreen.scale100.png"/>
-    <ROW XmlAttribute="IsSecondaryButtonAccent" XmlElement="Buttons" Name="IsSecondaryButtonAccent" Flags="0" Order="0" Value="false"/>
-    <ROW XmlAttribute="Language" XmlElement="Resource" Name="Language" Flags="0" Order="0" Value="en-US"/>
-    <ROW XmlAttribute="MaxVersionTested" XmlElement="TargetDeviceFamily" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.26200.0"/>
-    <ROW XmlAttribute="MinVersion" XmlElement="TargetDeviceFamily" Name="MinVersion" Flags="0" Order="0" Value="10.0.17763.0"/>
-    <ROW XmlAttribute="MinVersion_1" XmlElement="PackageDependency" Name="MinVersion" Flags="0" Order="2" Value="8.0.0.0"/>
-    <ROW XmlAttribute="Mode" XmlElement="AppInformation" Name="Mode" Flags="0" Order="0" Value="flyout"/>
-    <ROW XmlAttribute="Name" XmlElement="Identity" Name="Name" Flags="0" Order="0" Value="NovaMax.XBatteryStatus"/>
-    <ROW XmlAttribute="Name_1" XmlElement="Capability" Name="Name" Flags="0" Order="0" Value="runFullTrust"/>
-    <ROW XmlAttribute="Name_2" XmlElement="TargetDeviceFamily" Name="Name" Flags="0" Order="0" Value="Windows.Desktop"/>
-    <ROW XmlAttribute="Name_3" XmlElement="DeviceCapability" Name="Name" Flags="0" Order="0" Value="bluetooth"/>
-    <ROW XmlAttribute="Name_4" XmlElement="PackageDependency" Name="Name" Flags="0" Order="0" Value="Microsoft.NET.DesktopRuntime.8.0"/>
-    <ROW XmlAttribute="Notification" XmlElement="LockScreen" Name="Notification" Flags="0" Order="0" Value="badge"/>
-    <ROW XmlAttribute="Orientation" XmlElement="Buttons" Name="Orientation" Flags="0" Order="0" Value="horizontal"/>
-    <ROW XmlAttribute="Preference" XmlElement="Rotation" Name="Preference" Flags="0" Order="0" Value="portrait"/>
-    <ROW XmlAttribute="Preference_1" XmlElement="Rotation_1" Name="Preference" Flags="0" Order="0" Value="landscape"/>
-    <ROW XmlAttribute="PrimaryButtonMode" XmlElement="Buttons" Name="PrimaryButtonMode" Flags="0" Order="0" Value="normal"/>
-    <ROW XmlAttribute="ProcessorArchitecture" XmlElement="Identity" Name="ProcessorArchitecture" Flags="0" Order="0" Value="x64"/>
-    <ROW XmlAttribute="ProcessorArchitecture_1" XmlElement="PackageDependency" Name="ProcessorArchitecture" Flags="1" Order="3" Value="x64"/>
-    <ROW XmlAttribute="Publisher" XmlElement="Identity" Name="Publisher" Flags="0" Order="0" Value="CN=Nova_Max"/>
-    <ROW XmlAttribute="Publisher_1" XmlElement="PackageDependency" Name="Publisher" Flags="0" Order="1" Value="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"/>
-    <ROW XmlAttribute="Scale" XmlElement="Resource_1" Name="Scale" Flags="0" Order="0" Value="100"/>
-    <ROW XmlAttribute="SecondaryButtonMode" XmlElement="Buttons" Name="SecondaryButtonMode" Flags="0" Order="0" Value="normal"/>
-    <ROW XmlAttribute="ShortcutPath" XmlElement="DesktopApp" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.exe.lnk"/>
-    <ROW XmlAttribute="ShortcutPath_1" XmlElement="DesktopApp_1" Name="ShortcutPath" Flags="0" Order="0" Value="%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.exe.lnk"/>
-    <ROW XmlAttribute="ShortcutPath_2" XmlElement="DesktopApp_2" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatu.lnk"/>
-    <ROW XmlAttribute="ShortcutPath_3" XmlElement="DesktopApp_3" Name="ShortcutPath" Flags="0" Order="0" Value="%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatu.lnk"/>
-    <ROW XmlAttribute="ShortcutPath_4" XmlElement="DesktopApp_4" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.lnk"/>
-    <ROW XmlAttribute="ShortcutPath_5" XmlElement="DesktopApp_5" Name="ShortcutPath" Flags="0" Order="0" Value="%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.lnk"/>
-    <ROW XmlAttribute="Size" XmlElement="Icon" Name="Size" Flags="0" Order="0" Value="default"/>
-    <ROW XmlAttribute="Square150x150Logo" XmlElement="VisualElements" Name="Square150x150Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare150x150Logo.scale100.png"/>
-    <ROW XmlAttribute="Square310x310Logo" XmlElement="DefaultTile" Name="Square310x310Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare310x310Logo.scale100.png"/>
-    <ROW XmlAttribute="Square44x44Logo" XmlElement="VisualElements" Name="Square44x44Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare44x44Logo.scale100.png"/>
-    <ROW XmlAttribute="Square71x71Logo" XmlElement="DefaultTile" Name="Square71x71Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare71x71Logo.scale100.png"/>
-    <ROW XmlAttribute="TaskId" XmlElement="StartupTask" Name="TaskId" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.3.8.0"/>
-    <ROW XmlAttribute="Version_1" XmlElement="AppInstallerUX" Name="Version" Flags="0" Order="0" Value="1.0.0"/>
-    <ROW XmlAttribute="Wide310x150Logo" XmlElement="DefaultTile" Name="Wide310x150Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeWide310x150Logo.scale100.png"/>
-    <ROW XmlAttribute="xmlns" XmlElement="AppInstallerUX" Name="xmlns" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
-    <ROW XmlAttribute="xmlnsux" XmlElement="AppInstallerUX" Name="xmlns:ux" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
-    <ROW XmlAttribute="xmlnsux2" XmlElement="AppInstallerUX" Name="xmlns:ux2" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlElementComponent">
-    <ROW XmlElement="AppExecutionAlias" ParentElement="Extension" Name="AppExecutionAlias" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="AppInformation" ParentElement="AppInstallerUX" Name="AppInformation" Order="4" Flags="0" Type="0"/>
-    <ROW XmlElement="AppInstallerUX" Name="AppInstallerUX" Order="0" Flags="0" Type="0"/>
-    <ROW XmlElement="Application" ParentElement="Applications" Name="Application" Order="0" Flags="0" Type="4"/>
-    <ROW XmlElement="Applications" ParentElement="Package" Name="Applications" Order="4" Flags="0" Type="3"/>
-    <ROW XmlElement="Bundle" Name="Bundle" Order="0" Flags="0" Type="0"/>
-    <ROW XmlElement="Buttons" ParentElement="AppInstallerUX" Name="Buttons" Order="2" Flags="0" Type="0"/>
-    <ROW XmlElement="Capabilities" ParentElement="Package" Name="Capabilities" Order="5" Flags="0" Type="0"/>
-    <ROW XmlElement="Capability" ParentElement="Capabilities" Name="Capability" Order="0" Flags="0" Type="0"/>
-    <ROW XmlElement="DefaultTile" ParentElement="VisualElements" Name="DefaultTile" Order="3" Flags="0" Type="0"/>
-    <ROW XmlElement="Dependencies" ParentElement="Package" Name="Dependencies" Order="6" Flags="0" Type="0"/>
-    <ROW XmlElement="Description" ParentElement="Properties" Name="Description" Order="4" Flags="0" Text="A clean and lightweight tray app that displays the battery level of most bluetooth game controllers" Type="0"/>
-    <ROW XmlElement="DesktopApp" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="DesktopAppMigration" ParentElement="Extension_1" Name="DesktopAppMigration" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="DesktopApp_1" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="2" Flags="0" Type="0"/>
-    <ROW XmlElement="DesktopApp_2" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="3" Flags="0" Type="0"/>
-    <ROW XmlElement="DesktopApp_3" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="4" Flags="0" Type="0"/>
-    <ROW XmlElement="DesktopApp_4" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="5" Flags="0" Type="0"/>
-    <ROW XmlElement="DesktopApp_5" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="6" Flags="0" Type="0"/>
-    <ROW XmlElement="DeviceCapability" ParentElement="Capabilities" Name="DeviceCapability" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="DisplayName" ParentElement="Properties" Name="DisplayName" Order="2" Flags="0" Text="XBatteryStatus" Type="0"/>
-    <ROW XmlElement="ExecutionAlias" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="Extension" ParentElement="Extensions" Name="Extension" Order="1" Flags="0" Type="54"/>
-    <ROW XmlElement="Extension_1" ParentElement="Extensions" Name="Extension" Order="2" Flags="0" Type="55"/>
-    <ROW XmlElement="Extension_2" ParentElement="Extensions" Name="Extension" Order="3" Flags="0" Type="34"/>
-    <ROW XmlElement="Extensions" ParentElement="Application" Name="Extensions" Order="2" Flags="0" Type="0"/>
-    <ROW XmlElement="Icon" ParentElement="AppInstallerUX" Name="Icon" Order="5" Flags="0" Type="0"/>
-    <ROW XmlElement="Identity" ParentElement="Package" Name="Identity" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="InitialRotationPreference" ParentElement="VisualElements" Name="InitialRotationPreference" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="LaunchWhenReady" ParentElement="AppInstallerUX" Name="LaunchWhenReady" Order="3" Flags="0" Type="0"/>
-    <ROW XmlElement="LockScreen" ParentElement="VisualElements" Name="LockScreen" Order="2" Flags="0" Type="0"/>
-    <ROW XmlElement="Logo" ParentElement="Properties" Name="Logo" Order="3" Flags="0" FileId="Store50x50Logo.scale100.png" Type="0"/>
-    <ROW XmlElement="Package" Name="Package" Order="0" Flags="0" Type="6"/>
-    <ROW XmlElement="PackageDependency" ParentElement="Dependencies" Name="PackageDependency" Order="1" Flags="0" Type="5"/>
-    <ROW XmlElement="Properties" ParentElement="Package" Name="Properties" Order="3" Flags="0" Type="0"/>
-    <ROW XmlElement="PublisherDisplayName" ParentElement="Properties" Name="PublisherDisplayName" Order="1" Flags="0" Text="Nova_Max" Type="0"/>
-    <ROW XmlElement="Resource" ParentElement="Resources" Name="Resource" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="Resource_1" ParentElement="Resources" Name="Resource" Order="2" Flags="0" Type="0"/>
-    <ROW XmlElement="Resources" ParentElement="Package" Name="Resources" Order="2" Flags="0" Type="0"/>
-    <ROW XmlElement="Rotation" ParentElement="InitialRotationPreference" Name="Rotation" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="Rotation_1" ParentElement="InitialRotationPreference" Name="Rotation" Order="2" Flags="0" Type="0"/>
-    <ROW XmlElement="SplashScreen" ParentElement="VisualElements" Name="SplashScreen" Order="4" Flags="0" Type="0"/>
-    <ROW XmlElement="StartupTask" ParentElement="Extension_2" Name="StartupTask" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="TargetDeviceFamily" ParentElement="Dependencies" Name="TargetDeviceFamily" Order="0" Flags="0" Type="28"/>
-    <ROW XmlElement="UX" ParentElement="AppInstallerUX" Name="UX" Order="1" Flags="0" Type="0"/>
-    <ROW XmlElement="VisualElements" ParentElement="Application" Name="VisualElements" Order="1" Flags="0" Type="0"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlFileComponent">
-    <ROW XmlFile="AppxBundleManifest.xml" FileName="AppxBundleManifest.xml" RootElement="Bundle" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
-    <ROW XmlFile="AppxManifest.xml" FileName="AppxManifest.xml" RootElement="Package" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
-    <ROW XmlFile="MsixAppInstallerData.xml" FileName="MsixAppInstallerData.xml" RootElement="AppInstallerUX" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
-  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
     <ROW Action="AI_DownloadPrereq" Description="Downloading prerequisite software" DescriptionLocId="ActionText.Description.AI_DownloadPrereq" Template="[1]" TemplateLocId="ActionText.Template.AI_DownloadPrereq"/>
     <ROW Action="AI_ExtractPrereq" Description="Extracting prerequisite software" DescriptionLocId="ActionText.Description.AI_ExtractPrereq" Template="[1]" TemplateLocId="ActionText.Template.AI_ExtractPrereq"/>
@@ -299,7 +116,6 @@
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
-    <ROW Name="file_deleter.ps1" SourcePath="&lt;AI_SCRIPTS&gt;file_deleter.ps1"/>
     <ROW Name="viewer.exe" SourcePath="&lt;AI_CUSTACTS&gt;viewer.exe" DigSign="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
@@ -325,14 +141,14 @@
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
+    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_RollbackPrereq" Condition="1" Ordering="102"/>
+    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="301"/>
+    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="103"/>
+    <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="101"/>
     <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_RollbackPrePrereq" Condition="1" Ordering="104"/>
     <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrePrereq" Condition="1" Ordering="302"/>
     <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrePrereq" Condition="1" Ordering="105"/>
     <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrePrereq" Condition="1" Ordering="102"/>
-    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_RollbackPrereq" Condition="1" Ordering="106"/>
-    <ROW Dialog_="ExitDialog" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="303"/>
-    <ROW Dialog_="FatalError" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="107"/>
-    <ROW Dialog_="UserExit" Control_="Finish" Event="DoAction" Argument="AI_CleanPrereq" Condition="1" Ordering="103"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -367,7 +183,7 @@
     <ROW Action="AI_VerifyPrePrereq" Type="1" Source="Prereq.dll" Target="VerifyPrePrereq"/>
     <ROW Action="AI_VerifyPrereq" Type="1" Source="Prereq.dll" Target="VerifyPrereq"/>
     <ROW Action="LaunchApplication" Type="194" Source="viewer.exe" Target="/DontWait &quot;[#XBatteryStatus.exe]&quot;" Options="1"/>
-    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="x64_Release:[ProgramFiles64Folder][Manufacturer]\[ProductName]#Build_MSIX:"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="x64_Release:[ProgramFiles64Folder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
     <ROW Action="StopProcess" Type="65" Source="aicustact.dll" Target="StopProcess" Options="1" AdditionalSeq="AI_DATA_SETTER"/>
@@ -377,7 +193,6 @@
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
     <ROW Feature_="MainFeature" Component_="XBatteryStatus.exe"/>
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
-    <ROW Feature_="AiAppXAssets" Component_="Store50x50Logo.scale100.png"/>
     <ROW Feature_="A0BFC224E0E9125ADE0B2DBF343" Component_="A0BFC224E0E9125ADE0B2DBF343"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
@@ -394,11 +209,11 @@
     <ROW Action="AI_EnableDebugLog" Sequence="53"/>
     <ROW Action="LaunchApplication" Condition="NOT Installed" Sequence="6601"/>
     <ROW Action="AI_DetectSoftware" Sequence="102"/>
-    <ROW Action="AI_AppSearchEx" Sequence="101"/>
     <ROW Action="StopProcess" Sequence="52"/>
     <ROW Action="AI_DATA_SETTER" Sequence="51"/>
     <ROW Action="AI_MigrateInstallerProps" Condition="SETUPEXEDIR AND ((UILevel = 2) OR (UILevel = 3))" Sequence="6599"/>
     <ROW Action="AI_VerifyPrereq" Sequence="1101"/>
+    <ROW Action="AI_AppSearchEx" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
@@ -407,13 +222,13 @@
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_DetectSoftware" Sequence="102"/>
-    <ROW Action="AI_InstallPrePrerequisite" Condition="Installed" Sequence="1296"/>
-    <ROW Action="AI_AppSearchEx" Sequence="101"/>
-    <ROW Action="AI_DownloadPrereq" Sequence="1297"/>
-    <ROW Action="AI_ExtractPrereq" Sequence="1298"/>
-    <ROW Action="AI_InstallPrerequisite" Sequence="1299"/>
+    <ROW Action="AI_DownloadPrereq" Sequence="1296"/>
+    <ROW Action="AI_ExtractPrereq" Sequence="1297"/>
+    <ROW Action="AI_InstallPrerequisite" Sequence="1298"/>
     <ROW Action="AI_InstallPostPrerequisite" Sequence="1301"/>
     <ROW Action="AI_CleanPrereq" Sequence="1302"/>
+    <ROW Action="AI_InstallPrePrerequisite" Condition="Installed" Sequence="1299"/>
+    <ROW Action="AI_AppSearchEx" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 601) OR (MsiNTProductType = 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 602) OR (MsiNTProductType = 1)) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="x64_Release"/>
@@ -450,10 +265,10 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
-    <ROW PrereqKey="A0BFC224E0E9125ADE0B2DBF343" DisplayName=".NET Desktop Runtime 8.0.20 x64" VersionMin="8.0" SetupFileUrl="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.20/windowsdesktop-runtime-8.0.20-win-x64.exe" Location="1" ExactSize="58466840" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" WinNT64Versions="Windows 7 RTM x64, Windows 8 x64, Windows Server 2012 x64, Windows 10 version 1507 x64, Windows 10 version 1511 x64" Operator="1" NoUiComLine="/q /norestart" Options="fx" MD5="f60af75c4b3c2ff8b41044136736d45a" TargetName=".NET 8.0" Feature="A0BFC224E0E9125ADE0B2DBF343"/>
+    <ROW PrereqKey="A0BFC224E0E9125ADE0B2DBF343" DisplayName=".NET Desktop Runtime 8.0.22 x64" VersionMin="8.0" SetupFileUrl="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.22/windowsdesktop-runtime-8.0.22-win-x64.exe" Location="1" ExactSize="58495600" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" WinNT64Versions="Windows 7 RTM x64, Windows 8 x64, Windows Server 2012 x64, Windows 10 version 1507 x64, Windows 10 version 1511 x64" Operator="1" NoUiComLine="/q /norestart" Options="fx" MD5="23f26d16f7eb7cff1f312b2fb0222f4a" TargetName=".NET 8.0" Feature="A0BFC224E0E9125ADE0B2DBF343"/>
     <ATTRIBUTE name="PrereqsOrder" value="A0BFC224E0E9125ADE0B2DBF343"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
-    <ROW SearchKey="A0BFC224E0E9125ADE0B2DBF343SystemFo" Prereq="A0BFC224E0E9125ADE0B2DBF343" SearchType="14" SearchString="[ProgramFiles64Folder]dotnet\shared\Microsoft.WindowsDesktop.App" VerMin="8.0.20" Order="1" Property="PreReqSearch_A0BFC224E0E9125ADE0B2D"/>
+    <ROW SearchKey="A0BFC224E0E9125ADE0B2DBF343SystemFo" Prereq="A0BFC224E0E9125ADE0B2DBF343" SearchType="14" SearchString="[ProgramFiles64Folder]dotnet\shared\Microsoft.WindowsDesktop.App" VerMin="8.0.22" Order="1" Property="PreReqSearch_A0BFC224E0E9125ADE0B2D"/>
   </COMPONENT>
 </DOCUMENT>
