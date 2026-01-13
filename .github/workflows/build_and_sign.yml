@@ -56,7 +56,7 @@ jobs:
     - name: Build MSI Installer
       uses: caphyon/advinst-github-action@main
       with:
-        advinst-version: '23.1'
+        advinst-version: '23.3'
         advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
         advinst-enable-automation: 'true'
         aip-path: ${{ github.workspace }}\Installer/XBatteryStatus.aip
@@ -67,7 +67,7 @@ jobs:
     - name: Build Store Installer
       uses: caphyon/advinst-github-action@main
       with:
-        advinst-version: '23.1'
+        advinst-version: '23.3'
         advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
         advinst-enable-automation: 'true'
         aip-path: ${{ github.workspace }}\Installer/XBatteryStatus.aip

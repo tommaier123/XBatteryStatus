@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="23.1" Modules="professional" RootPath="." Language="en" Id="{4B1838EB-C72B-4362-8B22-8606D203FD19}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="23.3" Modules="professional" RootPath="." Language="en" Id="{4B1838EB-C72B-4362-8B22-8606D203FD19}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="Application_AssetGenDestFolderPath" Value="Generated Assets" ValueType="1"/>
     <ROW Name="Application_AssetGenScalingMode" Value="2"/>
@@ -20,10 +20,10 @@
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/tommaier123/XBatteryStatus"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/tommaier123/XBatteryStatus/releases"/>
     <ROW Property="Manufacturer" Value="Nova_Max"/>
-    <ROW Property="ProductCode" Value="1033:{D02F8EC9-28A6-4471-9208-A88B39C90938} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{2A0A4D06-AF48-4936-B4DB-935BF6C9E0F5} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="XBatteryStatus"/>
-    <ROW Property="ProductVersion" Value="1.3.6" Options="4"/>
+    <ROW Property="ProductVersion" Value="1.3.8" Options="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{93DDDD01-E50C-43CA-B3CB-EDF95BCEE958}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -140,7 +140,11 @@
     <ROW Action="AI_AppSearchEx" Condition="AI_BOOTSTRAPPER" Sequence="251"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="Build_MSIX" BuildName="Build_MSIX" BuildOrder="2" BuildType="7" PackageFolder="XBatteryStatus-x64_Release-SetupFiles" PackageFileName="XBatteryStatus" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppXBuildUploadFile="true" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
+<<<<<<< Updated upstream
+    <ROW BuildKey="Build_MSIX" BuildName="Build_MSIX" BuildOrder="2" BuildType="7" PackageFolder="XBatteryStatus-x64_Release-SetupFiles" PackageFileName="XBatteryStatus" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppXBuildPackageBundle="true" UwpAppXBuildUploadFile="true" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
+=======
+    <ROW BuildKey="Build_MSIX" BuildName="Build_MSIX" BuildOrder="2" BuildType="7" PackageFolder="XBatteryStatus-x64_Release-SetupFiles" PackageFileName="XBatteryStatus" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
+>>>>>>> Stashed changes
     <ROW BuildKey="Build_MSIXSubBuild" BuildName="x64" BuildOrder="3" BuildType="8" ParentBuild="Build_MSIX"/>
     <ROW BuildKey="x64_Release" BuildName="x64_Release" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
@@ -189,25 +193,39 @@
     <ROW XmlAttribute="HorizontalAlignment" XmlElement="LaunchWhenReady" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
     <ROW XmlAttribute="HorizontalAlignment_1" XmlElement="Icon" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
     <ROW XmlAttribute="HorizontalAlignment_2" XmlElement="Buttons" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
+    <ROW XmlAttribute="HorizontalAlignment_3" XmlElement="LaunchWhenReady_1" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
+    <ROW XmlAttribute="HorizontalAlignment_4" XmlElement="Buttons_1" Name="HorizontalAlignment" Flags="0" Order="0" Value="left"/>
     <ROW XmlAttribute="Id" XmlElement="Application" Name="Id" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
     <ROW XmlAttribute="IgnorableNamespaces" XmlElement="AppInstallerUX" Name="IgnorableNamespaces" Flags="0" Order="0" Value="ux ux2"/>
     <ROW XmlAttribute="Image" XmlElement="SplashScreen" Name="Image" Flags="0" Order="0" FileId="XBatteryStatus.exeSplashScreen.scale100.png"/>
     <ROW XmlAttribute="IsSecondaryButtonAccent" XmlElement="Buttons" Name="IsSecondaryButtonAccent" Flags="0" Order="0" Value="false"/>
+    <ROW XmlAttribute="IsSecondaryButtonAccent_1" XmlElement="Buttons_1" Name="IsSecondaryButtonAccent" Flags="0" Order="0" Value="false"/>
     <ROW XmlAttribute="Language" XmlElement="Resource" Name="Language" Flags="0" Order="0" Value="en-US"/>
-    <ROW XmlAttribute="MaxVersionTested" XmlElement="TargetDeviceFamily" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.22621.0"/>
+<<<<<<< Updated upstream
+    <ROW XmlAttribute="MaxVersionTested" XmlElement="TargetDeviceFamily" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.26100.0"/>
+=======
+    <ROW XmlAttribute="MaxVersionTested" XmlElement="TargetDeviceFamily" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.26200.0"/>
+>>>>>>> Stashed changes
     <ROW XmlAttribute="MinVersion" XmlElement="TargetDeviceFamily" Name="MinVersion" Flags="0" Order="0" Value="10.0.17763.0"/>
+    <ROW XmlAttribute="MinVersion_1" XmlElement="PackageDependency" Name="MinVersion" Flags="0" Order="2" Value="8.0.0.0"/>
     <ROW XmlAttribute="Mode" XmlElement="AppInformation" Name="Mode" Flags="0" Order="0" Value="flyout"/>
+    <ROW XmlAttribute="Mode_1" XmlElement="AppInformation_1" Name="Mode" Flags="0" Order="0" Value="show"/>
     <ROW XmlAttribute="Name" XmlElement="Identity" Name="Name" Flags="0" Order="0" Value="NovaMax.XBatteryStatus"/>
     <ROW XmlAttribute="Name_1" XmlElement="Capability" Name="Name" Flags="0" Order="0" Value="runFullTrust"/>
     <ROW XmlAttribute="Name_2" XmlElement="TargetDeviceFamily" Name="Name" Flags="0" Order="0" Value="Windows.Desktop"/>
     <ROW XmlAttribute="Name_3" XmlElement="DeviceCapability" Name="Name" Flags="0" Order="0" Value="bluetooth"/>
+    <ROW XmlAttribute="Name_4" XmlElement="PackageDependency" Name="Name" Flags="0" Order="0" Value="Microsoft.NET.DesktopRuntime.8.0"/>
     <ROW XmlAttribute="Notification" XmlElement="LockScreen" Name="Notification" Flags="0" Order="0" Value="badge"/>
     <ROW XmlAttribute="Orientation" XmlElement="Buttons" Name="Orientation" Flags="0" Order="0" Value="horizontal"/>
+    <ROW XmlAttribute="Orientation_1" XmlElement="Buttons_1" Name="Orientation" Flags="0" Order="0" Value="horizontal"/>
     <ROW XmlAttribute="Preference" XmlElement="Rotation" Name="Preference" Flags="0" Order="0" Value="portrait"/>
     <ROW XmlAttribute="Preference_1" XmlElement="Rotation_1" Name="Preference" Flags="0" Order="0" Value="landscape"/>
     <ROW XmlAttribute="PrimaryButtonMode" XmlElement="Buttons" Name="PrimaryButtonMode" Flags="0" Order="0" Value="normal"/>
+    <ROW XmlAttribute="PrimaryButtonMode_1" XmlElement="Buttons_1" Name="PrimaryButtonMode" Flags="0" Order="0" Value="normal"/>
     <ROW XmlAttribute="ProcessorArchitecture" XmlElement="Identity" Name="ProcessorArchitecture" Flags="0" Order="0" Value="x64"/>
+    <ROW XmlAttribute="ProcessorArchitecture_1" XmlElement="PackageDependency" Name="ProcessorArchitecture" Flags="1" Order="3" Value="x64"/>
     <ROW XmlAttribute="Publisher" XmlElement="Identity" Name="Publisher" Flags="0" Order="0" Value="CN=Nova_Max"/>
+    <ROW XmlAttribute="Publisher_1" XmlElement="PackageDependency" Name="Publisher" Flags="0" Order="1" Value="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"/>
     <ROW XmlAttribute="Scale" XmlElement="Resource_1" Name="Scale" Flags="0" Order="0" Value="100"/>
     <ROW XmlAttribute="SecondaryButtonMode" XmlElement="Buttons" Name="SecondaryButtonMode" Flags="0" Order="0" Value="normal"/>
     <ROW XmlAttribute="ShortcutPath" XmlElement="DesktopApp" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\XBatteryStatus\XBatteryStatus.exe.lnk"/>
@@ -222,7 +240,7 @@
     <ROW XmlAttribute="Square44x44Logo" XmlElement="VisualElements" Name="Square44x44Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare44x44Logo.scale100.png"/>
     <ROW XmlAttribute="Square71x71Logo" XmlElement="DefaultTile" Name="Square71x71Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeSquare71x71Logo.scale100.png"/>
     <ROW XmlAttribute="TaskId" XmlElement="StartupTask" Name="TaskId" Flags="0" Order="0" Value="XBatteryStatus.exe"/>
-    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.3.6.0"/>
+    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.3.8.0"/>
     <ROW XmlAttribute="Version_1" XmlElement="AppInstallerUX" Name="Version" Flags="0" Order="0" Value="1.0.0"/>
     <ROW XmlAttribute="Wide310x150Logo" XmlElement="DefaultTile" Name="Wide310x150Logo" Flags="0" Order="0" FileId="XBatteryStatus.exeWide310x150Logo.scale100.png"/>
     <ROW XmlAttribute="xmlns" XmlElement="AppInstallerUX" Name="xmlns" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
@@ -232,11 +250,13 @@
   <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlElementComponent">
     <ROW XmlElement="AppExecutionAlias" ParentElement="Extension" Name="AppExecutionAlias" Order="1" Flags="0" Type="0"/>
     <ROW XmlElement="AppInformation" ParentElement="AppInstallerUX" Name="AppInformation" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="AppInformation_1" ParentElement="UX" Name="AppInformation" Order="3" Flags="0" Type="0"/>
     <ROW XmlElement="AppInstallerUX" Name="AppInstallerUX" Order="0" Flags="0" Type="0"/>
     <ROW XmlElement="Application" ParentElement="Applications" Name="Application" Order="0" Flags="0" Type="4"/>
     <ROW XmlElement="Applications" ParentElement="Package" Name="Applications" Order="4" Flags="0" Type="3"/>
     <ROW XmlElement="Bundle" Name="Bundle" Order="0" Flags="0" Type="0"/>
     <ROW XmlElement="Buttons" ParentElement="AppInstallerUX" Name="Buttons" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Buttons_1" ParentElement="UX" Name="Buttons" Order="1" Flags="0" Type="0"/>
     <ROW XmlElement="Capabilities" ParentElement="Package" Name="Capabilities" Order="5" Flags="0" Type="0"/>
     <ROW XmlElement="Capability" ParentElement="Capabilities" Name="Capability" Order="0" Flags="0" Type="0"/>
     <ROW XmlElement="DefaultTile" ParentElement="VisualElements" Name="DefaultTile" Order="3" Flags="0" Type="0"/>
@@ -257,12 +277,15 @@
     <ROW XmlElement="Extension_2" ParentElement="Extensions" Name="Extension" Order="3" Flags="0" Type="34"/>
     <ROW XmlElement="Extensions" ParentElement="Application" Name="Extensions" Order="2" Flags="0" Type="0"/>
     <ROW XmlElement="Icon" ParentElement="AppInstallerUX" Name="Icon" Order="5" Flags="0" Type="0"/>
+    <ROW XmlElement="Icon_1" ParentElement="UX" Name="Icon" Order="4" Flags="0" Type="0"/>
     <ROW XmlElement="Identity" ParentElement="Package" Name="Identity" Order="1" Flags="0" Type="0"/>
     <ROW XmlElement="InitialRotationPreference" ParentElement="VisualElements" Name="InitialRotationPreference" Order="1" Flags="0" Type="0"/>
     <ROW XmlElement="LaunchWhenReady" ParentElement="AppInstallerUX" Name="LaunchWhenReady" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="LaunchWhenReady_1" ParentElement="UX" Name="LaunchWhenReady" Order="2" Flags="0" Type="0"/>
     <ROW XmlElement="LockScreen" ParentElement="VisualElements" Name="LockScreen" Order="2" Flags="0" Type="0"/>
     <ROW XmlElement="Logo" ParentElement="Properties" Name="Logo" Order="3" Flags="0" FileId="Store50x50Logo.scale100.png" Type="0"/>
     <ROW XmlElement="Package" Name="Package" Order="0" Flags="0" Type="6"/>
+    <ROW XmlElement="PackageDependency" ParentElement="Dependencies" Name="PackageDependency" Order="1" Flags="0" Type="5"/>
     <ROW XmlElement="Properties" ParentElement="Package" Name="Properties" Order="3" Flags="0" Type="0"/>
     <ROW XmlElement="PublisherDisplayName" ParentElement="Properties" Name="PublisherDisplayName" Order="1" Flags="0" Text="Nova_Max" Type="0"/>
     <ROW XmlElement="Resource" ParentElement="Resources" Name="Resource" Order="1" Flags="0" Type="0"/>
@@ -381,7 +404,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
     <ROW Action="AI_DETECT_MODERNWIN" Condition="(VersionNT &gt;= 603)" Sequence="55" MsiKey="AI_DETECT_MODERNWIN"/>
-    <ROW Action="AI_DETECT_WINTHEME" Condition="(VersionNT &gt;= 603)" Sequence="56" MsiKey="AI_DETECT_WINTHEME"/>
+    <ROW Action="AI_DETECT_WINTHEME" Condition="(VersionNT &gt;= 1000)" Sequence="56" MsiKey="AI_DETECT_WINTHEME"/>
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="748"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
