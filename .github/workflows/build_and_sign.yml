@@ -129,5 +129,5 @@ jobs:
     - name: Publish Signed Offline Installer
       uses: actions/upload-artifact@v4
       with:
-        name: signed-installer
+        name: signed-offline-installer
         path: signed/XBatteryStatus_offline.msi

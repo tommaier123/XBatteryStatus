@@ -83,6 +83,12 @@ jobs:
         with:
           name: signed-installer
           path: ./artifacts
+          
+      - name: Download Signed Offline Installer
+        uses: actions/download-artifact@v4
+        with:
+          name: signed-offline-installer
+          path: ./artifacts
       
       - name: Create Release Notes
         id: notes
@@ -107,3 +113,4 @@ jobs:
           prerelease: ${{ inputs.prerelease }}
           files: |
             ./artifacts/XBatteryStatus.msi
+            ./artifacts/XBatteryStatus_offline.msi
