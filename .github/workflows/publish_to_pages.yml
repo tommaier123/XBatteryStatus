@@ -30,7 +30,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release download "${{ inputs.release_tag }}" --pattern "XBatteryStatus.msi" --dir ./pages
+          gh release download "${{ inputs.release_tag }}" --pattern "XBatteryStatus.msixupload" --dir ./pages
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
