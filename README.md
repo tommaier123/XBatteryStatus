@@ -5,6 +5,8 @@
 
 A clean and lightweight tray app that displays the battery level of most bluetooth game controllers
 
+![Screenshot](/Icons/Screenshot1.png)
+
 ![Tray Icon](/Icons/png/icon70.png)
 ![Tray Icon](/Icons/png/iconNumeric.png)
 
@@ -25,6 +27,11 @@ A clean and lightweight tray app that displays the battery level of most bluetoo
 ## Installation via Winget
 * ```winget install Nova_Max.XBatteryStatus```
 * Run XBatteryStatus
+
+## Installation via Microsoft Store
+<a href="https://apps.microsoft.com/detail/xpdmdt0hpqbm7z?referrer=appbadge&mode=direct">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
 
 ## Requirements
 * [.NET 8 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/8.0) (automatically installed)
