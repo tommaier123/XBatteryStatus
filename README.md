@@ -1,7 +1,7 @@
 # <img src="https://github.com/tommaier123/XBatteryStatus/blob/master/Icons/png/icon.png" height="24"/> XBatteryStatus 
 [![Release](https://img.shields.io/github/release/tommaier123/XBatteryStatus.svg)](https://github.com/tommaier123/XBatteryStatus/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/tommaier123/XBatteryStatus/total)](https://github.com/tommaier123/XBatteryStatus/releases/latest)
-[<img src="https://ko-fi.com/img/githubbutton_sm.svg" height="20">](https://ko-fi.com/W7W6PHPZ3)
+[<img src="https://ko-fi.com/img/githubbutton_sm.svg" height="20">](https://ko-fi.com/Nova_Max)
 
 A clean and lightweight tray app that displays the battery level of most bluetooth game controllers
 
