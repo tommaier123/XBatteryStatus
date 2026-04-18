@@ -32,6 +32,7 @@ namespace XBatteryStatus
         private ToolStripMenuItem themeButton;
         private ToolStripMenuItem hideButton;
         private ToolStripMenuItem numbersButton;
+        private ToolStripMenuItem audioAlertButton;
 
         private Timer UpdateTimer;
         private Timer DiscoverTimer;
@@ -99,6 +100,10 @@ namespace XBatteryStatus
             numbersButton = new ToolStripMenuItem("Numeric", null, NumbersClicked);
             UpdateNumbersButton();
             contextMenu.Items.Add(numbersButton);
+
+            audioAlertButton = new ToolStripMenuItem("Audio Alert", null, AudioAlertClicked);
+            UpdateAudioAlertButton();
+            contextMenu.Items.Add(audioAlertButton);
 
             ToolStripMenuItem versionButton = new ToolStripMenuItem("V" + versionString, null, new EventHandler(VersionClicked));
             contextMenu.Items.Add(versionButton);
@@ -408,8 +413,33 @@ namespace XBatteryStatus
 
                         if ((lastBattery > 15 && val <= 15) || (lastBattery > 10 && val <= 10) || (lastBattery > 5 && val <= 5))
                         {
-                            new ToastContentBuilder().AddText("Low Battery").AddText(notify)
+                            new ToastContentBuilder()
+                                .AddText("Low Battery")
+                                .AddText(notify)
+                                .AddAudio(new Uri("ms-winsoundevent:Notification.Default"), false, true)
                                 .Show();
+
+                            if (Properties.Settings.Default.audioAlert)
+                            {
+                                try
+                                {
+                                    if (File.Exists($@"{System.AppDomain.CurrentDomain.BaseDirectory}\alert.wav"))
+                                    {
+                                        new System.Media.SoundPlayer($@"{System.AppDomain.CurrentDomain.BaseDirectory}\alert.wav").Play();
+                                    }
+                                    else
+                                    {
+                                        new System.Media.SoundPlayer(Properties.Resources.alertDefaultSound).Play();
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    // Failed to play alert.wav, use default sound resource instead.
+                                    LogError(e);
+
+                                    new System.Media.SoundPlayer(Properties.Resources.alertDefaultSound).Play();
+                                }
+                            }
                         }
                         lastBattery = val;
                     }
@@ -527,6 +557,19 @@ namespace XBatteryStatus
         private void UpdateNumbersButton()
         {
             numbersButton.Checked = Properties.Settings.Default.numbers;
+            Update();
+        }
+
+        private void AudioAlertClicked(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.audioAlert = !Properties.Settings.Default.audioAlert;
+            Properties.Settings.Default.Save();
+            UpdateAudioAlertButton();
+        }
+
+        private void UpdateAudioAlertButton()
+        {
+            audioAlertButton.Checked = Properties.Settings.Default.audioAlert;
             Update();
         }
 

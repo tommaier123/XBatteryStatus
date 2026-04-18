@@ -94,5 +94,17 @@ namespace XBatteryStatus.Properties {
                 this["newInstall"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool audioAlert {
+            get {
+                return ((bool)(this["audioAlert"]));
+            }
+            set {
+                this["audioAlert"] = value;
+            }
+        }
     }
 }
