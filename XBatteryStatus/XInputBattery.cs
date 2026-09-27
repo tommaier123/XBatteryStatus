@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace XBatteryStatus
 {
@@ -14,14 +13,13 @@ namespace XBatteryStatus
         private const byte BATTERY_TYPE_WIRED = 0x01;
         private const byte BATTERY_LEVEL_EMPTY = 0x00;
 
-        private readonly Action<string> log;
+        private readonly Action<Exception> logError;
 
         private bool available = true;
-        private string lastReport;
 
-        public XInputBattery(Action<string> log)
+        public XInputBattery(Action<Exception> logError)
         {
-            this.log = log;
+            this.logError = logError;
         }
 
         public BatteryInfo? Read()
@@ -31,7 +29,6 @@ namespace XBatteryStatus
                 return null;
             }
 
-            StringBuilder report = new StringBuilder();
             BatteryInfo? result = null;
             int candidate = -1;
             bool candidateWireless = false;
@@ -48,13 +45,12 @@ namespace XBatteryStatus
                 catch (Exception e)
                 {
                     available = false;
-                    log("xinput unavailable: " + e.Message);
+                    logError(e);
                     return null;
                 }
 
                 if (batteryResult != ERROR_SUCCESS)
                 {
-                    report.Append($"[{i} empty rc={batteryResult}] ");
                     continue;
                 }
 
@@ -65,8 +61,6 @@ namespace XBatteryStatus
                 XINPUT_CAPABILITIES caps;
                 uint capsResult = XInputGetCapabilities(i, XINPUT_FLAG_GAMEPAD, out caps);
                 bool wireless = capsResult == ERROR_SUCCESS && (caps.Flags & XINPUT_CAPS_WIRELESS) != 0;
-
-                report.Append($"[{i} type={info.BatteryType} level={info.BatteryLevel} hasLevel={hasLevel} capsRc={capsResult} devType={caps.Type} subType={caps.SubType} flags=0x{caps.Flags:X4} wireless={wireless}] ");
 
                 if (hasLevel)
                 {
@@ -86,15 +80,6 @@ namespace XBatteryStatus
             if (result == null && candidate >= 0)
             {
                 result = new BatteryInfo(0, null, !candidateWireless, "Controller " + (candidate + 1), candidateWireless);
-            }
-
-            report.Append("-> " + (result.HasValue ? (result.Value.Waiting ? "waiting" : result.Value.Level ?? "wired") + " \"" + result.Value.Name + "\"" : "nothing"));
-
-            string line = report.ToString();
-            if (line != lastReport)
-            {
-                lastReport = line;
-                log("xinput: " + line);
             }
 
             return result;

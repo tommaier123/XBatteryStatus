@@ -96,6 +96,7 @@ namespace XBatteryStatus
 
             numbersButton = new ToolStripMenuItem("Numeric", null, NumbersClicked);
             UpdateNumbersButton();
+            SetNumbersButtonVisibility(false);
             contextMenu.Items.Add(numbersButton);
 
             ToolStripMenuItem versionButton = new ToolStripMenuItem("V" + versionString, null, new EventHandler(VersionClicked));
@@ -109,7 +110,7 @@ namespace XBatteryStatus
             uiContext = System.Threading.SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();
 
             ble = new BleBattery(LogError);
-            xinput = new XInputBattery(Log);
+            xinput = new XInputBattery(LogError);
 
             ble.Changed += OnBleChanged;
 
@@ -320,6 +321,7 @@ namespace XBatteryStatus
                 SetIcon(-1, "?");
                 notifyIcon.Text = "XBatteryStatus: Waiting - " + info.Name;
                 lastBattery = 100;
+                SetNumbersButtonVisibility(false);
                 return;
             }
 
@@ -328,6 +330,7 @@ namespace XBatteryStatus
                 SetIcon(-1, "w");
                 notifyIcon.Text = "XBatteryStatus: Wired - " + info.Name;
                 lastBattery = 100;
+                SetNumbersButtonVisibility(false);
                 return;
             }
 
@@ -336,6 +339,7 @@ namespace XBatteryStatus
 
             notifyIcon.Text = "XBatteryStatus: " + notify;
             SetIcon(info.Percent, "", info.Level != null);
+            SetNumbersButtonVisibility(info.Level == null);
 
             if (info.Wired)
             {
@@ -360,6 +364,7 @@ namespace XBatteryStatus
             notifyIcon.Visible = Properties.Settings.Default.hide ? HideTimeoutTimer.Enabled : true;
             SetIcon(-1, "!");
             notifyIcon.Text = "XBatteryStatus: " + (ble.Status ?? "No controller is connected");
+            SetNumbersButtonVisibility(false);
         }
 
         private void ExitClicked(object sender, EventArgs e)
@@ -458,6 +463,14 @@ namespace XBatteryStatus
         {
             numbersButton.Checked = Properties.Settings.Default.numbers;
             Update();
+        }
+
+        private void SetNumbersButtonVisibility(bool visible)
+        {
+            if (numbersButton.Visible != visible)
+            {
+                numbersButton.Visible = visible;
+            }
         }
 
         public bool IsLightMode()
