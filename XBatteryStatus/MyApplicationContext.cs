@@ -41,7 +41,6 @@ namespace XBatteryStatus
 
         private int lastBattery = 100;
         private string lastName;
-        private string lastStatusLog;
         private bool updating;
 
         private bool lightMode = false;
@@ -82,27 +81,35 @@ namespace XBatteryStatus
             notifyIcon.Visible = true;
 
             contextMenu = new ContextMenuStrip();
+            contextMenu.ShowItemToolTips = true;
 
             themeButton = new ToolStripMenuItem("Theme");
             themeButton.DropDownItems.Add("Auto", null, ThemeClicked);
             themeButton.DropDownItems.Add("Light", null, ThemeClicked);
             themeButton.DropDownItems.Add("Dark", null, ThemeClicked);
+            ((ToolStripMenuItem)themeButton.DropDownItems[0]).ToolTipText = "Match the Windows system theme";
+            ((ToolStripMenuItem)themeButton.DropDownItems[1]).ToolTipText = "Always use light icons";
+            ((ToolStripMenuItem)themeButton.DropDownItems[2]).ToolTipText = "Always use dark icons";
             UpdateThemeButton();
             contextMenu.Items.Add(themeButton);
 
             hideButton = new ToolStripMenuItem("Auto Hide", null, HideClicked);
+            hideButton.ToolTipText = "Hide the tray icon after a few seconds when no controller is connected";
             UpdateHideButton();
             contextMenu.Items.Add(hideButton);
 
             numbersButton = new ToolStripMenuItem("Numeric", null, NumbersClicked);
+            numbersButton.ToolTipText = "Show battery level as a number instead of a bar";
+            numbersButton.Visible = false;
             UpdateNumbersButton();
-            SetNumbersButtonVisibility(false);
             contextMenu.Items.Add(numbersButton);
 
             ToolStripMenuItem versionButton = new ToolStripMenuItem("V" + versionString, null, new EventHandler(VersionClicked));
+            versionButton.ToolTipText = "Open the GitHub releases page";
             contextMenu.Items.Add(versionButton);
 
             ToolStripMenuItem exitButton = new ToolStripMenuItem("Exit", null, new EventHandler(ExitClicked));
+            exitButton.ToolTipText = "Close XBatteryStatus";
             contextMenu.Items.Add(exitButton);
 
             notifyIcon.ContextMenuStrip = contextMenu;
@@ -295,12 +302,6 @@ namespace XBatteryStatus
                 {
                     ShowUnavailable();
                 }
-
-                if (notifyIcon.Text != lastStatusLog)
-                {
-                    lastStatusLog = notifyIcon.Text;
-                    Log(lastStatusLog);
-                }
             }
             catch (Exception e) { LogError(e); }
             finally { updating = false; }
@@ -321,7 +322,7 @@ namespace XBatteryStatus
                 SetIcon(-1, "?");
                 notifyIcon.Text = "XBatteryStatus: Waiting - " + info.Name;
                 lastBattery = 100;
-                SetNumbersButtonVisibility(false);
+                numbersButton.Visible = false;
                 return;
             }
 
@@ -330,7 +331,7 @@ namespace XBatteryStatus
                 SetIcon(-1, "w");
                 notifyIcon.Text = "XBatteryStatus: Wired - " + info.Name;
                 lastBattery = 100;
-                SetNumbersButtonVisibility(false);
+                numbersButton.Visible = false;
                 return;
             }
 
@@ -339,7 +340,7 @@ namespace XBatteryStatus
 
             notifyIcon.Text = "XBatteryStatus: " + notify;
             SetIcon(info.Percent, "", info.Level != null);
-            SetNumbersButtonVisibility(info.Level == null);
+            numbersButton.Visible = info.Level == null;
 
             if (info.Wired)
             {
@@ -364,7 +365,7 @@ namespace XBatteryStatus
             notifyIcon.Visible = Properties.Settings.Default.hide ? HideTimeoutTimer.Enabled : true;
             SetIcon(-1, "!");
             notifyIcon.Text = "XBatteryStatus: " + (ble.Status ?? "No controller is connected");
-            SetNumbersButtonVisibility(false);
+            numbersButton.Visible = false;
         }
 
         private void ExitClicked(object sender, EventArgs e)
@@ -463,14 +464,6 @@ namespace XBatteryStatus
         {
             numbersButton.Checked = Properties.Settings.Default.numbers;
             Update();
-        }
-
-        private void SetNumbersButtonVisibility(bool visible)
-        {
-            if (numbersButton.Visible != visible)
-            {
-                numbersButton.Visible = visible;
-            }
         }
 
         public bool IsLightMode()
