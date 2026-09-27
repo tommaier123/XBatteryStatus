@@ -28,6 +28,7 @@ namespace XBatteryStatus
         private ToolStripMenuItem themeButton;
         private ToolStripMenuItem hideButton;
         private ToolStripMenuItem numbersButton;
+        private ToolStripMenuItem notificationsButton;
 
         private Timer UpdateTimer;
         private Timer DiscoverTimer;
@@ -49,7 +50,9 @@ namespace XBatteryStatus
 
         public MyApplicationContext()
         {
-            if (Properties.Settings.Default.newInstall)
+            bool isFirstRun = Properties.Settings.Default.newInstall;
+
+            if (isFirstRun)
             {
                 Properties.Settings.Default.Upgrade();
                 Properties.Settings.Default.newInstall = false;
@@ -104,6 +107,11 @@ namespace XBatteryStatus
             UpdateNumbersButton();
             contextMenu.Items.Add(numbersButton);
 
+            notificationsButton = new ToolStripMenuItem("Battery Alert", null, NotificationsClicked);
+            notificationsButton.ToolTipText = "Show a toast notification when the battery is low";
+            UpdateNotificationsButton();
+            contextMenu.Items.Add(notificationsButton);
+
             ToolStripMenuItem versionButton = new ToolStripMenuItem("V" + versionString, null, new EventHandler(VersionClicked));
             versionButton.ToolTipText = "Open the GitHub releases page";
             contextMenu.Items.Add(versionButton);
@@ -132,6 +140,25 @@ namespace XBatteryStatus
             DiscoverTimer.Tick += new EventHandler((x, y) => Discover());
             DiscoverTimer.Interval = 60000;
             DiscoverTimer.Start();
+
+            if (isFirstRun)
+            {
+                ShowOnboarding();
+            }
+        }
+
+        private void ShowOnboarding()
+        {
+            var settingTips = new (string Title, string Description)[]
+            {
+                ("Theme", "Choose whether the tray icon matches Windows automatically, or is always light or dark."),
+                (hideButton.Text, hideButton.ToolTipText),
+                (numbersButton.Text, numbersButton.ToolTipText),
+                (notificationsButton.Text, notificationsButton.ToolTipText),
+            };
+
+            var onboarding = new OnboardingForm(lightMode, IsStoreInstall(), settingTips);
+            onboarding.Show();
         }
 
         private void CheckSoftwareUpdate()
@@ -352,7 +379,7 @@ namespace XBatteryStatus
                 ? (lastBattery > 15 && info.Percent <= 15) || (lastBattery > 10 && info.Percent <= 10) || (lastBattery > 5 && info.Percent <= 5)
                 : info.Percent <= 40 && info.Percent < lastBattery;
 
-            if (low)
+            if (low && Properties.Settings.Default.batteryNotifications)
             {
                 new ToastContentBuilder().AddText("Low Battery").AddText(notify).Show();
             }
@@ -466,6 +493,18 @@ namespace XBatteryStatus
             Update();
         }
 
+        private void NotificationsClicked(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.batteryNotifications = !Properties.Settings.Default.batteryNotifications;
+            Properties.Settings.Default.Save();
+            UpdateNotificationsButton();
+        }
+
+        private void UpdateNotificationsButton()
+        {
+            notificationsButton.Checked = Properties.Settings.Default.batteryNotifications;
+        }
+
         public bool IsLightMode()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
@@ -491,14 +530,14 @@ namespace XBatteryStatus
         {
             Icon oldIcon = notifyIcon.Icon;
             IntPtr oldHandle = IntPtr.Zero;
-            
+
             if (oldIcon != null)
             {
                 oldHandle = oldIcon.Handle;
             }
-            
+
             notifyIcon.Icon = GetIcon(val, s, graphical);
-            
+
             if (oldIcon != null)
             {
                 oldIcon.Dispose();
