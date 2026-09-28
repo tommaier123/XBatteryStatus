@@ -362,6 +362,15 @@ namespace XBatteryStatus
                 return;
             }
 
+            if (!info.Wired && info.Level == null)
+            {
+                SetIcon(-1, "r");
+                notifyIcon.Text = "XBatteryStatus: Wireless - " + info.Name;
+                lastBattery = 100;
+                numbersButton.Visible = false;
+                return;
+            }
+
             string level = info.Level ?? info.Percent + "%";
             string notify = level + " - " + info.Name;
 
@@ -391,7 +400,7 @@ namespace XBatteryStatus
         {
             notifyIcon.Visible = Properties.Settings.Default.hide ? HideTimeoutTimer.Enabled : true;
             SetIcon(-1, "!");
-            notifyIcon.Text = "XBatteryStatus: " + (ble.Status ?? "No controller is connected");
+            notifyIcon.Text = "XBatteryStatus: " + (ble.Status ?? "No controller connected");
             numbersButton.Visible = false;
         }
 
@@ -581,6 +590,10 @@ namespace XBatteryStatus
                         else if (s == "w")
                         {
                             AddSymbol(icon, Properties.Resources.symbolW);
+                        }
+                        else if (s == "r")
+                        {
+                            AddSymbol(icon, Properties.Resources.symbolR);
                         }
                     }
 
